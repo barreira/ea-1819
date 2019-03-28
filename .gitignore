@@ -1,1 +1,4 @@
+*.bak_*
+*.vux
+
 .DS_Store
