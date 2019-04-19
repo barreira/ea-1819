@@ -1,0 +1,3 @@
+create database db_gestorespacos; 
+create user 'gestorespacos'@'%' identified by 'gestorespacos'; 
+grant all on db_gestorespacos.* to 'gestorespacos'@'%';
