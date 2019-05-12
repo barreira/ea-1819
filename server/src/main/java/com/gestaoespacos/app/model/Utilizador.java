@@ -6,15 +6,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class User {
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public class Utilizador {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,14 +32,23 @@ public class User {
         this.id = id;
     }
 
-    public User() {
+    @OneToMany
+    @JoinColumn(name = "utilizador_id")
+    private List<Notificacao> notificacoes;
+
+    @OneToMany
+    @JoinColumn(name = "utilizador_id")
+    private List<Evento> eventosASeguir;
+
+
+    public Utilizador() {
     }
 
-    public User(String username) {
+    public Utilizador(String username) {
         this.username = username;
     }
 
-    public User(String username, String email, String password) {
+    public Utilizador(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.registrationDate = Calendar.getInstance().getTime();
@@ -59,6 +66,12 @@ public class User {
         this.password = password;
     }
 
+    public List<Evento> getEventosASeguir() { return eventosASeguir;
+    }
+
+    public void setEventosASeguir(List<Evento> eventosASeguir) {
+        this.eventosASeguir = eventosASeguir;
+    }
     public long getId() {
         return id;
     }
@@ -95,14 +108,23 @@ public class User {
         this.registrationDate = registrationDate;
     }
 
+    public List<Notificacao> getNotificacoes() {
+        return notificacoes;
+    }
+
+    public void setNotificacoes(List<Notificacao> notificacoes) {
+        this.notificacoes = notificacoes;
+    }
+
     @Override
     public String toString() {
-        return "User{" +
+        return "Utilizador{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", registrationDate=" + registrationDate +
+                ", notificacoes=" + notificacoes +
                 '}';
     }
 }

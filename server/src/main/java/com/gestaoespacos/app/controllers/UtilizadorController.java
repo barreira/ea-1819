@@ -1,16 +1,15 @@
 package com.gestaoespacos.app.controllers;
 
-import com.gestaoespacos.app.model.User;
+import com.gestaoespacos.app.model.Utilizador;
 import com.gestaoespacos.app.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UtilizadorController {
 
     @Autowired
     private UserRepository userRepository;
@@ -22,16 +21,16 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public User addUser(@RequestBody User user) {
-        return userRepository.save(user);
+    public Utilizador addUser(@RequestBody Utilizador utilizador) {
+        return userRepository.save(utilizador);
     }
 
     @PostMapping("/edit")
     public void editUser(@RequestParam long id) {
-        Optional<User> u = userRepository.findById(id);
+        Optional<Utilizador> u = userRepository.findById(id);
 
         if (u.isPresent()) {
-            User users = u.get();
+            Utilizador users = u.get();
             userRepository.save(users);
         }
     }
@@ -42,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/view/{id}")
-    public Optional<User> viewUserById(@PathVariable long id) {
+    public Optional<Utilizador> viewUserById(@PathVariable long id) {
         return userRepository.findById(id);
     }
 
