@@ -20,17 +20,14 @@ public class Evento {
 
     private String descricao;
 
-    private boolean repeteDia;
-    private boolean repeteSemana;
-    private boolean repeteMes;
-    private boolean repeteAno;
+    private int periodicidade;
 
     @OneToMany
     @JoinColumn(name = "evento_id")
     private List<Utilizador> seguidores;
 
     @OneToOne
-    private UtilizadorCPDR utilizadorResponsavel;
+    private Responsavel utilizadorResponsavel;
 
 
     // TODO: Duvida, nao podera haver varios espacos por evento?!
@@ -48,11 +45,11 @@ public class Evento {
         this.evento = evento;
     }
 
-    public UtilizadorCPDR getUtilizadorResponsavel() {
+    public Responsavel getUtilizadorResponsavel() {
         return utilizadorResponsavel;
     }
 
-    public void setUtilizadorResponsavel(UtilizadorCPDR utilizadorResponsavel) {
+    public void setUtilizadorResponsavel(Responsavel utilizadorResponsavel) {
         this.utilizadorResponsavel = utilizadorResponsavel;
     }
 
@@ -104,36 +101,12 @@ public class Evento {
         this.descricao = descricao;
     }
 
-    public boolean isRepeteDia() {
-        return repeteDia;
+    public int getPeriodicidade() {
+        return periodicidade;
     }
 
-    public void setRepeteDia(boolean repeteDia) {
-        this.repeteDia = repeteDia;
-    }
-
-    public boolean isRepeteSemana() {
-        return repeteSemana;
-    }
-
-    public void setRepeteSemana(boolean repeteSemana) {
-        this.repeteSemana = repeteSemana;
-    }
-
-    public boolean isRepeteMes() {
-        return repeteMes;
-    }
-
-    public void setRepeteMes(boolean repeteMes) {
-        this.repeteMes = repeteMes;
-    }
-
-    public boolean isRepeteAno() {
-        return repeteAno;
-    }
-
-    public void setRepeteAno(boolean repeteAno) {
-        this.repeteAno = repeteAno;
+    public void setPeriodicidade(int periodicidade) {
+        this.periodicidade = periodicidade;
     }
 
     @Override
@@ -144,10 +117,7 @@ public class Evento {
                 ", dateTimeInicial=" + dateTimeInicial +
                 ", dateTimeFinal=" + dateTimeFinal +
                 ", descricao='" + descricao + '\'' +
-                ", repeteDia=" + repeteDia +
-                ", repeteSemana=" + repeteSemana +
-                ", repeteMes=" + repeteMes +
-                ", repeteAno=" + repeteAno +
+                ", periodicidade=" + periodicidade +
                 ", seguidores=" + seguidores +
                 '}';
     }

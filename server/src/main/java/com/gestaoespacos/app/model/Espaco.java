@@ -12,9 +12,9 @@ public class Espaco {
 
     private String designacao;
 
-    @OneToMany
-    @JoinColumn(name = "espaco_id")
-    private List<Horario> horarios;
+    @OneToOne
+    //@JoinColumn(name = "espaco_id")
+    private Horario horario;
 
     public Espaco(){
 
@@ -25,12 +25,12 @@ public class Espaco {
         this.designacao = designacao;
     }
 
-    public List<Horario> getHorarios() {
-        return horarios;
+    public Horario getHorario() {
+        return horario;
     }
 
-    public void setHorarios(List<Horario> horarios) {
-        this.horarios = horarios;
+    public void setHorarios(Horario horario) {
+        this.horario = horario;
     }
 
     public long getId() {
@@ -47,6 +47,14 @@ public class Espaco {
 
     public void setDesignacao(String designacao) {
         this.designacao = designacao;
+    }
+
+    public void addEvento(long id_evt){
+
+    }
+
+    public void removeEvento(long id_evt){
+
     }
 
     @Override

@@ -1,7 +1,11 @@
 package com.gestaoespacos.app.model;
 
+import org.apache.tomcat.jni.Local;
+
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 public class Horario {
@@ -13,7 +17,7 @@ public class Horario {
 
     @OneToMany
     @JoinColumn(name = "horario_id")
-    private List<Evento> eventos;
+    private Map<LocalDate, Evento> eventos;
 
     public Horario(){
 
@@ -27,12 +31,20 @@ public class Horario {
         this.id = id;
     }
 
-    public List<Evento> getEventos() {
+    public Map<LocalDate, Evento> getEventos() {
         return eventos;
     }
 
-    public void setEventos(List<Evento> eventos) {
+    public void setEventos(Map<LocalDate, Evento> eventos) {
         this.eventos = eventos;
+    }
+
+    public void addEvento(LocalDate data, long id_evt){
+
+    }
+
+    public void removeEvento(LocalDate data, long id_evt){
+
     }
 }
 

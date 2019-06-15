@@ -12,25 +12,15 @@ import javax.persistence.*;
 
 @Entity
 //@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Utilizador {
+public class Utilizador extends Ator{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(unique = true)
-    private String username;
 
     @Column(unique = true)
     private String email;
 
-    private String password;
+    private String nome;
 
     private Date registrationDate;
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     @OneToMany
     @JoinColumn(name = "utilizador_id")
@@ -42,28 +32,17 @@ public class Utilizador {
 
 
     public Utilizador() {
+        super();
     }
 
     public Utilizador(String username) {
-        this.username = username;
+        super(username);
     }
 
     public Utilizador(String username, String email, String password) {
-        this.username = username;
+        super(username, password);
         this.email = email;
         this.registrationDate = Calendar.getInstance().getTime();
-
-        MessageDigest digest = null;
-
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-        String encoded = Base64.getEncoder().encodeToString(hash);
-        this.password = password;
     }
 
     public List<Evento> getEventosASeguir() { return eventosASeguir;
@@ -72,17 +51,7 @@ public class Utilizador {
     public void setEventosASeguir(List<Evento> eventosASeguir) {
         this.eventosASeguir = eventosASeguir;
     }
-    public long getId() {
-        return id;
-    }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getEmail() {
         return email;
@@ -92,13 +61,6 @@ public class Utilizador {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public Date getRegistrationDate() {
         return registrationDate;
@@ -119,12 +81,28 @@ public class Utilizador {
     @Override
     public String toString() {
         return "Utilizador{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
+                "id=" + this.getId() +
+                ", username='" + getUsername() + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                ", password='" + getPassword() + '\'' +
                 ", registrationDate=" + registrationDate +
                 ", notificacoes=" + notificacoes +
                 '}';
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Evento follow(long id_evt){
+        return null;
+    }
+
+    public Evento unfollow(long id_evt){
+        return null;
     }
 }

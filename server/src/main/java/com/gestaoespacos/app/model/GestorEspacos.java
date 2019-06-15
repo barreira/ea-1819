@@ -4,14 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class GestorEspacos {
-
-    @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private long id;
-
-    private String username;
-    private String password;
+public class GestorEspacos extends Ator implements Responsavel{
 
     @OneToMany
     @JoinColumn(name = "gestorespacos_id")
@@ -29,10 +22,8 @@ public class GestorEspacos {
 
     }
 
-    public GestorEspacos(long id, String username, String password, List<EspacoComum> espacosComuns, List<Evento> eventos) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
+    public GestorEspacos(String username, String password, List<EspacoComum> espacosComuns, List<Evento> eventos) {
+        super(username, password);
         this.espacosComuns = espacosComuns;
         this.eventos = eventos;
     }
@@ -43,30 +34,6 @@ public class GestorEspacos {
 
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public List<EspacoComum> getEspacosComuns() {
@@ -83,5 +50,43 @@ public class GestorEspacos {
 
     public void setEventos(List<Evento> eventos) {
         this.eventos = eventos;
+    }
+
+    @Override
+    public void cancelaEvento(long id_evt) {
+
+    }
+
+    @Override
+    public List<Evento> meusEventos() {
+        return null;
+    }
+
+    public Pedido aceitaPedido(long nr_pedido){
+        return null;
+    }
+
+    public Pedido rejeitaPedido(long nr_pedido){
+        return null;
+    }
+
+    public void novoEvento(Evento e){
+
+    }
+
+    public void updateEvento(long id_evt, Evento novo_evt){
+
+    }
+
+    public EspacoComum novoEC(String d, List<Espaco> ec){
+        return null;
+    }
+
+    public EspacoComum updateEC(long id_ec, String d, List<Espaco> ec){
+        return null;
+    }
+
+    public EspacoComum removeEC(long id_ec){
+        return null;
     }
 }

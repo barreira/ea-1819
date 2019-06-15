@@ -1,6 +1,7 @@
 package com.gestaoespacos.app.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -11,6 +12,7 @@ public class Notificacao {
     private long id;
 
     private String justificacao;
+    private LocalDateTime momento;
 
     @OneToMany
     @JoinColumn(name = "notificacao_id")
@@ -48,12 +50,21 @@ public class Notificacao {
         this.justificacao = justificacao;
     }
 
+    public LocalDateTime getMomento() {
+        return momento;
+    }
+
+    public void setMomento(LocalDateTime momento) {
+        this.momento = momento;
+    }
+
     @Override
     public String toString() {
         return "Notificacao{" +
                 "id=" + id +
                 ", justificacao='" + justificacao + '\'' +
                 ", eventos=" + eventos +
+                ", moment=" + momento +
                 '}';
     }
 }
