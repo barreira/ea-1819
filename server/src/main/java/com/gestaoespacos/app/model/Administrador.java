@@ -12,17 +12,16 @@ public class Administrador extends Ator {
         super();
     }
 
-    /*public void carregarAtores(File f){
-        ...
+    public void carregarAtores(String filename){
+        //TODO
     }
 
-    public void carregarEspacos(File f){
-
+    public void carregarEspacos(String filename){
+        //TODO
     }
 
-    public void carregarHorarios(File f){
-
+    public void carregarHorarios(String filename){
+        //TODO
     }
 
-     */
 }

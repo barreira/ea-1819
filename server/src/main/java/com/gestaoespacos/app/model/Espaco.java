@@ -1,5 +1,7 @@
 package com.gestaoespacos.app.model;
 
+import com.gestaoespacos.app.repositories.EventoRepository;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -50,11 +52,19 @@ public class Espaco {
     }
 
     public void addEvento(long id_evt){
+        //Evento e;// = EventoRepository.getOne(id_evt);
 
+        horario.addEvento(id_evt);
+
+        //save?
     }
 
     public void removeEvento(long id_evt){
+       // Evento e;// = EventoRepository.getOne(id_evt);
 
+        horario.removeEvento(id_evt);
+
+        //save?
     }
 
     @Override

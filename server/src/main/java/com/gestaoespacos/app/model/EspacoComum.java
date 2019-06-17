@@ -25,6 +25,11 @@ public class EspacoComum {
         this.descricao = descricao;
     }
 
+    public EspacoComum(String descricao, List<Espaco> es) {
+        this.descricao = descricao;
+        this.espacos = es;
+    }
+
     public List<Espaco> getEspacos() {
         return espacos;
     }

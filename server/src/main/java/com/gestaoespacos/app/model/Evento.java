@@ -4,6 +4,7 @@ package com.gestaoespacos.app.model;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Evento {
@@ -32,17 +33,10 @@ public class Evento {
 
     // TODO: Duvida, nao podera haver varios espacos por evento?!
     @OneToOne
-    private Evento evento;
+    //private Evento evento;
+    private Espaco espaco;
 
     public Evento() {
-    }
-
-    public Evento getEvento() {
-        return evento;
-    }
-
-    public void setEvento(Evento evento) {
-        this.evento = evento;
     }
 
     public Responsavel getUtilizadorResponsavel() {
@@ -109,6 +103,14 @@ public class Evento {
         this.periodicidade = periodicidade;
     }
 
+    public Espaco getEspaco() {
+        return espaco;
+    }
+
+    public void setEspaco(Espaco espaco) {
+        this.espaco = espaco;
+    }
+
     @Override
     public String toString() {
         return "Evento{" +
@@ -120,5 +122,26 @@ public class Evento {
                 ", periodicidade=" + periodicidade +
                 ", seguidores=" + seguidores +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Evento evento1 = (Evento) o;
+        return getId() == evento1.getId() &&
+                getPeriodicidade() == evento1.getPeriodicidade() &&
+                getNome().equals(evento1.getNome()) &&
+                getDateTimeInicial().equals(evento1.getDateTimeInicial()) &&
+                getDateTimeFinal().equals(evento1.getDateTimeFinal()) &&
+                getDescricao().equals(evento1.getDescricao()) &&
+                getSeguidores().equals(evento1.getSeguidores()) &&
+                getUtilizadorResponsavel().equals(evento1.getUtilizadorResponsavel()) &&
+                getEspaco().equals(evento1.getEspaco());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getNome(), getDateTimeInicial(), getDateTimeFinal(), getDescricao(), getPeriodicidade(), getSeguidores(), getUtilizadorResponsavel(), getEspaco());
     }
 }

@@ -2,6 +2,7 @@ package com.gestaoespacos.app.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class GestorEspacos extends Ator implements Responsavel{
@@ -44,49 +45,68 @@ public class GestorEspacos extends Ator implements Responsavel{
         this.espacosComuns = espacosComuns;
     }
 
-    public List<Evento> getEventos() {
-        return eventos;
-    }
-
     public void setEventos(List<Evento> eventos) {
         this.eventos = eventos;
     }
 
     @Override
-    public void cancelaEvento(long id_evt) {
-
+    public void cancelaEvento(Evento e) {
+        eventos.remove(e);
     }
 
     @Override
     public List<Evento> meusEventos() {
-        return null;
+        return eventos.stream()
+                      .filter(e -> e.getUtilizadorResponsavel().equals(this))
+                      .collect(Collectors.toList());
     }
 
-    public Pedido aceitaPedido(long nr_pedido){
-        return null;
+    public Pedido aceitaPedido(Pedido p){
+        pedidos.remove(p);
+
+        p.setAceite(true);
+        p.setAtendido(true);
+
+        return p;
     }
 
-    public Pedido rejeitaPedido(long nr_pedido){
-        return null;
+    public Pedido rejeitaPedido(Pedido p){
+        pedidos.remove(p);
+
+        p.setAceite(false);
+        p.setAtendido(true);
+
+        return p;
     }
 
     public void novoEvento(Evento e){
-
+        eventos.add(e);
     }
 
-    public void updateEvento(long id_evt, Evento novo_evt){
-
+    public void updateEvento(Evento antigo, Evento novo_evt){
+        eventos.remove(antigo);
+        eventos.add(novo_evt);
     }
 
     public EspacoComum novoEC(String d, List<Espaco> ec){
-        return null;
+        EspacoComum e = new EspacoComum(d, ec);
+        espacosComuns.add(e);
+        return e;
     }
 
-    public EspacoComum updateEC(long id_ec, String d, List<Espaco> ec){
-        return null;
+    public EspacoComum updateEC(EspacoComum e, String d, List<Espaco> ec){
+        e.setDescricao(d);
+        e.setEspacos(ec);
+
+        //e é uma referencia certo?
+        //nao é preciso "remover" o espaco da lista 'eventos'
+        //e "adicionar", pq o hibernate trata de sincronizar 'eventos' com o estado da BD certo?
+
+        return e;
     }
 
-    public EspacoComum removeEC(long id_ec){
-        return null;
+    public EspacoComum removeEC(EspacoComum ec){
+        espacosComuns.remove(ec);
+        return ec;
     }
 }

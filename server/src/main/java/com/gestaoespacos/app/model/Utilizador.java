@@ -3,10 +3,7 @@ package com.gestaoespacos.app.model;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.*;
 
@@ -28,7 +25,7 @@ public class Utilizador extends Ator{
 
     @OneToMany
     @JoinColumn(name = "utilizador_id")
-    private List<Evento> eventosASeguir;
+    private Set<Evento> eventosASeguir;
 
 
     public Utilizador() {
@@ -45,10 +42,10 @@ public class Utilizador extends Ator{
         this.registrationDate = Calendar.getInstance().getTime();
     }
 
-    public List<Evento> getEventosASeguir() { return eventosASeguir;
+    public Set<Evento> getEventosASeguir() { return eventosASeguir;
     }
 
-    public void setEventosASeguir(List<Evento> eventosASeguir) {
+    public void setEventosASeguir(Set<Evento> eventosASeguir) {
         this.eventosASeguir = eventosASeguir;
     }
 
@@ -98,11 +95,15 @@ public class Utilizador extends Ator{
         this.nome = nome;
     }
 
-    public Evento follow(long id_evt){
-        return null;
+    public Evento follow(Evento e){
+        eventosASeguir.add(e);
+
+        return e;
     }
 
-    public Evento unfollow(long id_evt){
-        return null;
+    public Evento unfollow(Evento e){
+        eventosASeguir.remove(e);
+
+        return e;
     }
 }

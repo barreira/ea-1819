@@ -1,5 +1,6 @@
 package com.gestaoespacos.app.model;
 
+import com.gestaoespacos.app.repositories.EventoRepository;
 import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
@@ -39,12 +40,18 @@ public class Horario {
         this.eventos = eventos;
     }
 
-    public void addEvento(LocalDate data, long id_evt){
+    public void addEvento(long id_evt){
+        Evento e = null;// = EventoRepository.getOne(id_evt);
 
+        eventos.put(e.getDateTimeFinal().toLocalDate(), e);
+
+        //save?
     }
 
-    public void removeEvento(LocalDate data, long id_evt){
+    public void removeEvento(long id_evt){
+        Evento e = null;// = EventoRepository.getOne(id_evt);
 
+        eventos.remove(e.getDateTimeFinal().toLocalDate());
     }
 }
 
