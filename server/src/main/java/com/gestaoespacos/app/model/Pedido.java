@@ -8,6 +8,7 @@ import javax.persistence.*;
         name="tipoPedido",
         discriminatorType = DiscriminatorType.CHAR
 )
+@DiscriminatorValue("P")
 public abstract class Pedido {
 
     @Id

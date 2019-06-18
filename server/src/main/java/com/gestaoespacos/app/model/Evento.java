@@ -28,7 +28,8 @@ public class Evento {
     private List<Utilizador> seguidores;
 
     @OneToOne
-    private Responsavel utilizadorResponsavel;
+    //private Responsavel utilizadorResponsavel;
+    private Ator utilizadorResponsavel;
 
 
     // TODO: Duvida, nao podera haver varios espacos por evento?!
@@ -39,11 +40,18 @@ public class Evento {
     public Evento() {
     }
 
-    public Responsavel getUtilizadorResponsavel() {
+    /*public Responsavel getUtilizadorResponsavel() {
         return utilizadorResponsavel;
     }
 
     public void setUtilizadorResponsavel(Responsavel utilizadorResponsavel) {
+        this.utilizadorResponsavel = utilizadorResponsavel;
+    }*/
+    public Ator getUtilizadorResponsavel() {
+        return utilizadorResponsavel;
+    }
+
+    public void setUtilizadorResponsavel(Ator utilizadorResponsavel) {
         this.utilizadorResponsavel = utilizadorResponsavel;
     }
 

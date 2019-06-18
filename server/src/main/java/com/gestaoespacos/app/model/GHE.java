@@ -2,6 +2,7 @@ package com.gestaoespacos.app.model;
 
 import com.gestaoespacos.app.beans.*;
 import com.gestaoespacos.app.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -23,9 +24,11 @@ public class GHE {
 
     private static ApplicationContext ctx = new AnnotationConfigApplicationContext(BeansConfig.class);
     private static VisitanteBean vb = ctx.getBean(VisitanteBean.class);
-    private static UtilizadorBean ub = ctx.getBean(UtilizadorBean.class);
+    //private static UtilizadorBean ub = ctx.getBean(UtilizadorBean.class);
     private static ResponsavelBean rb = ctx.getBean(ResponsavelBean.class);
 
+    @Autowired
+    private static UtilizadorBean ub;
 
     public static Evento consultarEvento(String nome) throws EventoDoesNotExistException{
         return vb.consultarEvento(nome);

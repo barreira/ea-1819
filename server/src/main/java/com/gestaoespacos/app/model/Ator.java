@@ -11,7 +11,8 @@ import java.util.Base64;
 public abstract class Ator {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    //@GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
 
     @Column(unique = true)

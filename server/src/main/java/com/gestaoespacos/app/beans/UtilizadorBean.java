@@ -7,10 +7,13 @@ import com.gestaoespacos.app.model.Utilizador;
 import com.gestaoespacos.app.repositories.AtorRepository;
 import com.gestaoespacos.app.repositories.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 
 import java.util.List;
 import java.util.Set;
 
+@Scope(value=ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class UtilizadorBean {
 
     @Autowired
