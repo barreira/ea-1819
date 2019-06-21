@@ -4,16 +4,31 @@ import com.gestaoespacos.app.model.*;
 import com.gestaoespacos.app.repositories.EspacoRepository;
 import com.gestaoespacos.app.repositories.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@Scope(value= ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class VisitanteBean {
 
-    @Autowired
     private EventoRepository er;
-    @Autowired
     private EspacoRepository sr;
 
+    @Autowired
+    public VisitanteBean(EspacoRepository sr, EventoRepository er){
+        this.sr = sr;
+        this.er = er;
+    }
+
+    /**
+     * Obter um evento com o nome fornecido, a existir
+     * @param nome
+     * @return
+     * @throws EventoDoesNotExistException
+     */
     public Evento consultarEvento(String nome) throws EventoDoesNotExistException {
         List<Evento> es = er.findByNome(nome);
 
@@ -23,6 +38,12 @@ public class VisitanteBean {
         else throw new EventoDoesNotExistException();
     }
 
+    /**
+     * Obter o horário associado ao espaco com determinada designação, a existir.
+     * @param designacaoEspaco
+     * @return
+     * @throws EspacoDoesNotExistException
+     */
     public Horario consultarHorario(String designacaoEspaco) throws EspacoDoesNotExistException {
         List<Espaco> es = sr.findByDesignacao(designacaoEspaco);
 

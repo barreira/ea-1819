@@ -4,6 +4,7 @@ import com.gestaoespacos.app.repositories.EventoRepository;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Espaco {
@@ -51,20 +52,12 @@ public class Espaco {
         this.designacao = designacao;
     }
 
-    public void addEvento(long id_evt){
-        //Evento e;// = EventoRepository.getOne(id_evt);
-
-        horario.addEvento(id_evt);
-
-        //save?
+    public void addEvento(Evento e){
+        horario.addEvento(e);
     }
 
-    public void removeEvento(long id_evt){
-       // Evento e;// = EventoRepository.getOne(id_evt);
-
-        horario.removeEvento(id_evt);
-
-        //save?
+    public void removeEvento(Evento e){
+       horario.removeEvento(e);
     }
 
     @Override
@@ -73,5 +66,20 @@ public class Espaco {
                 "id=" + id +
                 ", designacao='" + designacao + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Espaco espaco = (Espaco) o;
+        return getId() == espaco.getId() &&
+                Objects.equals(getDesignacao(), espaco.getDesignacao()) &&
+                Objects.equals(getHorario(), espaco.getHorario());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getDesignacao(), getHorario());
     }
 }

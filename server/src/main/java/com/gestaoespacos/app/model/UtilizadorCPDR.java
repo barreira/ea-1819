@@ -10,11 +10,12 @@ import java.util.stream.Collectors;
 @Entity
 public class UtilizadorCPDR extends Utilizador implements Responsavel{
 
-    @OneToMany
-    @JoinColumn(name = "utilizadorCPDR_id")
+    @OneToMany(mappedBy = "utilizadorResponsavel")
+    //@JoinColumn(name = "utilizadorCPDR_id")
     private List<Evento> eventos;
+    //Eventos pelos quais o utilizador é responsavel
 
-    @OneToMany
+    @OneToMany //todo:
     @JoinColumn(name = "utilizadorCPDR_id")
     private Set<Pedido> pedidos;
 

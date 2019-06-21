@@ -3,6 +3,7 @@ package com.gestaoespacos.app.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,26 +19,39 @@ public class Evento {
 
     private LocalDateTime dateTimeInicial;
     private LocalDateTime dateTimeFinal;
+    private LocalDateTime limite;
 
     private String descricao;
 
     private int periodicidade;
 
-    @OneToMany
-    @JoinColumn(name = "evento_id")
+    @ManyToMany(mappedBy = "eventosASeguir", fetch = FetchType.EAGER)
+    //@JoinColumn(name = "evento_id")
     private List<Utilizador> seguidores;
 
     @OneToOne
     //private Responsavel utilizadorResponsavel;
+    //Solução provisória. Responsavel é uma Interface, pelo que não pode ser persistida
+    //é necessário garantir que este Ator é instância de GestorEspacos ou UtilizadorCPDR
     private Ator utilizadorResponsavel;
 
 
     // TODO: Duvida, nao podera haver varios espacos por evento?!
     @OneToOne
-    //private Evento evento;
     private Espaco espaco;
 
     public Evento() {
+    }
+
+    public Evento(String nome, String desc, LocalDateTime inicio, LocalDateTime fim, int p, LocalDateTime limite){
+        this.nome = nome;
+        this.descricao = desc;
+        this.dateTimeInicial = inicio;
+        this.dateTimeFinal = fim;
+        this.periodicidade = p;
+        this.limite = limite;
+        this.seguidores = new ArrayList<>();
+        this.espaco = null;
     }
 
     /*public Responsavel getUtilizadorResponsavel() {
@@ -111,6 +125,14 @@ public class Evento {
         this.periodicidade = periodicidade;
     }
 
+    public LocalDateTime getLimite() {
+        return limite;
+    }
+
+    public void setLimite(LocalDateTime limite) {
+        this.limite = limite;
+    }
+
     public Espaco getEspaco() {
         return espaco;
     }
@@ -120,36 +142,40 @@ public class Evento {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Evento evento = (Evento) o;
+        return getId() == evento.getId() &&
+                getPeriodicidade() == evento.getPeriodicidade() &&
+                Objects.equals(getNome(), evento.getNome()) &&
+                Objects.equals(getDateTimeInicial(), evento.getDateTimeInicial()) &&
+                Objects.equals(getDateTimeFinal(), evento.getDateTimeFinal()) &&
+                Objects.equals(getLimite(), evento.getLimite()) &&
+                Objects.equals(getDescricao(), evento.getDescricao()) &&
+                Objects.equals(getSeguidores(), evento.getSeguidores()) &&
+                Objects.equals(getUtilizadorResponsavel(), evento.getUtilizadorResponsavel()) &&
+                Objects.equals(getEspaco(), evento.getEspaco());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getNome(), getDateTimeInicial(), getDateTimeFinal(), getLimite(), getDescricao(), getPeriodicidade(), getSeguidores(), getUtilizadorResponsavel(), getEspaco());
+    }
+
+    @Override
     public String toString() {
         return "Evento{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", dateTimeInicial=" + dateTimeInicial +
                 ", dateTimeFinal=" + dateTimeFinal +
+                ", limite=" + limite +
                 ", descricao='" + descricao + '\'' +
                 ", periodicidade=" + periodicidade +
                 ", seguidores=" + seguidores +
+                ", utilizadorResponsavel=" + utilizadorResponsavel +
+                ", espaco=" + espaco +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Evento evento1 = (Evento) o;
-        return getId() == evento1.getId() &&
-                getPeriodicidade() == evento1.getPeriodicidade() &&
-                getNome().equals(evento1.getNome()) &&
-                getDateTimeInicial().equals(evento1.getDateTimeInicial()) &&
-                getDateTimeFinal().equals(evento1.getDateTimeFinal()) &&
-                getDescricao().equals(evento1.getDescricao()) &&
-                getSeguidores().equals(evento1.getSeguidores()) &&
-                getUtilizadorResponsavel().equals(evento1.getUtilizadorResponsavel()) &&
-                getEspaco().equals(evento1.getEspaco());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getNome(), getDateTimeInicial(), getDateTimeFinal(), getDescricao(), getPeriodicidade(), getSeguidores(), getUtilizadorResponsavel(), getEspaco());
     }
 }

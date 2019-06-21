@@ -14,25 +14,27 @@ public class Notificacao {
     private String justificacao;
     private LocalDateTime momento;
 
-    @OneToMany
-    @JoinColumn(name = "notificacao_id")
-    private List<Evento> eventos;
+    //@OneToOne
+    //@JoinColumn(name = "notificacao_id")
+    //private Evento evento;
 
     public Notificacao() {
     }
 
-    public Notificacao(long id, String justificacao) {
-        this.id = id;
+    public Notificacao(String justificacao) {
+        //this.id = id;
         this.justificacao = justificacao;
+        this.momento = LocalDateTime.now();
+        //this.evento = e;
     }
 
-    public List<Evento> getEventos() {
-        return eventos;
-    }
+    /*public Evento getEvento() {
+        return evento;
+    }*/
 
-    public void setEventos(List<Evento> eventos) {
-        this.eventos = eventos;
-    }
+    /*public void setEvento(Evento evento) {
+        this.evento = evento;
+    }*/
 
     public long getId() {
         return id;
@@ -63,7 +65,7 @@ public class Notificacao {
         return "Notificacao{" +
                 "id=" + id +
                 ", justificacao='" + justificacao + '\'' +
-                ", eventos=" + eventos +
+               // ", evento(nome)=" + evento.getNome() +
                 ", moment=" + momento +
                 '}';
     }

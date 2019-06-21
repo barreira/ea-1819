@@ -19,12 +19,12 @@ public class Utilizador extends Ator{
 
     private Date registrationDate;
 
-    @OneToMany
-    @JoinColumn(name = "utilizador_id")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //@JoinColumn(name = "utilizador_id")
     private List<Notificacao> notificacoes;
 
-    @OneToMany
-    @JoinColumn(name = "utilizador_id")
+    @ManyToMany
+    //@JoinColumn(name = "utilizador_id")
     private Set<Evento> eventosASeguir;
 
 
@@ -97,13 +97,15 @@ public class Utilizador extends Ator{
 
     public Evento follow(Evento e){
         eventosASeguir.add(e);
-
         return e;
     }
 
     public Evento unfollow(Evento e){
         eventosASeguir.remove(e);
-
         return e;
+    }
+
+    public void addNotificacao(Notificacao n){
+        notificacoes.add(n);
     }
 }

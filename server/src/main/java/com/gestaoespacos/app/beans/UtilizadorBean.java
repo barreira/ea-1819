@@ -1,28 +1,39 @@
 package com.gestaoespacos.app.beans;
 
-import com.gestaoespacos.app.model.Evento;
-import com.gestaoespacos.app.model.IdNotFoundException;
-import com.gestaoespacos.app.model.Notificacao;
-import com.gestaoespacos.app.model.Utilizador;
-import com.gestaoespacos.app.repositories.AtorRepository;
+import com.gestaoespacos.app.model.*;
+import com.gestaoespacos.app.repositories.UserRepository;
 import com.gestaoespacos.app.repositories.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
+@Service
 @Scope(value=ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class UtilizadorBean {
 
-    @Autowired
-    private AtorRepository ar;
-    @Autowired
+    private UserRepository ur;
     private EventoRepository er;
 
+    @Autowired
+    public UtilizadorBean(UserRepository ur, EventoRepository er){
+        this.ur = ur;
+        this.er = er;
+    }
+
+    /**
+     * Utilizador passa a seguir o evento
+     * @param id_user
+     * @param id_evt
+     * @return
+     * @throws IdNotFoundException
+     */
     public Evento follow(long id_user, long id_evt) throws IdNotFoundException {
-        Utilizador u = (Utilizador)ar.getOne(id_user);
+        Utilizador u = ur.getOne(id_user);
 
         if(u == null)
             throw new IdNotFoundException("Utilizador with id="+id_user+" not found.");
@@ -34,14 +45,20 @@ public class UtilizadorBean {
 
         u.follow(e);
 
-        er.save(e); //?
-        ar.save(u);
+        ur.save(u);
 
         return e;
     }
 
+    /**
+     * Utilizador deixa de seguir o evento, se o estava a seguir previamente
+     * @param id_user
+     * @param id_evt
+     * @return
+     * @throws IdNotFoundException
+     */
     public Evento unfollow(long id_user, long id_evt) throws IdNotFoundException{
-        Utilizador u = (Utilizador)ar.getOne(id_user);
+        Utilizador u = ur.getOne(id_user);
 
         if(u == null)
             throw new IdNotFoundException("Utilizador with id="+id_user+" not found.");
@@ -53,14 +70,19 @@ public class UtilizadorBean {
 
         u.unfollow(e);
 
-        er.save(e); //?
-        ar.save(u);
+        ur.save(u);
 
         return e;
     }
 
+    /**
+     * Obter as notificações recebidas pelo utilizador
+     * @param id_user
+     * @return
+     * @throws IdNotFoundException
+     */
     public List<Notificacao> getNotificacoes(long id_user) throws IdNotFoundException{
-        Utilizador u = (Utilizador)ar.getOne(id_user);//ur.getOne(id_user);
+        Utilizador u = ur.getOne(id_user);
 
         if(u == null)
             throw new IdNotFoundException("Utilizador with id="+id_user+" not found.");
@@ -68,16 +90,27 @@ public class UtilizadorBean {
         return u.getNotificacoes();
     }
 
+    /**
+     * Determina o conjunto de eventos que o utilizador especificado segue
+     * @param id_user
+     * @return
+     * @throws IdNotFoundException
+     */
     public Set<Evento> getFollowing(long id_user) throws IdNotFoundException{
-        Utilizador u = (Utilizador)ar.getOne(id_user);//ur.getOne(id_user);
+        Optional<Utilizador> u = ur.findById(id_user);
 
-        if(u == null)
+        if(!u.isPresent())
             throw new IdNotFoundException("Utilizador with id="+id_user+" not found.");
 
-        return u.getEventosASeguir();
+        return u.get().getEventosASeguir();
     }
 
+    /**
+     * Regista utilizador no sistema
+     * @param u
+     */
     public void registarUtilizador(Utilizador u) {
-        ar.save(u);
+        ur.save(u);
     }
+
 }

@@ -1,18 +1,21 @@
 package com.gestaoespacos.app.model;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
 public class GestorEspacos extends Ator implements Responsavel{
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "gestorespacos_id")
-    private List<EspacoComum> espacosComuns;
+    private Set<EspacoComum> espacosComuns;
 
-    @OneToMany
-    @JoinColumn(name = "gestorespacos_id")
+    @OneToMany(mappedBy = "utilizadorResponsavel", fetch = FetchType.EAGER)
+    //@JoinColumn(name = "gestorespacos_id")
+    //Eventos pelos quais o gestor é responsável
     private List<Evento> eventos;
 
     @OneToMany
@@ -23,7 +26,7 @@ public class GestorEspacos extends Ator implements Responsavel{
 
     }
 
-    public GestorEspacos(String username, String password, List<EspacoComum> espacosComuns, List<Evento> eventos) {
+    public GestorEspacos(String username, String password, Set<EspacoComum> espacosComuns, List<Evento> eventos) {
         super(username, password);
         this.espacosComuns = espacosComuns;
         this.eventos = eventos;
@@ -37,11 +40,11 @@ public class GestorEspacos extends Ator implements Responsavel{
         this.pedidos = pedidos;
     }
 
-    public List<EspacoComum> getEspacosComuns() {
+    public Set<EspacoComum> getEspacosComuns() {
         return espacosComuns;
     }
 
-    public void setEspacosComuns(List<EspacoComum> espacosComuns) {
+    public void setEspacosComuns(Set<EspacoComum> espacosComuns) {
         this.espacosComuns = espacosComuns;
     }
 
@@ -56,36 +59,26 @@ public class GestorEspacos extends Ator implements Responsavel{
 
     @Override
     public List<Evento> meusEventos() {
-        return eventos.stream()
-                      .filter(e -> e.getUtilizadorResponsavel().equals(this))
-                      .collect(Collectors.toList());
-    }
-
-    public Pedido aceitaPedido(Pedido p){
-        pedidos.remove(p);
-
-        p.setAceite(true);
-        p.setAtendido(true);
-
-        return p;
+        return eventos;
     }
 
     public Pedido rejeitaPedido(Pedido p){
-        pedidos.remove(p);
-
         p.setAceite(false);
         p.setAtendido(true);
 
         return p;
     }
 
-    public void novoEvento(Evento e){
-        eventos.add(e);
-    }
-
     public void updateEvento(Evento antigo, Evento novo_evt){
-        eventos.remove(antigo);
-        eventos.add(novo_evt);
+        antigo.setNome(novo_evt.getNome());
+        antigo.setDateTimeInicial(novo_evt.getDateTimeInicial());
+        antigo.setDateTimeFinal(novo_evt.getDateTimeFinal());
+        antigo.setDescricao(novo_evt.getDescricao());
+        antigo.setEspaco(novo_evt.getEspaco());
+        antigo.setPeriodicidade(novo_evt.getPeriodicidade());
+        antigo.setLimite(novo_evt.getLimite());
+        antigo.setSeguidores(novo_evt.getSeguidores());
+        antigo.setUtilizadorResponsavel(novo_evt.getUtilizadorResponsavel());
     }
 
     public EspacoComum novoEC(String d, List<Espaco> ec){
@@ -97,11 +90,6 @@ public class GestorEspacos extends Ator implements Responsavel{
     public EspacoComum updateEC(EspacoComum e, String d, List<Espaco> ec){
         e.setDescricao(d);
         e.setEspacos(ec);
-
-        //e é uma referencia certo?
-        //nao é preciso "remover" o espaco da lista 'eventos'
-        //e "adicionar", pq o hibernate trata de sincronizar 'eventos' com o estado da BD certo?
-
         return e;
     }
 
@@ -109,4 +97,5 @@ public class GestorEspacos extends Ator implements Responsavel{
         espacosComuns.remove(ec);
         return ec;
     }
+
 }
