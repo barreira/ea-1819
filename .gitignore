@@ -1,6 +1,7 @@
 *.bak_*
 *.vux
 *.vpp.lck
+.idea/
 
 .DS_Store
 
