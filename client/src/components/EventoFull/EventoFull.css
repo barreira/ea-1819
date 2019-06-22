@@ -1,0 +1,18 @@
+.card-header {
+    background-color: white;
+}
+
+.aDecorrerLocation,
+.aDecorrerStartEnd,
+.aDecorrerResponsible,
+.aDecorrerDescription {
+    display: inline-block;
+    margin: 5px;
+}
+
+.aDecorrerButton {
+    height: 40px;
+    text-decoration: none;
+    font-weight: bold;
+    color: inherit;
+}

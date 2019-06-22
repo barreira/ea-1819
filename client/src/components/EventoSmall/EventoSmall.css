@@ -1,0 +1,11 @@
+.MaisTardeTitle {
+    display: inline-block;
+    font-weight: bold;
+    margin: 5px;
+}
+
+.MaisTardeStart {
+    display: inline-block;
+    float: right;
+    margin: 5px;
+}
