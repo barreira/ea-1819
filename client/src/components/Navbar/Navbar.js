@@ -1,34 +1,60 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+
 import './Navbar.css'
 
-const Navbar = () => {
-    return (
-        <nav className="navbar navbar-expand-md bg-faded">
-            <div className="container">
-                <a className="navbar-brand" href="#">GestaoEspaços</a>
-                <div className="collapse navbar-collapse " id="navbarText">
-                    <ul className="navbar-nav ml-auto">
-                        <li className="nav-item active">
-                            <Link to="/">
-                                <span className="nav-link" href="#">Menu 1</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item active">
-                            <Link to="/">
-                                <span className="nav-link" href="#">Menu 2</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/">
-                                <span className="nav-link" href="#">Menu 3</span>
-                            </Link>
-                        </li>
-                    </ul>
+class Navbar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { time: Date.now() }
+    }
+
+    componentDidMount() {
+        this.interval = setInterval(() => this.setState({ time: Date.now() }), 5000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+    render() {
+        return (
+            <nav className="navbar navbar-expand-md bg-faded">
+                <div className="container">
+                    <a className="navbar-brand" href="#">GestaoEspaços</a>
+                    <div className="collapse navbar-collapse " id="navbarText">
+                        <ul className="navbar-nav ml-auto">
+                            <li className="nav-item">
+                                <div id="current-time">
+                                    <span className="nav-link">
+                                        {/* <i className="material-icons individual-icon" >
+                                            access_time
+                                    </i> */}
+                                        {moment().format('DD-MM, HH:mm')}
+                                    </span>
+                                </div>
+                            </li>
+                            <li className="nav-item active">
+                                <Link to="/">
+                                    <span className="nav-link" href="#">Menu 1</span>
+                                </Link>
+                            </li>
+                            <li className="nav-item active">
+                                <Link to="/">
+                                    <span className="nav-link" href="#">Menu 2</span>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/">
+                                    <span className="nav-link" href="#">Menu 3</span>
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    )
+            </nav>);
+    }
 }
 
 export default Navbar;
