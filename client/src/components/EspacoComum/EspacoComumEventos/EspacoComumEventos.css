@@ -1,0 +1,21 @@
+.ec-event {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.ec-event p {
+    display: inline !important;
+}
+
+.ec-table p {
+    margin: 0;
+}
+
+.ec-table tr {
+    border: 2px solid #222;
+}
+
+i {
+    float: left;
+    margin-right: 5px;
+}

@@ -3,7 +3,7 @@ import WeeklyCalendar from '../WeeklyCalendar/WeeklyCalendar';
 
 import moment from 'moment';
 
-class EcraEspaco extends Component {
+class Espaco extends Component {
     constructor(props) {
         super(props);
         this.state = { events: [] }
@@ -53,4 +53,4 @@ class EcraEspaco extends Component {
     }
 }
 
-export default EcraEspaco;
+export default Espaco;

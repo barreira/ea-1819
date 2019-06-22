@@ -1,11 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
+import './style/calendar.css'
 
 // Components
 import Home from './components/Home/Home';
 import Navbar from './components/Navbar/Navbar';
-import EcraEspaco from './components/EcraEspaco/EcraEspaco';
+import Espaco from './components/Espaco/Espaco';
+import EspacoComum from './components/EspacoComum/EspacoComum';
 
 function App() {
   return (
@@ -14,7 +16,8 @@ function App() {
         <Navbar />
         <div className="container mt-4">
           <Switch>
-            <Route exact path="/" component={EcraEspaco} />
+            <Route exact path="/" component={Espaco} />
+            <Route exact path="/espaco-comum" component={EspacoComum} />
             <Route component={Home} />
           </Switch>
         </div>
