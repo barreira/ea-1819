@@ -18,9 +18,9 @@ public class GestorEspacos extends Ator implements Responsavel{
     //Eventos pelos quais o gestor é responsável
     private List<Evento> eventos;
 
-    @OneToMany
+    /*@OneToMany
     @JoinColumn(name = "gestorespacos_id")
-    private List<Pedido> pedidos;
+    private List<Pedido> pedidos;*/
 
     public GestorEspacos(){
 
@@ -32,13 +32,13 @@ public class GestorEspacos extends Ator implements Responsavel{
         this.eventos = eventos;
     }
 
-    public List<Pedido> getPedidos() {
+    /*public List<Pedido> getPedidos() {
         return pedidos;
     }
 
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
-    }
+    }*/
 
     public Set<EspacoComum> getEspacosComuns() {
         return espacosComuns;

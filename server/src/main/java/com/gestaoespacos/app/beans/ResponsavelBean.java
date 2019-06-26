@@ -241,6 +241,17 @@ public class ResponsavelBean {
         return r.meusEventos();
     }
 
+    /**
+     * Determina os pedidos pendentes/atendidos efetuados por este utilizador c/ privilegios.
+     * @param id_usercpdr
+     * @param atendido
+     * @return
+     */
+    public List<Pedido> getPedidosByAtendimento(long id_usercpdr, boolean atendido){
+        return pr.findAllByAtendido(id_usercpdr, atendido);
+    }
+
+
     /**----------------------------------------------------------------------------------------------------------------------------------------------
      * Métodos auxiliares
      * ----------------------------------------------------------------------------------------------------------------------------------------------
