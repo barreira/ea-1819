@@ -6,7 +6,7 @@ import './EspacoComumEventos.css';
 class EspacoComumEventos extends Component {
     constructor(props) {
         super(props);
-        this.state = { events: [], ongoing: [], later: [], tomorrow: [] }
+        this.state = { events: [], ongoing: [], later: [], tomorrow: [], loading: true }
     }
 
     componentDidMount() {
@@ -21,22 +21,29 @@ class EspacoComumEventos extends Component {
             },
             {
                 title: 'Arquiteturas Aplicacionais',
-                start: moment().subtract(5, 'days').valueOf(),
-                end: moment().subtract(5, 'days').add('5', 'h').valueOf(),
+                start: moment().add(3, 'hours').valueOf(),
+                end: moment().add(5, 'hours').valueOf(),
                 local: 'DI-01',
                 responsavel: 'Maria Carolina'
             },
             {
                 title: 'Engenharia Web',
-                start: moment().subtract(2, 'days').valueOf(),
-                end: moment().subtract(2, 'days').add('1', 'h').valueOf(),
+                start: moment().add(1, 'days').valueOf(),
+                end: moment().add(1, 'days').add('1', 'h').valueOf(),
                 local: 'DI-01',
                 responsavel: 'João Carlos'
             },
             {
                 title: 'Programação Avançada',
-                start: moment().subtract(3, 'days').subtract('5', 'h').valueOf(),
-                end: moment().subtract(3, 'days').subtract('3', 'h').valueOf(),
+                start: moment().add(1, 'days').subtract('5', 'h').valueOf(),
+                end: moment().add(1, 'days').subtract('3', 'h').valueOf(),
+                local: 'DI-01',
+                responsavel: 'João Carlos'
+            },
+            {
+                title: 'Programação Avançada',
+                start: moment().valueOf(),
+                end: moment().add(5, 'h').valueOf(),
                 local: 'DI-01',
                 responsavel: 'João Carlos'
             },
@@ -53,27 +60,66 @@ class EspacoComumEventos extends Component {
                 end: moment().add(3, 'h').valueOf(),
                 local: 'DI-02',
                 responsavel: 'Luis Miguel'
+            },
+            {
+                title: 'Programação Avançada III',
+                start: moment().add(2, 'h').valueOf(),
+                end: moment().add(3, 'h').valueOf(),
+                local: 'DI-02',
+                responsavel: 'Luis Miguel'
             }
         ];
 
-
-        this.setState({ events })
+        this.organizeEventsByTime(events)
     }
 
     organizeEventsByTime = (events) => {
+        let ongoing = [];
+        let later = [];
+        let tomorrow = [];
+
+        const current = moment().format('DD-MM-YYYY hh:mm:ss');
+
+        events.forEach(event => {
+
+            const start = moment(event.start).format('DD-MM-YYYY hh:mm:ss');
+            const end = moment(event.end).format('DD-MM-YYYY hh:mm:ss');
+
+            if (current > end) {
+                return
+            }
+
+            const mStart = moment(start, 'DD-MM-YYYY')
+            const mCurr = moment(current, 'DD-MM-YYYY')
 
 
+            if (current < start) {
 
+                if (moment(current, 'DD-MM-YYYY').isSame(moment(start, 'DD-MM-YYYY'), 'day')) {
+                    later.push(event);
+                } else if (mStart.diff(mCurr, 'days') === 1) {
+                    tomorrow.push(event)
+                }
+
+            } else if (current >= start && current < end) {
+                ongoing.push(event);
+            }
+
+        })
+
+        this.setState({
+            ongoing, later, tomorrow, events, loading: false
+        })
     }
 
 
 
     render() {
 
-        const { events } = this.state;
+        const { ongoing, later, tomorrow, loading } = this.state;
 
 
-        if (!events)
+        if (loading)
             return <div></div>
 
 
@@ -85,7 +131,7 @@ class EspacoComumEventos extends Component {
                         <h3>A decorrer</h3>
                         <table className="table ec-table">
                             <tbody>
-                                {events.map(event => (
+                                {ongoing.map(event => (
                                     <tr>
                                         <td>
                                             <p>{event.title}</p>
@@ -122,7 +168,7 @@ class EspacoComumEventos extends Component {
                         <h3>Mais tarde</h3>
                         <table className="table ec-table">
                             <tbody>
-                                {events.map(event => (
+                                {later.map(event => (
                                     <tr>
                                         <td>
                                             <p>{event.title}</p>
@@ -151,7 +197,7 @@ class EspacoComumEventos extends Component {
                         <h3>Amanhã</h3>
                         <table className="table ec-table">
                             <tbody>
-                                {events.map(event => (
+                                {tomorrow.map(event => (
                                     <tr>
                                         <td>
                                             <p>{event.title}</p>
