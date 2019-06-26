@@ -126,7 +126,7 @@ class EspacoComumEventos extends Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-xs-12 col-md-12">
 
                         <h3>A decorrer</h3>
                         <table className="table ec-table">
@@ -164,7 +164,7 @@ class EspacoComumEventos extends Component {
                 </div>
 
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-xs-12 col-md-6">
                         <h3>Mais tarde</h3>
                         <table className="table ec-table">
                             <tbody>
@@ -193,7 +193,8 @@ class EspacoComumEventos extends Component {
                             </tbody>
                         </table>
                     </div>
-                    <div className="col-md-6">
+
+                    <div className="col-xs-12 col-md-6">
                         <h3>Amanhã</h3>
                         <table className="table ec-table">
                             <tbody>

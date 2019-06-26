@@ -30,8 +30,8 @@ class WeeklyCalendar extends Component {
                 <FullCalendar defaultView="timeGridWeek"
                     allDaySlot={false}
                     plugins={[timeGridPlugin]}
-                    minTime={'08:00:00'}
-                    maxTime={'20:00:00'}
+                    minTime={'06:00:00'}
+                    maxTime={'24:00:00'}
                     events={this.props.events}
                     locale='pt'
                 /> </div>);
