@@ -144,7 +144,7 @@ public class GestorBean {
         elimConflitos(e, inicio, fim);
 
         //Pedido aceite
-        aceita(p);
+        p = (Alocacao)gestor.aceitaPedido(p);
 
         //Notificar Responsável
         notificarResponsavel(p, "O evento " + e.getNome() + " foi criado com sucesso.");
@@ -168,7 +168,7 @@ public class GestorBean {
         elimConflitos(e, e.getDateTimeInicial(), e.getDateTimeFinal());
 
         //Pedido aceite
-        aceita(p);
+        p = (Alteracao)gestor.aceitaPedido(p);
 
         //Notificar Responsável
         notificarResponsavel(p, "O evento " + e.getNome() + " foi atualizado com sucesso.");
@@ -396,10 +396,10 @@ public class GestorBean {
      * Atende e aceita o pedido
      * @param p
      */
-    private void aceita(Pedido p){
+    /*private void aceita(Pedido p){
         p.setAceite(true);
         p.setAtendido(true);
-    }
+    }*/
 
     /**
      * Especifica o evento, local, responsável, horario, e persiste a informação.

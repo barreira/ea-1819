@@ -62,6 +62,13 @@ public class GestorEspacos extends Ator implements Responsavel{
         return eventos;
     }
 
+    public Pedido aceitaPedido(Pedido p){
+        p.setAceite(true);
+        p.setAtendido(true);
+
+        return p;
+    }
+
     public Pedido rejeitaPedido(Pedido p){
         p.setAceite(false);
         p.setAtendido(true);
