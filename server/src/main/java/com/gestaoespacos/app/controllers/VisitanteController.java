@@ -1,8 +1,8 @@
 package com.gestaoespacos.app.controllers;
 
+import com.gestaoespacos.app.model.GHE;
 import com.gestaoespacos.app.model.Utilizador;
 import com.gestaoespacos.app.model.UtilsGHE;
-import com.gestaoespacos.app.repositories.UserRepository;
 import com.gestaoespacos.app.security.UserAuthenticationService;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -22,15 +22,14 @@ import static lombok.AccessLevel.PRIVATE;
 final class VisitanteController {
     @NonNull
     private UserAuthenticationService authentication;
-    @NonNull
-    private UserRepository users;
 
     @PostMapping("/register")
     String register(
             @RequestParam("username") final String username,
             @RequestParam("email") final String email,
-            @RequestParam("password") final String password) {
-        users.save(new Utilizador(username, email, password));
+            @RequestParam("password") final String password,
+            @RequestParam("nome") final String nome) {
+        GHE.registarUtilizador(new Utilizador(username, password, email, nome));
 
         return login(username, password);
     }
@@ -40,7 +39,8 @@ final class VisitanteController {
             @RequestParam("username") final String username,
             @RequestParam("password") final String password) {
         return authentication
-                .login(username, UtilsGHE.encode(password))
+                //.login(username, UtilsGHE.encode(password))
+                .login(username, password)
                 .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
     }
 }
