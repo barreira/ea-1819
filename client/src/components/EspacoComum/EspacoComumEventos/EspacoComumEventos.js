@@ -34,14 +34,14 @@ class EspacoComumEventos extends Component {
                 responsavel: 'João Carlos'
             },
             {
-                title: 'Programação Avançada',
+                title: 'Programação Avançada II',
                 start: moment().add(1, 'days').subtract('5', 'h').valueOf(),
                 end: moment().add(1, 'days').subtract('3', 'h').valueOf(),
                 local: 'DI-01',
                 responsavel: 'João Carlos'
             },
             {
-                title: 'Programação Avançada',
+                title: 'Programação Avançada III',
                 start: moment().valueOf(),
                 end: moment().add(5, 'h').valueOf(),
                 local: 'DI-01',
