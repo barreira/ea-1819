@@ -1,6 +1,7 @@
 package com.gestaoespacos.app.controllers;
 
 import com.gestaoespacos.app.model.Utilizador;
+import com.gestaoespacos.app.model.UtilsGHE;
 import com.gestaoespacos.app.repositories.UserRepository;
 import com.gestaoespacos.app.security.UserAuthenticationService;
 import lombok.AllArgsConstructor;
@@ -39,7 +40,7 @@ final class VisitanteController {
             @RequestParam("username") final String username,
             @RequestParam("password") final String password) {
         return authentication
-                .login(username, password)
+                .login(username, UtilsGHE.encode(password))
                 .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
     }
 }

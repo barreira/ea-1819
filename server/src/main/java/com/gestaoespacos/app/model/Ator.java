@@ -30,18 +30,7 @@ public abstract class Ator implements UserDetails {
 
     public Ator(String username, String password) {
         this.username = username;
-
-        MessageDigest digest = null;
-
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-        String encoded = Base64.getEncoder().encodeToString(hash);
-        this.password = password;
+        this.password = UtilsGHE.encode(password);
     }
 
     public long getId() {

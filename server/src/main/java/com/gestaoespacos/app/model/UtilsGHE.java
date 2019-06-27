@@ -1,9 +1,13 @@
 package com.gestaoespacos.app.model;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.time.temporal.UnsupportedTemporalTypeException;
+import java.util.Base64;
 
 public class UtilsGHE {
     //Verifica se o Temporal está contido num intrevalo
@@ -109,5 +113,23 @@ public class UtilsGHE {
         e.setEspaco(a.getEspaco());
         e.setPeriodicidade(a.getPeriodicidade());
         e.setLimite(a.getLimite());
+    }
+
+    /**
+     * Password encoding
+     * @param password fornecida
+     * @return
+     */
+    public static String encode(String password){
+        MessageDigest digest = null;
+
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(hash);
     }
 }
