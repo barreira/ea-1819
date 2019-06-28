@@ -16,10 +16,9 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 function App() {
 
-
   const testFunction = () => {
     console.log("Testing from App")
-  }
+  };
 
   return (
     <Router>
