@@ -8,6 +8,7 @@
     "@fullcalendar/react": "^4.2.0",
     "@fullcalendar/timegrid": "^4.2.0",
     "bootstrap": "^4.3.1",
+    "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
     "rc-time-picker": "^3.7.1",
     "react": "^16.8.6",

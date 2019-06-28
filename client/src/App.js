@@ -12,17 +12,23 @@ import EspacoComum from './components/EspacoComum/EspacoComum';
 import Login from "./components/Login/Login";
 import CriarEvento from './components/CriarEvento/CriarEvento';
 import GestaoPedidos from './components/GestaoPedidos/GestaoPedidos';
-
-
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 function App() {
+
+
+  const testFunction = () => {
+    console.log("Testing from App")
+  }
+
   return (
     <Router>
       <div>
         <Navbar />
         <div className="container mt-4">
           <Switch>
-            <Route exact path="/" component={Espaco} />
+            <PrivateRoute exact path="/" component={Home} />
+            <PrivateRoute exact path="/espaco" component={Espaco} testFunction={testFunction} />
             <Route exact path="/espaco-comum" component={EspacoComum} />
             <Route exact path="/evento/criar" component={CriarEvento} />
             <Route exact path="/gestaopedidos" component={GestaoPedidos} />
@@ -32,7 +38,7 @@ function App() {
         </div>
       </div>
 
-    </Router>
+    </Router >
   );
 }
 
