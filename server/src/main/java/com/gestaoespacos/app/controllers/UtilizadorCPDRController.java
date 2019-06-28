@@ -1,5 +1,7 @@
 package com.gestaoespacos.app.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.gestaoespacos.app.model.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,8 +10,77 @@ import java.util.List;
 @RestController
 @RequestMapping("/usercpdr")
 public class UtilizadorCPDRController {
+    private ObjectMapper mapper = new ObjectMapper();
 
     @PostMapping("/alocar")
+    public void alocarEspaco(@RequestBody ObjectNode aloc){
+        try{
+            long id_usercpdr = aloc.get("id").asLong();
+            Alocacao a = mapper.readValue(aloc.get("alocacao").asText(), Alocacao.class);
+            GHE.alocarEspaco(id_usercpdr, a);
+        }catch(IdNotFoundException e){ System.out.println(e);}
+         catch(Exception e){ System.out.println(e);}
+
+    }
+
+    @PostMapping("/alterar")
+    public void alterarEspaco(@RequestBody ObjectNode alt){
+        try{
+            long id_usercpdr = alt.get("id").asLong();
+            Alteracao a = mapper.readValue(alt.get("alteracao").asText(), Alteracao.class);
+            GHE.alterarEvento(id_usercpdr, a);
+        }catch(IdNotFoundException e){ System.out.println(e);}
+         catch(Exception e){ System.out.println(e);}
+    }
+
+    @PostMapping("/pedidos/cancelar")
+    public void cancelarPedido(@RequestBody ObjectNode cancelamento){
+
+        try{
+            long id_usercpdr = cancelamento.get("id").asLong();
+            long nr_pedido = cancelamento.get("long").asLong();
+            GHE.cancelarPedido(id_usercpdr, nr_pedido);
+        }catch(IdNotFoundException e){ System.out.println(e);}
+
+    }
+
+    @GetMapping("/pedidos/pendentes/{id}")
+    public List<Pedido> getPendentes(@PathVariable long id){
+        return GHE.getPendentes(id);
+    }
+
+    @GetMapping("/pedidos/atendidos/{id}")
+    public List<Pedido> getAtendidos(@PathVariable long id){
+        return GHE.getAtendidos(id);
+    }
+
+    @PostMapping("/eventos/cancelar")
+    public void cancelarEvento(@RequestBody ObjectNode cancelamento){
+
+        try{
+            long id_responsavel = cancelamento.get("responsavel").asLong();
+            long id_evt = cancelamento.get("evento").asLong();
+
+            if(!cancelamento.has("justificacao"))
+                GHE.cancelaEvento(id_responsavel, id_evt);
+            else GHE.cancelaEvento(id_responsavel, id_evt, cancelamento.get("justificacao").asText());
+        }catch(IdNotFoundException e){ System.out.println(e);}
+
+    }
+
+    @GetMapping("/eventos/view/{id}")
+    public List<Evento> getEventosResponsavel(@PathVariable long id){
+        try{
+            return GHE.eventosResp(id);
+        }catch(IdNotFoundException e){ System.out.println(e);}
+
+        return null;
+    }
+
+}
+
+/*
+@PostMapping("/alocar")
     public void alocarEspaco(
             @RequestParam("id") long id_usercpdr,
             @RequestBody Alocacao a){
@@ -74,5 +145,4 @@ public class UtilizadorCPDRController {
 
         return null;
     }
-
-}
+ */

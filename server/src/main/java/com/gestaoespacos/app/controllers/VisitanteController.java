@@ -1,5 +1,8 @@
 package com.gestaoespacos.app.controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.gestaoespacos.app.model.*;
 import com.gestaoespacos.app.security.UserAuthenticationService;
 import lombok.AllArgsConstructor;
@@ -21,8 +24,65 @@ import static lombok.AccessLevel.PRIVATE;
 final class VisitanteController {
     @NonNull
     private UserAuthenticationService authentication;
+    private ObjectMapper mapper = new ObjectMapper();
 
     @PostMapping("/register")
+    public String register(@RequestBody ObjectNode user) {
+        String username = user.get("username").asText();
+        String password = user.get("password").asText();
+        String email = user.get("email").asText();
+        String nome = user.get("nome").asText();
+
+        GHE.registarUtilizador(new Utilizador(username, password, email, nome));
+
+        return login(user);
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody ObjectNode credenciais) {
+        String username = credenciais.get("username").asText();
+        String password = credenciais.get("password").asText();
+
+        return authentication
+                //.login(username, UtilsGHE.encode(password))
+                .login(username, password)
+                .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
+    }
+
+    @GetMapping("/evento")
+    public Evento consultarEvento(@RequestBody ObjectNode nome){
+        try{
+            return GHE.consultarEvento(nome.get("nome").asText());
+        }catch(EventoDoesNotExistException e){ System.out.println(e);}
+
+        return null;
+    }
+
+    @GetMapping("/horario")
+    public Horario consultarHorario(@RequestBody ObjectNode espaco){
+        try{
+            return GHE.consultarHorario(espaco.get("espaco").asText());
+        }catch(EspacoDoesNotExistException e){ System.out.println(e);}
+
+        return null;
+    }
+
+    @GetMapping("/eventos")
+    public Map<LocalDate, Set<Evento>> eventosEntreDatas(@RequestBody ObjectNode intervalo){
+        try{
+            LocalDate inicio =  mapper.readValue(intervalo.get("inicio").asText(), LocalDate.class);
+            LocalDate fim =  mapper.readValue(intervalo.get("fim").asText(), LocalDate.class);
+            Long id_espaco = intervalo.get("espaco").asLong();
+
+            return id_espaco == null ? GHE.eventosEntreDatas(inicio, fim) : GHE.eventosEntreDatas(inicio, fim, id_espaco);
+        }catch(IdNotFoundException e){ System.out.println(e);}
+         catch(Exception e){}
+
+        return null;
+    }
+}
+
+    /*@PostMapping("/register")
     String register(
             @RequestParam("username") final String username,
             @RequestParam("email") final String email,
@@ -35,8 +95,8 @@ final class VisitanteController {
 
     @PostMapping("/login")
     String login(
-            @RequestParam("username") final String username,
-            @RequestParam("password") final String password) {
+            @RequestParam final String username,
+            @RequestParam final String password) {
         return authentication
                 //.login(username, UtilsGHE.encode(password))
                 .login(username, password)
@@ -75,5 +135,4 @@ final class VisitanteController {
         }catch(IdNotFoundException e){ System.out.println(e);}
 
         return null;
-    }
-}
+    }*/
