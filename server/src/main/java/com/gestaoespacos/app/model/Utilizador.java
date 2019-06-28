@@ -1,8 +1,7 @@
 package com.gestaoespacos.app.model;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.*;
 
 import javax.persistence.*;
@@ -23,8 +22,9 @@ public class Utilizador extends Ator{
     //@JoinColumn(name = "utilizador_id")
     private List<Notificacao> notificacoes;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     //@JoinColumn(name = "utilizador_id")
+    @JsonIgnore
     private Set<Evento> eventosASeguir;
 
 
@@ -40,6 +40,17 @@ public class Utilizador extends Ator{
         super(username, password);
         this.email = email;
         this.registrationDate = Calendar.getInstance().getTime();
+        this.notificacoes = new ArrayList<>();
+        this.eventosASeguir = new HashSet<>();
+    }
+
+    public Utilizador(String username, String password, String email, String nome){
+        super(username, password);
+        this.email = email;
+        this.nome = nome;
+        this.registrationDate = Calendar.getInstance().getTime();
+        this.notificacoes = new ArrayList<>();
+        this.eventosASeguir = new HashSet<>();
     }
 
     public Set<Evento> getEventosASeguir() { return eventosASeguir;

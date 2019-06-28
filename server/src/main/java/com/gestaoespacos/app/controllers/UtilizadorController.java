@@ -1,9 +1,11 @@
 package com.gestaoespacos.app.controllers;
 
-import com.gestaoespacos.app.model.Utilizador;
-import com.gestaoespacos.app.repositories.UserRepository;
+import com.gestaoespacos.app.model.*;
+import com.gestaoespacos.app.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
 
 import java.util.Optional;
 
@@ -43,6 +45,50 @@ public class UtilizadorController {
     @GetMapping("/view/{id}")
     public Optional<Utilizador> viewUserById(@PathVariable long id) {
         return userRepository.findById(id);
+    }
+
+    @PostMapping("/follow")
+    public String follow(
+            @RequestParam("id_user") final long id_user,
+            @RequestParam("id_evt") final long id_evt){
+
+         try{
+             Evento e = GHE.follow(id_user, id_evt);
+             return "A seguir " + e.getNome() + " com sucesso.";
+         }catch(IdNotFoundException e){ System.out.println(e);}
+
+        return "Não foi possível seguir o evento especificado, para o utilizador fornecido.";
+    }
+
+    @PostMapping("/unfollow")
+    public String unfollow(
+            @RequestParam("id_user") final long id_user,
+            @RequestParam("id_evt") final long id_evt){
+
+        try{
+            Evento e = GHE.unfollow(id_user, id_evt);
+            return "Deixou de seguir " + e.getNome() + " com sucesso.";
+        }catch(IdNotFoundException e){ System.out.println(e);}
+
+        return "Não foi possível deixar de seguir o evento especificado, para o utilizador fornecido.";
+    }
+
+    @GetMapping("/following/{id}")
+    public Set<Evento> getFollowing(@PathVariable long id){
+        try{
+            return GHE.getFollowing(id);
+        }catch(IdNotFoundException e){ System.out.println(e);}
+
+        return null;
+    }
+
+    @GetMapping("/notificacoes")
+    public List<Notificacao> getNotificacoes(@RequestParam("id") long id){
+        try{
+            return GHE.getNotificacoes(id);
+        }catch(IdNotFoundException e){ System.out.println(e);}
+
+        return null;
     }
 
 }

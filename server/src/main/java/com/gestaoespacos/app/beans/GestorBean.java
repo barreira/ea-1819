@@ -42,7 +42,9 @@ public class GestorBean {
         this.nr = nr;
         this.ucpdr = ucpdr;
         this.hr = hr;
-        this.gestor = gr.findAll().get(0);
+
+        List<GestorEspacos> ges = gr.findAll();
+        this.gestor = ges.size() > 0 ? ges.get(0) : null;
     }
 
     /**
@@ -342,7 +344,8 @@ public class GestorBean {
      * @return
      */
     public Administrador getAdmin(){
-        return ar.findAll().get(0);
+        List<Administrador> ads = ar.findAll();
+        return ads.size() > 0 ? ads.get(0) : null;
     }
 
     /**----------------------------------------------------------------------------------------------------------------------------------------------

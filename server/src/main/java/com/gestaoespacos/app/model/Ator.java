@@ -30,7 +30,7 @@ public abstract class Ator implements UserDetails {
 
     public Ator(String username, String password) {
         this.username = username;
-        this.password = UtilsGHE.encode(password);
+        this.password = password; //UtilsGHE.encode(password);
     }
 
     public long getId() {
