@@ -2,6 +2,8 @@ package com.gestaoespacos.app.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.gestaoespacos.app.controllers.model.EventoUpdate;
+import com.gestaoespacos.app.controllers.model.GesEC;
 import com.gestaoespacos.app.model.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,8 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/gestor")
 public class GestorController {
-
-    private ObjectMapper mapper = new ObjectMapper();
 
     /*-----------------------------------------------------------------------------------------------------------------
      | Gerir Eventos
@@ -26,13 +26,10 @@ public class GestorController {
     }
 
     @PostMapping("/eventos/update")
-    public Evento updateEvento(@RequestBody ObjectNode update) {
+    public Evento updateEvento(@RequestBody EventoUpdate update) {
         try{
-            long id_evt = update.get("id").asLong();
-            Evento novoEvento = mapper.readValue(update.get("novoEvento").asText(), Evento.class);
-            return GHE.updateEvento(id_evt, novoEvento);
+            return GHE.updateEvento(update.getId(), update.getNovoEvento());
         }catch(IdNotFoundException e){ System.out.println(e);}
-         catch(Exception e){ System.out.println(e); }
 
         return null;
     }
@@ -83,30 +80,20 @@ public class GestorController {
      */
 
     @PostMapping("/ecs/add")
-    public EspacoComum addEC(@RequestBody ObjectNode ec){
+    public EspacoComum addEC(@RequestBody GesEC ec){
         try{
-            String designacao = ec.get("designacao").asText();
-            List<Espaco> espacos = mapper.readValue(ec.get("espacos").asText(),
-                    mapper.getTypeFactory().constructCollectionType(List.class, Espaco.class));
-
-            return GHE.novoEC(designacao, espacos);
+            return GHE.novoEC(ec.getDesignacao(), ec.getEspacos());
         }catch(Exception e){ System.out.println(e); }
 
         return null;
     }
 
     @PostMapping("/ecs/update")
-    public EspacoComum updateEC(@RequestBody ObjectNode ec){
+    public EspacoComum updateEC(@RequestBody GesEC ec){
 
         try{
-            long id_ec = ec.get("id").asLong();
-            String designacao = ec.get("designacao").asText();
-            List<Espaco> espacos = mapper.readValue(ec.get("espacos").asText(),
-                    mapper.getTypeFactory().constructCollectionType(List.class, Espaco.class));
-
-            return GHE.updateEC(id_ec, designacao, espacos);
+            return GHE.updateEC(ec.getId(), ec.getDesignacao(), ec.getEspacos());
         }catch(IdNotFoundException e){ System.out.println(e);}
-         catch(Exception e){ System.out.println(e); }
 
         return null;
     }

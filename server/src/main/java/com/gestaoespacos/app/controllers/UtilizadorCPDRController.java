@@ -1,7 +1,7 @@
 package com.gestaoespacos.app.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.gestaoespacos.app.controllers.model.NovoPedido;
 import com.gestaoespacos.app.model.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,25 +10,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/usercpdr")
 public class UtilizadorCPDRController {
-    private ObjectMapper mapper = new ObjectMapper();
 
     @PostMapping("/alocar")
-    public void alocarEspaco(@RequestBody ObjectNode aloc){
+    public void alocarEspaco(@RequestBody NovoPedido aloc){
         try{
-            long id_usercpdr = aloc.get("id").asLong();
-            Alocacao a = mapper.readValue(aloc.get("alocacao").asText(), Alocacao.class);
-            GHE.alocarEspaco(id_usercpdr, a);
+            GHE.alocarEspaco(aloc.getId_usercpdr(), (Alocacao)aloc.getPedido());
         }catch(IdNotFoundException e){ System.out.println(e);}
          catch(Exception e){ System.out.println(e);}
 
     }
 
     @PostMapping("/alterar")
-    public void alterarEspaco(@RequestBody ObjectNode alt){
+    public void alterarEspaco(@RequestBody NovoPedido alt){
         try{
-            long id_usercpdr = alt.get("id").asLong();
-            Alteracao a = mapper.readValue(alt.get("alteracao").asText(), Alteracao.class);
-            GHE.alterarEvento(id_usercpdr, a);
+            GHE.alterarEvento(alt.getId_usercpdr(), (Alteracao)alt.getPedido());
         }catch(IdNotFoundException e){ System.out.println(e);}
          catch(Exception e){ System.out.println(e);}
     }

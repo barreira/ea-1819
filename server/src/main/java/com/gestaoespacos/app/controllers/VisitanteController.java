@@ -1,14 +1,13 @@
 package com.gestaoespacos.app.controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.gestaoespacos.app.controllers.model.Intervalo;
 import com.gestaoespacos.app.model.*;
 import com.gestaoespacos.app.security.UserAuthenticationService;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -24,7 +23,6 @@ import static lombok.AccessLevel.PRIVATE;
 final class VisitanteController {
     @NonNull
     private UserAuthenticationService authentication;
-    private ObjectMapper mapper = new ObjectMapper();
 
     @PostMapping("/register")
     public String register(@RequestBody ObjectNode user) {
@@ -68,15 +66,15 @@ final class VisitanteController {
     }
 
     @GetMapping("/eventos")
-    public Map<LocalDate, Set<Evento>> eventosEntreDatas(@RequestBody ObjectNode intervalo){
+    public Map<LocalDate, Set<Evento>> eventosEntreDatas(@RequestBody Intervalo intervalo){
         try{
-            LocalDate inicio =  mapper.readValue(intervalo.get("inicio").asText(), LocalDate.class);
-            LocalDate fim =  mapper.readValue(intervalo.get("fim").asText(), LocalDate.class);
-            Long id_espaco = intervalo.get("espaco").asLong();
+            LocalDate inicio =  intervalo.getInicio();
+            LocalDate fim =  intervalo.getFim();
+            Long espaco = intervalo.getEspaco();
 
-            return id_espaco == null ? GHE.eventosEntreDatas(inicio, fim) : GHE.eventosEntreDatas(inicio, fim, id_espaco);
+            return espaco == null ? GHE.eventosEntreDatas(inicio, fim) : GHE.eventosEntreDatas(inicio, fim,  espaco);
         }catch(IdNotFoundException e){ System.out.println(e);}
-         catch(Exception e){}
+         catch(Exception e){ System.out.println(e); }
 
         return null;
     }
