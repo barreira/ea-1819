@@ -21,7 +21,7 @@ class CriarEvento extends Component {
             event: {
                 nome: '',
                 espaco: '',
-                data: '',
+                data: moment().toDate(),
                 repete: '',
                 horaInicio: moment('00:00', 'hh:mm'),
                 horaFim: moment('00:00', 'hh:mm'),
@@ -114,7 +114,7 @@ class CriarEvento extends Component {
 
                         <div className="col-md-6">
                             <DatePicker
-                                selected={this.state.startDate}
+                                selected={event.data}
                                 onChange={(e) => this.handleChange(e, 'data')}
                                 locale={pt}
                                 dateFormat="dd/MM/yyyy"

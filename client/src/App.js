@@ -11,6 +11,7 @@ import Espaco from './components/Espaco/Espaco';
 import EspacoComum from './components/EspacoComum/EspacoComum';
 import Login from "./components/Login/Login";
 import CriarEvento from './components/CriarEvento/CriarEvento';
+import GestaoPedidos from './components/GestaoPedidos/GestaoPedidos';
 
 
 
@@ -24,6 +25,7 @@ function App() {
             <Route exact path="/" component={Espaco} />
             <Route exact path="/espaco-comum" component={EspacoComum} />
             <Route exact path="/evento/criar" component={CriarEvento} />
+            <Route exact path="/gestaopedidos" component={GestaoPedidos} />
             <Route exact path={"/login"} component={Login} />
             <Route component={Home} />
           </Switch>
