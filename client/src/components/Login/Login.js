@@ -21,6 +21,9 @@ class Login extends Component {
         // Substituir por ação correta
         console.log('Email: ' + this.state.email);
         console.log('Password: ' + this.state.password);
+
+        this.state.setLoggedInAs('Utilizador');
+        console.log('Login as: Utilizador');
     };
 
     render() {
