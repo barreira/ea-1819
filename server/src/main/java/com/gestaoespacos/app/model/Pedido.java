@@ -1,5 +1,7 @@
 package com.gestaoespacos.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -10,6 +12,7 @@ import java.time.LocalDateTime;
         discriminatorType = DiscriminatorType.CHAR
 )
 @DiscriminatorValue("P")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public abstract class Pedido {
 
     @Id

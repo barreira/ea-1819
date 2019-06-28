@@ -1,5 +1,7 @@
 package com.gestaoespacos.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gestaoespacos.app.repositories.EventoRepository;
 
 import javax.persistence.*;
@@ -7,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Espaco {
 
     @Id
@@ -17,6 +20,7 @@ public class Espaco {
 
     @OneToOne
     //@JoinColumn(name = "espaco_id")
+    @JsonIgnore
     private Horario horario;
 
     public Espaco(){

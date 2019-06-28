@@ -137,6 +137,13 @@ public class VisitanteBean {
     }
 
 
+    /**
+     * Adicionar evento ao Map na data especificada.
+     * Garante que os conjuntos estão ordenados por data inicial, final, id.
+     * @param eventos
+     * @param e
+     * @param data
+     */
     private void addToMap(Map<LocalDate, Set<Evento>> eventos, Evento e, LocalDate data){
         if(!eventos.containsKey(data)){
             Set<Evento> evsDia = new TreeSet<>(Comparator.comparing(Evento :: getDateTimeInicial)
