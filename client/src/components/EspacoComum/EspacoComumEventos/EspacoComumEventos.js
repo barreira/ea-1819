@@ -130,6 +130,37 @@ class EspacoComumEventos extends Component {
 
                         <h3>A decorrer</h3>
 
+                        <table className="table ec-table">
+                            <tbody>
+                                {ongoing.map(event => (
+                                    <tr>
+                                        <td>
+                                            <p>{event.title}</p>
+
+                                        </td>
+                                        <td>
+                                            <i className="material-icons individual-icon" >
+                                                location_on
+                                          </i>
+                                            <p>{event.local}</p>
+                                        </td>
+                                        <td>
+                                            <i className="material-icons individual-icon" >
+                                                calendar_today
+                                          </i>
+                                            <p>{moment(event.start).format('HH:mm')} - {moment(event.end).format('HH:mm')}</p>
+                                        </td>
+                                        <td>
+                                            <i className="material-icons individual-icon" >
+                                                person
+                                          </i>
+                                            <p>{event.responsavel}</p>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
 

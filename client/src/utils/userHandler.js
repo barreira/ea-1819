@@ -23,7 +23,7 @@ UserHandler.typeOfUser = () => {
     const data = localStorage.getItem(userData);
 
     // TODO remover hardcode, verificar tipo de user
-    return 'Utilizador'
+    return 'Gestor'
 }
 
 UserHandler.isUserLogged = () => {

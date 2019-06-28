@@ -38,7 +38,7 @@ class Navbar extends Component {
                             <li className="nav-item active">
                                 <Link to={{
                                     pathname: "/login",
-                                    state: {setLoggedInAs: this.props.setLoggedInAs}
+                                    state: { setLoggedInAs: this.props.setLoggedInAs }
                                 }}>
                                     <span className="nav-link" href="#">Login</span>
                                 </Link>

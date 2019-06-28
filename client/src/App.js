@@ -24,7 +24,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Navbar />
+        <Navbar testFunction={testFunction} />
         <div className="container mt-4">
           <Switch>
             <PrivateRoute exact path="/" component={Home} />

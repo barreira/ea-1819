@@ -3,6 +3,7 @@ import { Redirect, Route } from 'react-router-dom';
 import UserHandler from '../../utils/userHandler';
 import HomeUtilizador from '../../components/Users/Utilizador/Home/HomeUtilizador';
 import HomeVisitante from '../../components/Users/Visitante/Home/HomeVisitante';
+import HomeGestor from '../../components/Users/Gestor/HomeGestor/HomeGestor';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
 
@@ -49,7 +50,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
                         <HomeUtilizador {...props} />
                     )} />
                 )
-
             }
             break;
 
@@ -57,7 +57,14 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
             break;
 
-        case ' Gestor':
+        case 'Gestor':
+            if (rest.path === '/') {
+                return (
+                    <Route {...rest} render={(props) => (
+                        <HomeGestor {...props} />
+                    )} />
+                )
+            }
             break;
 
         case 'Administrador':

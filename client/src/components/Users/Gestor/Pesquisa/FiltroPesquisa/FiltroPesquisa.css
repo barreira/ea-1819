@@ -1,0 +1,21 @@
+.input-filter-container {
+    position: relative;
+}
+
+.input-filter-container i {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    color: #ccc;
+}
+
+.input-filter-container input {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    height: 40px;
+    text-align: right;
+    padding: 5px 10px;
+    color: black;
+    margin-right: 15px;
+
+}
