@@ -22,7 +22,7 @@ class Navbar extends Component {
         return (
             <nav className="navbar navbar-expand-md bg-faded">
                 <div className="container">
-                    <a className="navbar-brand" href="#">GestaoEspaços</a>
+                    <a className="navbar-brand" href="/">GestaoEspaços</a>
                     <div className="collapse navbar-collapse " id="navbarText">
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item">
@@ -36,18 +36,16 @@ class Navbar extends Component {
                                 </div>
                             </li>
                             <li className="nav-item active">
-                                <Link to="/">
-                                    <span className="nav-link" href="#">Menu 1</span>
+                                <Link to={{
+                                    pathname: "/login",
+                                    state: {setLoggedInAs: this.props.setLoggedInAs}
+                                }}>
+                                    <span className="nav-link" href="#">Login</span>
                                 </Link>
                             </li>
                             <li className="nav-item active">
-                                <Link to="/">
-                                    <span className="nav-link" href="#">Menu 2</span>
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to="/">
-                                    <span className="nav-link" href="#">Menu 3</span>
+                                <Link to="/registar">
+                                    <span className="nav-link" href="#">Registar</span>
                                 </Link>
                             </li>
                         </ul>
