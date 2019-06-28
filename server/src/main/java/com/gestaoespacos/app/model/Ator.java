@@ -1,5 +1,6 @@
 package com.gestaoespacos.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -68,26 +69,31 @@ public abstract class Ator implements UserDetails {
 
     ///////Security/////////
     @Override
+    @JsonIgnore
     public Collection<GrantedAuthority> getAuthorities() {
         return new ArrayList<>();
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }

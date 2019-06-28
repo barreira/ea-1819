@@ -207,10 +207,8 @@ public class ResponsavelBean {
 
         //Eliminar pedidos pendentes associados ao evento
         upr.deleteByEvento(e);
-
         er.delete(e);
-        ucpdr.save((UtilizadorCPDR)r);
-
+        //ucpdr.save((UtilizadorCPDR)r);
         return e;
     }
 

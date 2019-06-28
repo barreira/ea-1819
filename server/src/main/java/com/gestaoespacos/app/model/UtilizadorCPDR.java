@@ -1,13 +1,15 @@
 package com.gestaoespacos.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class UtilizadorCPDR extends Utilizador implements Responsavel{
 
     @OneToMany(mappedBy = "utilizadorResponsavel")
