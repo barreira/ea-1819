@@ -12,7 +12,6 @@ UserHandler.save = (data) => {
 UserHandler.get = () => {
     const data = localStorage.getItem(token);
 
-    console.log("LocalStorage UserData", data)
     if (data)
         return jwt(data);
 
