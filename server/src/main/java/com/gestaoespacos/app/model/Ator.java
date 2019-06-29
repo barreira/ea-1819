@@ -1,6 +1,8 @@
 package com.gestaoespacos.app.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,6 +14,16 @@ import java.util.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Utilizador.class, name = "utilizador"),
+        @JsonSubTypes.Type(value = UtilizadorCPDR.class, name = "utilizadorcpdr"),
+        @JsonSubTypes.Type(value = Administrador.class, name = "administrador"),
+        @JsonSubTypes.Type(value = GestorEspacos.class, name = "gestorespacos")
+})
 public abstract class Ator implements UserDetails {
 
     @Id

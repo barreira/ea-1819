@@ -1,10 +1,11 @@
 package com.gestaoespacos.app.controllers;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.gestaoespacos.app.controllers.model.Intervalo;
 import com.gestaoespacos.app.model.*;
-import com.gestaoespacos.app.repositories.AtorRepository;
+import com.gestaoespacos.app.repositories.*;
 //import com.gestaoespacos.app.security.UserAuthenticationService;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -31,13 +32,24 @@ final class VisitanteController {
 
     @Autowired
     private AtorRepository atorRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private UtilizadorCPDRRepository usercpdrRepository;
+    @Autowired
+    private GestorEspacosRepository gestorRepository;
+    @Autowired
+    private AdministradorRepository adminRepository;
 
     @Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("/login")
-    public String login(@RequestBody Utilizador utilizador) {
-        Optional<Ator> currentAtor = atorRepository.findByUsername(utilizador.getUsername());
+    public String login(@RequestBody ObjectNode ator) {
+        String username = ator.get("username").asText();
+        String password = ator.get("password").asText();
+
+        Optional<Ator> currentAtor = atorRepository.findByUsername(username);
 
         if(!currentAtor.isPresent()){
             return null;
@@ -49,13 +61,12 @@ final class VisitanteController {
         System.out.println(fetchAtor);
 
         System.out.println("Utilizador: " );
-        System.out.println(utilizador );
-        System.out.println(bCryptPasswordEncoder.encode(utilizador.getPassword()));
+        System.out.println(ator.toString());
+        System.out.println(bCryptPasswordEncoder.encode(password));
 
         if(fetchAtor != null) {
 
-            if (bCryptPasswordEncoder.matches(utilizador.getPassword(), fetchAtor.getPassword())) {
-
+            if (bCryptPasswordEncoder.matches(password, fetchAtor.getPassword())) {
                 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
                 System.out.println(auth.getAuthorities());
                 System.out.println(auth.toString());
@@ -76,21 +87,23 @@ final class VisitanteController {
     public String register(@RequestBody Utilizador utilizador) {
         System.out.println("Registering " + utilizador.toString());
 
-        Optional<Ator> findByUsername = atorRepository.findByUsername(utilizador.getUsername());
+        Optional<Utilizador> findByUsername = userRepository.findByUsername(utilizador.getUsername());
 
         if(findByUsername.isPresent()){
            return "Username already exists" ;
         }
 
-        Ator newAtor = new Utilizador(utilizador.getUsername(),
-                bCryptPasswordEncoder.encode(utilizador.getPassword()));
+        Utilizador newAtor = new Utilizador(utilizador.getUsername(), bCryptPasswordEncoder.encode(utilizador.getPassword()));
 
-        atorRepository.save(newAtor);
+        GHE.registarUtilizador(newAtor);
 
-        return login(utilizador);
+        ObjectNode u = new ObjectMapper().createObjectNode()
+                                         .put("username", utilizador.getUsername())
+                                         .put("password", utilizador.getPassword())
+                                         .put("type", "utilizador");
+
+        return login(u);
     }
-
-
 
 
     @GetMapping("/evento")
@@ -123,6 +136,41 @@ final class VisitanteController {
          catch(Exception e){ System.out.println(e); }
 
         return null;
+    }
+
+    @GetMapping("/exists/user")
+    public boolean existsUtilizador(@RequestBody ObjectNode username){
+        return userRepository.findByUsername(username.get("username").asText()).isPresent();
+    }
+
+    @GetMapping("/exists/usercpdr")
+    public boolean existsUtilizadorCPDR(@RequestBody ObjectNode username){
+        return usercpdrRepository.findByUsername(username.get("username").asText()).isPresent();
+    }
+
+    @GetMapping("/exists/gestor")
+    public boolean existsGestor(@RequestBody ObjectNode username){
+        return gestorRepository.findByUsername(username.get("username").asText()).isPresent();
+    }
+
+    @GetMapping("/exists/admin")
+    public boolean existsAdmin(@RequestBody ObjectNode username){
+        return adminRepository.findByUsername(username.get("username").asText()).isPresent();
+    }
+
+
+    /**
+     * TODO: CUIDADO!! fazer só uma vez !!
+     * @return
+     */
+    @GetMapping("/encode")
+    public String encodePW(){
+        atorRepository.findAll().forEach(a ->{
+            a.setPassword(bCryptPasswordEncoder.encode(a.getPassword()));
+            atorRepository.save(a);
+        });
+
+        return "Done";
     }
 }
 

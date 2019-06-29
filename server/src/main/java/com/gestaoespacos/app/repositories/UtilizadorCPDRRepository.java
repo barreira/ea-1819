@@ -10,4 +10,6 @@ public interface UtilizadorCPDRRepository extends JpaRepository<UtilizadorCPDR, 
 
     @Query("SELECT u FROM UtilizadorCPDR u JOIN u.pedidos p WHERE p.id = ?1")
     Optional<UtilizadorCPDR> findByPedido(long nr_pedido);
+
+    Optional<UtilizadorCPDR> findByUsername(String username);
 }
