@@ -9,13 +9,17 @@ import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.impl.TextCodec;
 import io.jsonwebtoken.impl.compression.GzipCompressionCodec;
+import io.jsonwebtoken.impl.crypto.MacProvider;
 import lombok.experimental.FieldDefaults;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
+import javax.crypto.SecretKey;
+import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 import java.util.Map;
 
@@ -45,7 +49,10 @@ final class JWTTokenService implements Clock, TokenService {
         this.issuer = requireNonNull(issuer);
         this.expirationSec = requireNonNull(expirationSec);
         this.clockSkewSec = requireNonNull(clockSkewSec);
-        this.secretKey = BASE64.encode(requireNonNull(secret));
+        //this.secretKey = BASE64.encode(requireNonNull(secret));
+
+        SecretKey key = MacProvider.generateKey(HS256);
+        this.secretKey = BASE64.encode(key.getEncoded());
     }
 
     @Override
@@ -71,10 +78,16 @@ final class JWTTokenService implements Clock, TokenService {
         }
         claims.putAll(attributes);
 
+        //String base64Key = DatatypeConverter.printBase64Binary("9iEUhbo6qvX8dyFRVjXMN9QsP1I5qun4SCLuNPFJtZcQ1FBnL5MA2f9NsewgwDN".getBytes());
+        //byte[] secretBytes = DatatypeConverter.parseBase64Binary(base64Key);
+        //SecretKey key = MacProvider.generateKey(HS256);
+        //String base64Encoded = TextCodec.BASE64.encode(key.getEncoded());
+        //System.out.println(base64Encoded);
+
         return Jwts
                 .builder()
                 .setClaims(claims)
-                .signWith(HS256, secretKey)
+                .signWith(HS256, secretKey)//base64Encoded)//secretBytes)//secretKey)
                 .compressWith(COMPRESSION_CODEC)
                 .compact();
     }
