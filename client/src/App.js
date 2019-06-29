@@ -31,7 +31,7 @@ function App() {
             <Route exact path="/espaco-comum" component={EspacoComum} />
             <Route exact path="/evento/criar" component={CriarEvento} />
             <Route exact path="/gestaopedidos" component={GestaoPedidos} />
-            <Route exact path={"/login"} component={Login} />
+            <Route exact path="/login" component={Login} />
             <Route component={Home} />
           </Switch>
         </div>
