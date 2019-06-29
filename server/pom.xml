@@ -21,6 +21,7 @@
 		<commons-lang.version>3.6</commons-lang.version>
 		<jwt.version>0.9.0</jwt.version>
 		<joda-time.version>2.9.9</joda-time.version>
+		<project.oauth.version>1.23.0</project.oauth.version>
 	</properties>
 
 	<dependencies>
@@ -36,6 +37,8 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -83,7 +86,27 @@
 			<artifactId>joda-time</artifactId>
 			<version>${joda-time.version}</version>
 		</dependency>
-    </dependencies>
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-calendar</artifactId>
+			<version>v3-rev379-1.25.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client</artifactId>
+			<version>1.25.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.oauth-client</groupId>
+			<artifactId>google-oauth-client-jetty</artifactId>
+			<version>${project.oauth.version}</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>

@@ -92,6 +92,20 @@ public class UtilizadorController {
         return null;
     }
 
+    /**
+     * URL: https://accounts.google.com/o/oauth2/auth?client_id=810326640331-eth52d1a0ocejiero78e6edosfbcf9vf.apps.googleusercontent.com&redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=code&scope=https://www.googleapis.com/auth/calendar
+     * email: utilizadorghe@gmail.com
+     * password: 1234.567
+     */
+    @PostMapping("/calendar")
+    public boolean syncCalendar(@RequestBody ObjectNode code){
+        try{
+            return GHE.syncCalendar(code.get("id").asLong(), code.get("code").asText());
+        }catch(IdNotFoundException e){ System.out.println(e);}
+
+        return false;
+    }
+
 }
 
 /*

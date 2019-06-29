@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -18,15 +17,17 @@ public class GHE {
     private static VisitanteBean vb;
     private static ResponsavelBean rb;
     private static GestorBean gb;
+    private static CalendarBean cb;
 
     private static Administrador admin;
 
     @Autowired
-    public GHE(UtilizadorBean userBean, VisitanteBean visitanteBean, ResponsavelBean respBean, GestorBean gesBean){
+    public GHE(UtilizadorBean userBean, VisitanteBean visitanteBean, ResponsavelBean respBean, GestorBean gesBean, CalendarBean cb){
         this.ub = userBean;
         this.vb = visitanteBean;
         this.rb = respBean;
         this.gb = gesBean;
+        this.cb = cb;
         this.admin = gb.getAdmin();
     }
 
@@ -346,5 +347,16 @@ public class GHE {
 
     public static void carregarHorarios(String filename){
         admin.carregarHorarios(filename);
+    }
+
+    /**
+     * Efetua a sincronização do Primary Google Calendar do utilizador, tendo em conta os eventos que está a seguir
+     * @param id do utilizador
+     * @param code para obter o token com o google
+     * @return sucesso na sincronização
+     * @throws IdNotFoundException se não existir Utilizador(CPDR) com esse id
+     */
+    public static boolean syncCalendar(long id, String code) throws IdNotFoundException{
+        return cb.syncCalendar(id, code);
     }
 }
