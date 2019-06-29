@@ -106,7 +106,7 @@ final class VisitanteController {
     }
 
 
-    @GetMapping("/evento")
+    @PostMapping("/evento")
     public Evento consultarEvento(@RequestBody ObjectNode nome){
         try{
             return GHE.consultarEvento(nome.get("nome").asText());
@@ -115,7 +115,7 @@ final class VisitanteController {
         return null;
     }
 
-    @GetMapping("/horario")
+    @PostMapping("/horario")
     public Horario consultarHorario(@RequestBody ObjectNode espaco){
         try{
             return GHE.consultarHorario(espaco.get("espaco").asText());
@@ -124,7 +124,7 @@ final class VisitanteController {
         return null;
     }
 
-    @GetMapping("/eventos")
+    @PostMapping("/eventos")
     public Map<LocalDate, Set<Evento>> eventosEntreDatas(@RequestBody Intervalo intervalo){
         try{
             LocalDate inicio =  intervalo.getInicio();
@@ -138,22 +138,22 @@ final class VisitanteController {
         return null;
     }
 
-    @GetMapping("/exists/user")
+    @PostMapping("/exists/user")
     public boolean existsUtilizador(@RequestBody ObjectNode username){
         return userRepository.findByUsername(username.get("username").asText()).isPresent();
     }
 
-    @GetMapping("/exists/usercpdr")
+    @PostMapping("/exists/usercpdr")
     public boolean existsUtilizadorCPDR(@RequestBody ObjectNode username){
         return usercpdrRepository.findByUsername(username.get("username").asText()).isPresent();
     }
 
-    @GetMapping("/exists/gestor")
+    @PostMapping("/exists/gestor")
     public boolean existsGestor(@RequestBody ObjectNode username){
         return gestorRepository.findByUsername(username.get("username").asText()).isPresent();
     }
 
-    @GetMapping("/exists/admin")
+    @PostMapping("/exists/admin")
     public boolean existsAdmin(@RequestBody ObjectNode username){
         return adminRepository.findByUsername(username.get("username").asText()).isPresent();
     }
@@ -163,7 +163,7 @@ final class VisitanteController {
      * TODO: CUIDADO!! fazer só uma vez !!
      * @return
      */
-    @GetMapping("/encode")
+    @PostMapping("/encode")
     public String encodePW(){
         atorRepository.findAll().forEach(a ->{
             a.setPassword(bCryptPasswordEncoder.encode(a.getPassword()));
