@@ -4,7 +4,7 @@ import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 
 import '../Login.css';
-import Api from '../../../api/api';
+import ApiUsers from '../../../api/ApiUsers';
 import UserHandler from '../../../utils/userHandler';
 
 class Register extends Component {
@@ -65,12 +65,12 @@ class Register extends Component {
                         return errors;
                     }}
                     onSubmit={async (values, { setSubmitting }) => {
-                        const req = await Api.register(values.username, values.email, values.name, values.password);
+                        const req = await ApiUsers.register(values.username, values.email, values.name, values.password);
 
                         if (req.success && req.token !== 'Username already exists') {
                             this.setState({ registered: true });
 
-                            const login = await Api.login(values.username, values.password);
+                            const login = await ApiUsers.login(values.username, values.password);
 
                             if (login.success) {
                                 if (login.success) {

@@ -6,7 +6,7 @@ import "react-notifications-component/dist/theme.css";
 import UserHandler from '../../utils/userHandler';
 
 import './Login.css';
-import Api from '../../api/api';
+import ApiUsers from '../../api/ApiUsers';
 import Register from './Register/Register';
 
 
@@ -80,7 +80,7 @@ class Login extends Component {
                         return errors;
                     }}
                     onSubmit={async (values, { setSubmitting }) => {
-                        const req = await Api.login(values.username, values.password);
+                        const req = await ApiUsers.login(values.username, values.password);
 
                         this.props.updateNavBar();
 

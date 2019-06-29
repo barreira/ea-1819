@@ -12,7 +12,7 @@ class Navbar extends Component {
     }
 
     componentDidMount() {
-        this.interval = setInterval(() => this.setState({ time: Date.now() }), 5000);
+        this.interval = setInterval(() => this.setState({ time: Date.now() }), 10000);
     }
 
     componentWillUnmount() {
@@ -27,9 +27,6 @@ class Navbar extends Component {
     render() {
 
         const user = UserHandler.get();
-
-        console.log("Logging user", user)
-
         const loginRegisterSection = (
             <React.Fragment>
                 <li className="nav-item active">
@@ -85,7 +82,7 @@ class Navbar extends Component {
                                         {/* <i className="material-icons individual-icon" >
                                             access_time
                                     </i> */}
-                                        {moment().format('DD/MM HH:mm')}
+                                        {moment().format('HH:mm DD/MM')}
                                     </span>
                                 </div>
                             </li>
