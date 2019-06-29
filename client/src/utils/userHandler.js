@@ -7,23 +7,23 @@ const token = 'token';
 
 UserHandler.save = (data) => {
     localStorage.setItem(token, data);
-    localStorage.setItem(userData, JSON.stringify(jwt(data)));
 }
 
 UserHandler.get = () => {
-    const data = localStorage.getItem(userData);
+    const data = localStorage.getItem(token);
 
+    console.log("LocalStorage UserData", data)
     if (data)
-        return JSON.parse(data);
+        return jwt(data);
 
-    return data;
+    return false;
 }
 
 UserHandler.typeOfUser = () => {
     const data = localStorage.getItem(userData);
 
     // TODO remover hardcode, verificar tipo de user
-    return 'Gestor'
+    return 'Visitante'
 }
 
 UserHandler.isUserLogged = () => {

@@ -1,6 +1,120 @@
-.loginButton {
-    background-color: #942218;
-    border: none;
+.login-container h3 {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 0;
+    margin-bottom: 40px;
 }
 
-.loginButton:active
+.login-container p {
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+label {
+    padding-top: 15px;
+    padding-right: 10px;
+    display: inline-block;
+    width: 100px;
+    text-align: left;
+    font-size: 14pt;
+    font-weight: 500;
+}
+
+.ErrorMessa {
+    font-size: 10px;
+    font-weight: bold;
+    color: red;
+}
+
+.form {
+    text-align: center;
+}
+
+.login-container {
+    height: auto;
+    width: 100%;
+    background-color: var(--color-gray);
+    padding: 20px;
+}
+
+
+.username {
+    width: 100%;
+    padding: 5px;
+    font-size: 10pt;
+    background-image: url("../../assets/Form/man-user.png");
+    background-repeat: no-repeat;
+    text-indent: 30px;
+    background-origin: content-box;
+}
+
+.password {
+    width: 100%;
+    padding: 5px;
+    margin-top: 20px;
+    font-size: 10pt;
+    background-image: url("../../assets/Form/lock.png");
+    background-repeat: no-repeat;
+    text-indent: 30px;
+    background-origin: content-box;
+}
+
+
+.name {
+    width: 100%;
+    padding: 5px;
+    margin-top: 20px;
+    font-size: 10pt;
+    background-image: url("../../assets/Form/man-user.png");
+    background-repeat: no-repeat;
+    text-indent: 30px;
+    background-origin: content-box;
+}
+
+
+.email {
+    width: 100%;
+    padding: 5px;
+    margin-top: 20px;
+    font-size: 10pt;
+    background-image: url("../../assets/Form/envelope.png");
+    background-repeat: no-repeat;
+    text-indent: 30px;
+    background-origin: content-box;
+}
+
+
+.balance {
+    width: 100%;
+    padding: 4px;
+    margin-top: 20px;
+    font-size: 10pt;
+    background-image: url("../../assets/Form/euro-currency-symbol.png");
+    background-repeat: no-repeat;
+    text-indent: 30px;
+    background-origin: content-box;
+}
+
+
+button {
+    margin-top: 20px !important;
+    margin-left: 20px !important;
+}
+
+.button-container {
+    text-align: center;
+}
+
+.input-login {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.button-login {
+    background-color: var(--color-red);
+    color: white;
+}

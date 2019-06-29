@@ -17,8 +17,13 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 function App() {
 
   const testFunction = () => {
-    console.log("Testing from App")
+    console.log("Testing from App !!")
   };
+
+  const updateNavBar = () => {
+    console.log("Should update NavBar")
+    testFunction();
+  }
 
   return (
     <Router>
@@ -31,7 +36,7 @@ function App() {
             <Route exact path="/espaco-comum" component={EspacoComum} />
             <Route exact path="/evento/criar" component={CriarEvento} />
             <Route exact path="/gestaopedidos" component={GestaoPedidos} />
-            <Route exact path={"/login"} component={Login} />
+            <Route exact path="/login" render={(props) => <Login {...props} updateNavBar={updateNavBar} />} />
             <Route component={Home} />
           </Switch>
         </div>

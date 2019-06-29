@@ -27,12 +27,16 @@
     padding: 0;
 }
 
-.nav-item a,
 .nav-item span {
     color: white;
     font-size: 14pt;
     margin: 0;
-    padding: 0;
+    padding: 0 15px;
+    cursor: pointer;
+}
+
+.nav-item span:hover {
+    color: black;
 }
 
 .nav-item i {

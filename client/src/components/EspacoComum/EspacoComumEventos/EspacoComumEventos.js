@@ -146,7 +146,7 @@ class EspacoComumEventos extends Component {
                                         </td>
                                         <td>
                                             <i className="material-icons individual-icon" >
-                                                calendar_today
+                                                access_time
                                           </i>
                                             <p>{moment(event.start).format('HH:mm')} - {moment(event.end).format('HH:mm')}</p>
                                         </td>
