@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-import './EspacoComumEventos.css';
+import './ResumoEspacoEventos.css';
 
-class EspacoComumEventos extends Component {
+class ResumoEspacoEventos extends Component {
     constructor(props) {
         super(props);
         this.state = { events: [], ongoing: [], later: [], tomorrow: [], loading: true }
@@ -230,4 +230,4 @@ class EspacoComumEventos extends Component {
     }
 }
 
-export default EspacoComumEventos;
+export default ResumoEspacoEventos;

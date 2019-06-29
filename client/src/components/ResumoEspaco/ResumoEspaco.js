@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-import './EspacoComum.css';
+import './ResumoEspaco.css';
 
-import EspacoComumEventos from './EspacoComumEventos/EspacoComumEventos';
-import EspacoComumHorarios from './EspacoComumHorarios/EspacoComumHorarios';
+import ResumoEspacoEventos from './ResumoEspacoEventos/ResumoEspacoEventos';
+import ResumoEspacoHorarios from './ResumoEspacoHorarios/ResumoEspacoHorarios';
 
-class EspacoComum extends Component {
+class ResumoEspaco extends Component {
     constructor(props) {
         super(props);
         this.state = { activeButton: 'Eventos' }
@@ -24,23 +24,21 @@ class EspacoComum extends Component {
         const baseCss = 'btn btn-filter'
         const active = 'btn-filter-active';
 
-
-
         return (
             <div>
-                <h2>Espaco Comum</h2>
+                <h3 style={{ textAlign: 'center' }}>{this.props.title}</h3>
 
                 <div className="btn-section">
                     <button className={activeButton === 'Eventos' ? `${baseCss} ${active}` : baseCss} onClick={() => this.changeActiveButton('Eventos')}>Eventos</button>
                     <button className={activeButton === 'Horarios' ? `${baseCss} ${active}` : baseCss} onClick={() => this.changeActiveButton('Horarios')}>Horários</button>
                 </div>
 
-                {activeButton === 'Eventos' ? <EspacoComumEventos /> : ''}
-                {activeButton === 'Horarios' ? <EspacoComumHorarios /> : ''}
+                {activeButton === 'Eventos' ? <ResumoEspacoEventos /> : ''}
+                {activeButton === 'Horarios' ? <ResumoEspacoHorarios /> : ''}
 
             </div>
         );
     }
 }
 
-export default EspacoComum;
+export default ResumoEspaco;

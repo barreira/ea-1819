@@ -34,6 +34,7 @@ class WeeklyCalendar extends Component {
                     maxTime={'24:00:00'}
                     events={this.props.events}
                     locale='pt'
+                    timeFormat='H:mm'
                 /> </div>);
     }
 }

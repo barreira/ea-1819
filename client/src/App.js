@@ -8,7 +8,7 @@ import './style/global.css'
 import Home from './components/Home/Home';
 import Navbar from './components/Navbar/Navbar';
 import Espaco from './components/Espaco/Espaco';
-import EspacoComum from './components/EspacoComum/EspacoComum';
+import ResumoEspaco from './components/ResumoEspaco/ResumoEspaco';
 import Login from "./components/Login/Login";
 import CriarEvento from './components/CriarEvento/CriarEvento';
 import GestaoPedidos from './components/GestaoPedidos/GestaoPedidos';
@@ -33,7 +33,7 @@ function App() {
           <Switch>
             <PrivateRoute exact path="/" component={Home} />
             <PrivateRoute exact path="/espaco" component={Espaco} testFunction={testFunction} />
-            <Route exact path="/espaco-comum" component={EspacoComum} />
+            <Route exact path="/espaco-comum" component={ResumoEspaco} />
             <Route exact path="/evento/criar" component={CriarEvento} />
             <Route exact path="/gestaopedidos" component={GestaoPedidos} />
             <Route exact path="/login" render={(props) => <Login {...props} updateNavBar={updateNavBar} />} />

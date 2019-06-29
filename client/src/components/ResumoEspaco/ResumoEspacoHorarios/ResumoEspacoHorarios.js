@@ -4,7 +4,7 @@ import moment from 'moment';
 import WeeklyCalendar from '../../WeeklyCalendar/WeeklyCalendar';
 import FiltrarPorEspaco from '../FiltrarPorEspaco/FiltrarPorEspaco';
 
-class EspacoComumHorarios extends Component {
+class ResumoEspacoHorarios extends Component {
     constructor(props) {
         super(props);
         this.state = { events: [], filteredEvents: [] }
@@ -66,4 +66,4 @@ class EspacoComumHorarios extends Component {
     }
 }
 
-export default EspacoComumHorarios;
+export default ResumoEspacoHorarios;
