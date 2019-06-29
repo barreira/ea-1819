@@ -48,10 +48,26 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
 		auth.jdbcAuthentication().dataSource(dataSource)
-				.usersByUsernameQuery("select username, password, 1 from utilizador where username=?")
+				.usersByUsernameQuery("select t.username, t.password, 1 from " +
+										"(select username, password from utilizador " +
+						"union all " +
+						"select username, password from utilizadorcpdr " +
+						"union all " +
+						"select username, password from administrador " +
+						"union all " +
+						"select username, password from gestor_espacos) t where t.username=?")
+
+				//"select username, password, 1 from utilizador where username=?")
 				.authoritiesByUsernameQuery(
 						//"select u.username, r.name from users_roles ur, users u, role r where u.username = ? and ur.users_id = u.id and ur.role_id = r.id")
-		"select username, 'Utilizador' from utilizador where username=?")
+						"select t.username, t.tipo from (select username, 'Utilizador' as tipo from utilizador " +
+								"union all " +
+								"select username, 'UtilizadorCPDR' as tipo from utilizadorcpdr " +
+								"union all " +
+								"select username, 'Administrador' as tipo from administrador " +
+								"union all " +
+								"select username, 'GestorEspacos' as tipo from gestor_espacos) t where t.username=?")
+						//"select username, 'Utilizador' from utilizador where username=?")
 				.passwordEncoder(bCryptPasswordEncoder);
 	}
 
