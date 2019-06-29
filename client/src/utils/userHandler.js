@@ -16,14 +16,14 @@ UserHandler.get = () => {
     if (data)
         return jwt(data);
 
-    return null;
+    return false;
 }
 
 UserHandler.typeOfUser = () => {
     const data = localStorage.getItem(userData);
 
     // TODO remover hardcode, verificar tipo de user
-    return 'Gestor'
+    return 'Visitante'
 }
 
 UserHandler.isUserLogged = () => {

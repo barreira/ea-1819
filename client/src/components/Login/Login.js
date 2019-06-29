@@ -82,6 +82,8 @@ class Login extends Component {
                     onSubmit={async (values, { setSubmitting }) => {
                         const req = await Api.login(values.username, values.password);
 
+                        this.props.updateNavBar();
+
                         if (req.success) {
                             this.setState({ logged: true, registered: req });
                             UserHandler.save(req.token.token);
