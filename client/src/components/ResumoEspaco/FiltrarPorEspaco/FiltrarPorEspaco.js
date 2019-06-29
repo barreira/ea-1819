@@ -18,7 +18,7 @@ const FiltrarPorEspaco = (props) => {
     return (
 
         <div>
-            <h3>Locais</h3>
+            <h4>Locais</h4>
             <div className="filter-espacos-container">
                 {espacos.map(espaco => (
                     <button className="btn" onClick={(e) => props.filter(e)}>{espaco}</button>

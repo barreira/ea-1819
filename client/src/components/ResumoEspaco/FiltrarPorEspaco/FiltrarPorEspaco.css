@@ -1,0 +1,20 @@
+.filter-espacos-container {
+    margin: 0;
+    padding: 0;
+}
+
+.filter-espacos-container button {
+    display: inline-block;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 0 10px !important;
+    background-color: #ccc;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.filter-espacos-container button:first-child {
+    margin-left: 0 !important;
+}
