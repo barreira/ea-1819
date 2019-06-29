@@ -1,7 +1,6 @@
 package com.gestaoespacos.app.controllers;
 
 import com.gestaoespacos.app.model.Ator;
-import com.gestaoespacos.app.security.UserAuthenticationService;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
@@ -19,7 +18,7 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor(access = PACKAGE)
 final class LoggedInUtilizadorController {
     @NonNull
-    private UserAuthenticationService authentication;
+   // private UserAuthenticationService authentication;
 
     @GetMapping("/current")
     Ator getCurrent(@AuthenticationPrincipal final Ator user) {
@@ -28,7 +27,7 @@ final class LoggedInUtilizadorController {
 
     @GetMapping("/logout")
     boolean logout(@AuthenticationPrincipal final Ator  user) {
-        authentication.logout(user);
+    //    authentication.logout(user);
         return true;
     }
 }

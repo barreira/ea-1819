@@ -44,6 +44,13 @@ public class Utilizador extends Ator{
         this.eventosASeguir = new HashSet<>();
     }
 
+    public Utilizador(String username, String password) {
+        super(username, password);
+        this.registrationDate = Calendar.getInstance().getTime();
+        this.notificacoes = new ArrayList<>();
+        this.eventosASeguir = new HashSet<>();
+    }
+
     public Utilizador(String username, String password, String email, String nome){
         super(username, password);
         this.email = email;
