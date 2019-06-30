@@ -57,7 +57,7 @@ class PedidosUtilizadorCPDR extends React.Component {
     render() {
         return (
             <div>
-                <h4>Pedidos Gestor</h4>
+                <h4>Pedidos UtilizadorCPDR</h4>
 
                 <table className="table ec-table">
                     <thead>
