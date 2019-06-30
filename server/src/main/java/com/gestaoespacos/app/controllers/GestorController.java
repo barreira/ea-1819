@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.gestaoespacos.app.controllers.model.EventoUpdate;
 import com.gestaoespacos.app.controllers.model.GesEC;
 import com.gestaoespacos.app.model.*;
-import com.gestaoespacos.app.repositories.EspacoComumRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +14,6 @@ import java.util.Optional;
 @RequestMapping("/gestor")
 public class GestorController {
 
-    @Autowired
-    EspacoComumRepository ecr;
 
     /*-----------------------------------------------------------------------------------------------------------------
      | Gerir Eventos
@@ -112,16 +108,6 @@ public class GestorController {
         }catch(IdNotFoundException e){ System.out.println(e);}
 
         return null;
-    }
-
-    @GetMapping("/ecs/view/{id_ec}")
-    public Optional<EspacoComum> viewEC(@PathVariable long id_ec){
-        return ecr.findById(id_ec);
-    }
-
-    @GetMapping("/ecs/viewAll")
-    public List<EspacoComum> viewAllEC(){
-        return ecr.findAll();
     }
 
 }
