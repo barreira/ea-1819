@@ -13,7 +13,8 @@ import Login from "./components/Login/Login";
 import CriarEvento from './components/CriarEvento/CriarEvento';
 import GestaoPedidos from './components/GestaoPedidos/GestaoPedidos';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import Pesquisa from './components/Users/Gestor/Pesquisa/Pesquisa';
+import PesquisaGestor from "./components/Users/Gestor/Pesquisa/PesquisaGestor";
+import PesquisaUtilizador from "./components/Users/Utilizador/Pesquisa/PesquisaUtilizador";
 
 function App() {
 
@@ -22,9 +23,9 @@ function App() {
   };
 
   const updateNavBar = () => {
-    console.log("Should update NavBar")
+    console.log("Should update NavBar");
     testFunction();
-  }
+  };
 
   return (
     <Router>
@@ -34,6 +35,9 @@ function App() {
           <Switch>
             <PrivateRoute exact path="/" component={Home} />
             <PrivateRoute exact path="/espaco" component={Espaco} testFunction={testFunction} />
+            {/*<PrivateRoute exact path="/pesquisar" component={Pesquisar} />*/}
+            <Route exact path="/pesquisagestor" component={PesquisaGestor} />
+            <Route exact path="/pesquisautilizador" component={PesquisaUtilizador} />
             <Route exact path="/espaco-comum" component={ResumoEspaco} />
             <Route exact path="/evento/criar" component={CriarEvento} />
             <Route exact path="/gestaopedidos" component={GestaoPedidos} />

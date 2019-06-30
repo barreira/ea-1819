@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,10 +41,12 @@ public class ResponsavelBean {
      * @throws IdNotFoundException
      */
     public Pedido alocarEspaco(long id_usercpdr, Alocacao a) throws IdNotFoundException {
-        UtilizadorCPDR u = ucpdr.getOne(id_usercpdr);
+        Optional<UtilizadorCPDR> u_opt = ucpdr.findById(id_usercpdr);
 
-        if(u == null)
+        if(!u_opt.isPresent())
             throw new IdNotFoundException("UtilizadorCPDR with id="+id_usercpdr+" not found.");
+
+        UtilizadorCPDR u = u_opt.get();
 
         //Se falta menos de uma hora para o possível agendamento
         if(UtilsGHE.menos1Hora(LocalDateTime.now(), a.getDateTimeInicial()) &&
@@ -82,15 +85,19 @@ public class ResponsavelBean {
      * @throws IdNotFoundException
      */
     public Pedido cancelarPedido(long id_usercpdr, long nr_pedido) throws IdNotFoundException{
-        UtilizadorCPDR u = ucpdr.getOne(id_usercpdr);
+        Optional<UtilizadorCPDR> u_opt = ucpdr.findById(id_usercpdr);
 
-        if(u == null)
+        if(!u_opt.isPresent())
             throw new IdNotFoundException("UtilizadorCPDR with id="+id_usercpdr+" not found.");
 
-        Pedido p = pr.getOne(nr_pedido);
+        UtilizadorCPDR u = u_opt.get();
 
-        if(p == null)
+        Optional<Pedido> p_opt = pr.findById(nr_pedido);
+
+        if(!p_opt.isPresent())
             throw new IdNotFoundException("Pedido with id="+nr_pedido+" not found.");
+
+        Pedido p = p_opt.get();
 
         if(!u.getPedidos().contains(p))
             throw new IdNotFoundException("Pedido with id="+nr_pedido+" not found for the UtilizadorCPDR with id="+id_usercpdr+".");
@@ -113,10 +120,12 @@ public class ResponsavelBean {
      * @throws IdNotFoundException
      */
     public Pedido alterarEvento(long id_usercpdr, Alteracao a) throws IdNotFoundException{
-        UtilizadorCPDR u = ucpdr.getOne(id_usercpdr);
+        Optional<UtilizadorCPDR> u_opt = ucpdr.findById(id_usercpdr);
 
-        if(u == null)
+        if(!u_opt.isPresent())
             throw new IdNotFoundException("UtilizadorCPDR with id="+id_usercpdr+" not found.");
+
+        UtilizadorCPDR u = u_opt.get();
 
         Evento e = a.getEvento();
 
@@ -187,10 +196,12 @@ public class ResponsavelBean {
         if(r == null)
             throw new IdNotFoundException("Responsavel with id="+id_responsavel+" not found.");
 
-        Evento e = er.getOne(id_evt);
+        Optional<Evento> e_opt = er.findById(id_evt);
 
-        if(e == null)
+        if(!e_opt.isPresent())
             throw new IdNotFoundException("Evento with id="+id_evt+" not found.");
+
+        Evento e = e_opt.get();
 
         if(e.getUtilizadorResponsavel().getId() != id_responsavel)
             throw new IdNotFoundException("Evento with id="+id_evt+" not owned by responsável with id="+ id_responsavel + ".");

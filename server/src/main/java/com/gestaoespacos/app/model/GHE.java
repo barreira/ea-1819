@@ -300,7 +300,7 @@ public class GHE {
      * @return Evento atualizado
      * @throws IdNotFoundException Evento com esse identificador não encontrado
      */
-    public static Evento updateEvento(long id_evt, Evento novoEvento) throws IdNotFoundException{
+    public static Evento updateEvento(long id_evt, Evento novoEvento) throws IdNotFoundException, EspacoDoesNotExistException{
         return gb.updateEvento(id_evt, novoEvento);
     }
 

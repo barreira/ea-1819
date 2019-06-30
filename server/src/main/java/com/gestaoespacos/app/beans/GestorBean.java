@@ -23,6 +23,7 @@ public class GestorBean {
     private PedidoRepository pr;
     private AlocacaoRepository alr;
     private AlteracaoRepository upr;
+    private EspacoRepository espr;
     private EspacoComumRepository ecr;
     private NotificacaoRepository nr;
     private UtilizadorCPDRRepository ucpdr;
@@ -30,7 +31,7 @@ public class GestorBean {
 
     @Autowired
     public GestorBean(GestorEspacosRepository gr, AdministradorRepository ar, EventoRepository er, PedidoRepository pr,
-                      AlocacaoRepository alr, AlteracaoRepository upr, EspacoComumRepository ecr,
+                      AlocacaoRepository alr, AlteracaoRepository upr,  EspacoRepository espr, EspacoComumRepository ecr,
                       NotificacaoRepository nr, UtilizadorCPDRRepository ucpdr, HorarioRepository hr){
         this.gr = gr;
         this.ar = ar;
@@ -38,6 +39,7 @@ public class GestorBean {
         this.pr = pr;
         this.alr = alr;
         this.upr = upr;
+        this.espr = espr;
         this.ecr = ecr;
         this.nr = nr;
         this.ucpdr = ucpdr;
@@ -124,7 +126,7 @@ public class GestorBean {
         if (!a.isPresent()) up = upr.findById(nr_pedido);
         else return aceitaPedido(a.get());
 
-        if (up == null)
+        if (!up.isPresent())
             throw new IdNotFoundException("Pedido with id=" + nr_pedido + " not found.");
 
         return aceitaPedido(up.get());
@@ -193,14 +195,22 @@ public class GestorBean {
      * @throws IdNotFoundException
      */
     public Pedido rejeitaPedido(long nr_pedido, String justificacao) throws IdNotFoundException{
-        Pedido p = pr.getOne(nr_pedido);
+        Optional<Pedido> p_opt = pr.findById(nr_pedido);
 
-        if(p == null)
+        if(!p_opt.isPresent())
             throw new IdNotFoundException("Pedido with id="+nr_pedido+" not found.");
+
+        Pedido p = p_opt.get();
 
         gestor.rejeitaPedido(p);
 
-        UtilizadorCPDR u = ucpdr.findByPedido(nr_pedido).get();
+        Optional<UtilizadorCPDR> u_opt = ucpdr.findByPedido(nr_pedido);
+
+        if(!u_opt.isPresent())
+            throw new IdNotFoundException("UtilizadorCPDR that owns Pedido with id=" + nr_pedido + " not found.");
+
+        UtilizadorCPDR u = u_opt.get();
+
         Notificacao n = new Notificacao(justificacao);
         u.addNotificacao(n);
 
@@ -228,8 +238,9 @@ public class GestorBean {
      * @throws EspacoDoesNotExistException
      */
     public void novoEvento(Evento e) throws EspacoDoesNotExistException{
-        Espaco esp = e.getEspaco();
-        if(esp == null)
+        Optional<Espaco> esp = espr.findById(e.getEspaco().getId());
+
+        if(!esp.isPresent())
             throw new EspacoDoesNotExistException("Evento with name=" + e.getNome() + " does not have Espaco associated.");
 
         //O gestor é o responsavel
@@ -237,6 +248,9 @@ public class GestorBean {
 
         //Eliminar conflitos
         elimConflitos(e, e.getDateTimeInicial(), e.getDateTimeFinal());
+
+        //Adicionar ao horário do espaço
+        esp.get().getHorario().addEvento(e);
 
         er.save(e);
     }
@@ -250,16 +264,29 @@ public class GestorBean {
      * @return
      * @throws IdNotFoundException
      */
-    public Evento updateEvento(long id_evt, Evento novoEvento) throws IdNotFoundException{
-        Evento e = er.getOne(id_evt);
+    public Evento updateEvento(long id_evt, Evento novoEvento) throws IdNotFoundException, EspacoDoesNotExistException{
+         Optional<Evento> e_opt = er.findById(id_evt);
 
-        if(e == null)
+        if(!e_opt.isPresent())
             throw new IdNotFoundException("Evento with id="+id_evt+" not found.");
+
+        Evento e = e_opt.get();
 
         String oldName = e.getNome();
 
         //Atualizar o evento
-        gestor.updateEvento(e, novoEvento);
+        Espaco espaco = novoEvento.getEspaco();
+
+        if(espaco != null){
+            Optional<Espaco> esp = espr.findById(espaco.getId());
+
+            if(!esp.isPresent())
+                throw new EspacoDoesNotExistException("Novo evento with name=" + novoEvento.getNome() + " does not have Espaco associated.");
+
+            gestor.updateEvento(e, novoEvento, esp.get());
+        }
+        else gestor.updateEvento(e, novoEvento);
+
 
         //Eliminar conflitos
         elimConflitos(e, e.getDateTimeInicial(), e.getDateTimeFinal());
@@ -269,7 +296,8 @@ public class GestorBean {
         if(e.getUtilizadorResponsavel().getId() != gestor.getId()){
             ((UtilizadorCPDR)e.getUtilizadorResponsavel()).addNotificacao(n);
         }
-        e.getSeguidores().forEach(s -> s.addNotificacao(n));
+        System.out.println(e.getSeguidores());
+        //e.getSeguidores().forEach(s -> s.addNotificacao(n));
 
         nr.save(n);
 
@@ -300,10 +328,12 @@ public class GestorBean {
      * @throws IdNotFoundException
      */
     public EspacoComum updateEC(long id_ec, String designacao, List<Espaco> ec) throws IdNotFoundException{
-        EspacoComum e = ecr.getOne(id_ec);
+        Optional<EspacoComum> e_opt = ecr.findById(id_ec);
 
-        if(e == null)
+        if(!e_opt.isPresent())
             throw new IdNotFoundException("EspacoComum with id="+id_ec+" not found.");
+
+        EspacoComum e = e_opt.get();
 
         EspacoComum newEC = gestor.updateEC(e, designacao, ec);
 
@@ -320,10 +350,12 @@ public class GestorBean {
      * @throws IdNotFoundException
      */
     public EspacoComum removeEC(long id_ec) throws IdNotFoundException{
-        EspacoComum e = ecr.getOne(id_ec);
+        Optional<EspacoComum> e_opt = ecr.findById(id_ec);
 
-        if(e == null)
+        if(!e_opt.isPresent())
             throw new IdNotFoundException("EspacoComum with id="+id_ec+" not found.");
+
+        EspacoComum e = e_opt.get();
 
         gestor.removeEC(e);
         ecr.delete(e);

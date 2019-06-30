@@ -33,15 +33,19 @@ public class UtilizadorBean {
      * @throws IdNotFoundException
      */
     public Evento follow(long id_user, long id_evt) throws IdNotFoundException {
-        Utilizador u = ur.getOne(id_user);
+        Optional<Utilizador> u_opt = ur.findById(id_user);
 
-        if(u == null)
+        if(!u_opt.isPresent())
             throw new IdNotFoundException("Utilizador with id="+id_user+" not found.");
 
-        Evento e = er.getOne(id_evt);
+        Utilizador u = u_opt.get();
 
-        if(e == null)
+        Optional<Evento> e_opt = er.findById(id_evt);
+
+        if(!e_opt.isPresent())
             throw new IdNotFoundException("Evento with id="+id_evt+" not found.");
+
+        Evento e = e_opt.get();
 
         u.follow(e);
 
@@ -58,10 +62,12 @@ public class UtilizadorBean {
      * @throws IdNotFoundException
      */
     public Evento unfollow(long id_user, long id_evt) throws IdNotFoundException{
-        Utilizador u = ur.getOne(id_user);
+        Optional<Utilizador> u_opt = ur.findById(id_user);
 
-        if(u == null)
+        if(!u_opt.isPresent())
             throw new IdNotFoundException("Utilizador with id="+id_user+" not found.");
+
+        Utilizador u = u_opt.get();
 
         Evento e = er.getOne(id_evt);
 
@@ -82,10 +88,12 @@ public class UtilizadorBean {
      * @throws IdNotFoundException
      */
     public List<Notificacao> getNotificacoes(long id_user) throws IdNotFoundException{
-        Utilizador u = ur.getOne(id_user);
+        Optional<Utilizador> u_opt = ur.findById(id_user);
 
-        if(u == null)
+        if(!u_opt.isPresent())
             throw new IdNotFoundException("Utilizador with id="+id_user+" not found.");
+
+        Utilizador u = u_opt.get();
 
         return u.getNotificacoes();
     }

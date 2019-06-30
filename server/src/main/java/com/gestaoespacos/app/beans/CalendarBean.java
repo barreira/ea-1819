@@ -28,6 +28,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Optional;
 import java.util.TimeZone;
 
 @Service
@@ -75,10 +76,12 @@ public class CalendarBean {
      */
     public boolean syncCalendar(long id, String code) throws IdNotFoundException {
 
-        Utilizador u = ur.getOne(id);
+        Optional<Utilizador> u_opt = ur.findById(id);
 
-        if (u == null)
+        if (!u_opt.isPresent())
             throw new IdNotFoundException("Utilizador with id=" + id + " not found.");
+
+        Utilizador u = u_opt.get();
 
         try {
 

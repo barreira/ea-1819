@@ -8,23 +8,21 @@ class FiltroPesquisa extends Component {
             filters: ['Eventos', 'Espaços', 'Responsáveis'],
             activeFilters: ['Eventos', 'Espaços'],
             inputFilter: ''
-        }
+        };
 
         this.props.setActiveFilters(this.state.activeFilters);
     }
 
     classNameByFilter = (filter) => {
-
         let className = "btn btn-filter";
 
         if (this.state.activeFilters.includes(filter))
             className = "btn btn-filter btn-filter-active"
 
         return className;
-    }
+    };
 
     changeFilter = (filter) => {
-
         let newActiveFilters = [];
 
         if (this.state.activeFilters.includes(filter)) {
@@ -36,18 +34,18 @@ class FiltroPesquisa extends Component {
 
         this.setState({
             activeFilters: newActiveFilters
-        })
+        });
 
         this.props.setActiveFilters(newActiveFilters);
-    }
+    };
 
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
-        })
+        });
 
         this.props.handleInputFilter(e.target.value);
-    }
+    };
 
     render() {
         const { filters } = this.state;
