@@ -1,7 +1,8 @@
 package com.gestaoespacos.app.controllers;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.gestaoespacos.app.controllers.model.NovoPedido;
+import com.gestaoespacos.app.controllers.model.PedidoAlocacao;
+import com.gestaoespacos.app.controllers.model.PedidoAlteracao;
 import com.gestaoespacos.app.model.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,18 +13,18 @@ import java.util.List;
 public class UtilizadorCPDRController {
 
     @PostMapping("/alocar")
-    public void alocarEspaco(@RequestBody NovoPedido aloc){
+    public void alocarEspaco(@RequestBody PedidoAlocacao aloc){
         try{
-            GHE.alocarEspaco(aloc.getId_usercpdr(), (Alocacao)aloc.getPedido());
+            GHE.alocarEspaco(aloc.getId(), aloc.getAlocacao());
         }catch(IdNotFoundException e){ System.out.println(e);}
          catch(Exception e){ System.out.println(e);}
 
     }
 
     @PostMapping("/alterar")
-    public void alterarEspaco(@RequestBody NovoPedido alt){
+    public void alterarEspaco(@RequestBody PedidoAlteracao alt){
         try{
-            GHE.alterarEvento(alt.getId_usercpdr(), (Alteracao)alt.getPedido());
+            GHE.alterarEvento(alt.getId(), alt.getAlteracao());
         }catch(IdNotFoundException e){ System.out.println(e);}
          catch(Exception e){ System.out.println(e);}
     }
@@ -33,7 +34,7 @@ public class UtilizadorCPDRController {
 
         try{
             long id_usercpdr = cancelamento.get("id").asLong();
-            long nr_pedido = cancelamento.get("long").asLong();
+            long nr_pedido = cancelamento.get("nr").asLong();
             GHE.cancelarPedido(id_usercpdr, nr_pedido);
         }catch(IdNotFoundException e){ System.out.println(e);}
 

@@ -21,14 +21,17 @@ public class ResponsavelBean {
     private AlteracaoRepository upr;
     private EventoRepository er;
     private HorarioRepository hr;
+    private EspacoRepository espr;
 
     @Autowired
-    public ResponsavelBean(UtilizadorCPDRRepository ucpdr, PedidoRepository pr, AlteracaoRepository upr, EventoRepository er, HorarioRepository hr){
+    public ResponsavelBean(UtilizadorCPDRRepository ucpdr, PedidoRepository pr, AlteracaoRepository upr,
+                           EventoRepository er, HorarioRepository hr, EspacoRepository espr){
         this.ucpdr = ucpdr;
         this.er = er;
         this.pr = pr;
         this.upr = upr;
         this.hr = hr;
+        this.espr = espr;
     }
 
     /**
@@ -52,25 +55,29 @@ public class ResponsavelBean {
         if(UtilsGHE.menos1Hora(LocalDateTime.now(), a.getDateTimeInicial()) &&
                 //e este não causa conflito com mais nenhum
                 getConflitos(a.getEspaco(), a.getDateTimeInicial(), a.getDateTimeFinal()).size() == 0){
+            System.out.println("ok");
             //Então o evento fica efetivo
             Evento e = makeEvento(u, a);
             //Atualizar horario do espaco
+            System.out.println("ok2");
             Horario h = e.getEspaco().getHorario();
+            System.out.println("ok3");
             h.addEvento(e);
-
+            System.out.println("ok4");
             a.setAceite(true);
             a.setAtendido(true);
+            System.out.println("ok5");
 
             Notificacao n = new Notificacao("Evento criado com sucesso");
             u.addNotificacao(n);
-
+            System.out.println("ok6");
             er.save(e);
             hr.save(h);
-
+            System.out.println("ok7");
         }
-
+        System.out.println("ok7.5");
         u.alocarEspaco(a);
-
+        System.out.println("ok8");
         pr.save(a);
         ucpdr.save(u);
 
@@ -304,7 +311,11 @@ public class ResponsavelBean {
     private Evento makeEvento(UtilizadorCPDR r, Pedido p){
         Evento e =  new Evento(p.getNome(), p.getDescricao(), p.getDateTimeInicial(), p.getDateTimeFinal(), p.getPeriodicidade(), p.getLimite());
         e.setUtilizadorResponsavel(r);
-        e.setEspaco(p.getEspaco());
+
+        Espaco esp = espr.getOne(p.getEspaco().getId());
+        e.setEspaco(esp);
+        esp.getHorario().addEvento(e);
+
         return e;
     }
 
