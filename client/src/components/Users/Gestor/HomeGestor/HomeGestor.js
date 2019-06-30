@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Pesquisa from '../Pesquisa/Pesquisa';
+import PesquisaGestor from '../Pesquisa/PesquisaGestor';
 
 class HomeGestor extends Component {
     constructor(props) {
@@ -12,7 +12,7 @@ class HomeGestor extends Component {
         return (
 
             <div>
-                <Pesquisa />
+                <PesquisaGestor />
             </div>
 
         );

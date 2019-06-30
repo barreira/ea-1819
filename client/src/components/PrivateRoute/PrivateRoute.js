@@ -7,6 +7,7 @@ import HomeVisitante from '../../components/Users/Visitante/Home/HomeVisitante';
 import HomeUtilizadorCPDR from "../Users/UtilizadorCPDR/Home/HomeUtilizadorCPDR";
 import HomeGestor from "../Users/Gestor/HomeGestor/HomeGestor";
 import HomeAdministrador from "../Users/Administrador/Home/HomeAdministrador";
+import PesquisaGestor from "../Users/Gestor/Pesquisa/PesquisaGestor";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
 
@@ -32,7 +33,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
     switch (typeUser) {
         case 'Visitante':
-            pathLimitations = ['/', '/login', '/registar', '/espacos'];
+            pathLimitations = ['/', '/login', '/registar', '/espacos', '/pesquisar'];
 
             if (rest.path === '/') {
                 return (
@@ -45,7 +46,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
             break;
 
         case 'Utilizador':
-            pathLimitations = ['/', '/eventos', '/notificacoes'];
+            pathLimitations = ['/', '/eventos', '/notificacoes', '/pesquisar'];
 
             if (rest.path === '/') {
                 return (
@@ -57,7 +58,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
             break;
 
         case 'UtilizadorCPDR':
-            pathLimitations = ['/', '/espacos', '/eventos', '/pedidos', '/notificacoes'];
+            pathLimitations = ['/', '/espacos', '/eventos', '/pedidos', '/notificacoes', '/pesquisar'];
 
             if (rest.path === '/') {
                 return (
@@ -71,7 +72,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
         case 'Gestor':
             pathLimitations = ['/', '/espacos', '/eventos', '/eventos/criar', '/eventos/modificar', '/espacos-comuns',
-                '/espacos-comuns/criar', '/espacos-comuns/modificar', '/pedidos', '/notificacoes'];
+                '/espacos-comuns/criar', '/espacos-comuns/modificar', '/pedidos', '/notificacoes', '/pesquisar'];
 
             if (rest.path === '/') {
                 return (
@@ -81,11 +82,19 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
                 )
             }
 
+            if (rest.path === '/pesquisar') {
+                return (
+                    <Route {...rest} render={(props) => (
+                        <PesquisaGestor {...props} />
+                    )} />
+                );
+            }
+
             break;
 
         case 'Administrador':
             pathLimitations = ['/', '/espacos', '/espacos/carregar', '/eventos', '/eventos/carregar', '/utilizadores',
-                'utilizadores/carregar', '/espacos-comuns'];
+                'utilizadores/carregar', '/espacos-comuns', '/pesquisar'];
 
             if (rest.path === '/') {
                 return (

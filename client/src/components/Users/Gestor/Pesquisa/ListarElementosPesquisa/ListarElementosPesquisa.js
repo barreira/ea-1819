@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
+import './ListarElementosPesquisa.css';
+
 class ListarElementosPesquisa extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {};
     }
 
     render() {
-
         const { listar } = this.props;
 
-
         const { eventos, espacos, responsaveis } = listar;
-
 
         // Listar Eventos
 
@@ -23,36 +22,46 @@ class ListarElementosPesquisa extends Component {
         // Listar Responsáveis
 
         return (
-
             <div>
                 <div>
                     <table className="table ec-table">
                         <tbody>
-
-
                             {eventos && eventos.map(event => (
                                 <tr>
                                     <td>
                                         <p>{event.nome}</p>
-
                                     </td>
                                     <td>
-                                        <i className="material-icons individual-icon" >
+                                        <i className="material-icons individual-icon">
                                             location_on
-                                          </i>
+                                        </i>
                                         <p>{event.local}</p>
                                     </td>
                                     <td>
-                                        <i className="material-icons individual-icon" >
+                                        <i className="material-icons individual-icon">
                                             calendar_today
-                                          </i>
+                                        </i>
                                         <p>{moment(event.start).format('HH:mm')} - {moment(event.end).format('HH:mm')}</p>
                                     </td>
                                     <td>
-                                        <i className="material-icons individual-icon" >
+                                        <i className="material-icons individual-icon">
                                             person
-                                          </i>
+                                        </i>
                                         <p>{event.responsavel}</p>
+                                    </td>
+                                    <td>
+                                        <a href="#" className="alert-danger">
+                                            <i className="material-icons individual-icon">
+                                                edit
+                                            </i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="#" className="alert-danger">
+                                            <i className="material-icons individual-icon">
+                                                cancel
+                                            </i>
+                                        </a>
                                     </td>
                                 </tr>
                             ))}
@@ -62,6 +71,8 @@ class ListarElementosPesquisa extends Component {
                                     <td>
                                         {espaco}
                                     </td>
+                                    <td></td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -76,9 +87,10 @@ class ListarElementosPesquisa extends Component {
                                     <td></td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                             ))}
-
                         </tbody>
                     </table>
                 </div>
