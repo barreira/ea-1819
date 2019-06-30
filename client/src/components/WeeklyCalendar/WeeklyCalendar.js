@@ -26,16 +26,22 @@ class WeeklyCalendar extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{ marginBottom: '25px' }}>
                 <FullCalendar defaultView="timeGridWeek"
                     allDaySlot={false}
                     plugins={[timeGridPlugin]}
-                    minTime={'06:00:00'}
-                    maxTime={'24:00:00'}
+                    slotLabelFormat={{
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        omitZeroMinute: false
+                    }}
+                    minTime={'08:00:00'}
+                    maxTime={'20:00:00'}
                     events={this.props.events}
                     locale='pt'
-                    timeFormat='H:mm'
-                /> </div>);
+                    contentHeight='auto'
+                /> </div>
+        );
     }
 }
 

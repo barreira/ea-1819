@@ -6,8 +6,11 @@ let ApiUsers = {};
 ApiUsers.login = async (username, password) => {
 
     try {
+
         const req = await axios.post(`${HOST}/public/users/login`, {
-            username, password
+            username,
+            password,
+            "type": "utilizador"
         })
 
         return {
@@ -28,32 +31,13 @@ ApiUsers.login = async (username, password) => {
 ApiUsers.register = async (username, email, name, password) => {
 
     try {
+
         const req = await axios.post(`${HOST}/public/users/register`, {
-            username, email, name, password
-        })
-
-        return {
-            success: true,
-            status: req.status,
-            token: req.data
-        };
-
-    } catch (e) {
-        console.error(e);
-
-        return {
-            success: false,
-        }
-    }
-}
-
-
-
-ApiUsers.login = async (username, password) => {
-
-    try {
-        const req = await axios.post(`${HOST}/public/users/login`, {
-            username, password
+            "username": username,
+            "email": email,
+            "nome": name,
+            "password": password,
+            "type": "utilizador"
         })
 
         return {

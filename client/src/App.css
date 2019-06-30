@@ -1,15 +1,19 @@
 h2 {
     font-size: 24pt;
+    font-family: 'Fira Sans', sans-serif;
 }
 
 h3 {
     font-size: 18pt;
+    font-family: 'Fira Sans', sans-serif;
 }
 
 h4 {
     font-size: 16pt;
+    font-family: 'Fira Sans', sans-serif;
 }
 
 p {
     font-size: 12pt;
+    font-family: 'Roboto', sans-serif;
 }

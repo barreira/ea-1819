@@ -98,12 +98,11 @@ final class VisitanteController {
 
         GHE.registarUtilizador(newAtor);
 
-        ObjectNode u = new ObjectMapper().createObjectNode()
-                                         .put("username", utilizador.getUsername())
-                                         .put("password", utilizador.getPassword())
-                                         .put("type", "utilizador");
-
-        return login(u);
+       // ObjectNode u = new ObjectMapper().createObjectNode()
+        //                                 .put("username", utilizador.getUsername())
+         //                                .put("password", utilizador.getPassword())
+           //                              .put("type", "utilizador");
+        return "Sucessfully registered!";
     }
 
     @PostMapping("/registerucpdr")

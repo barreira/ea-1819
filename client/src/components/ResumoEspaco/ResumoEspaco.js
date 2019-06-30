@@ -5,6 +5,9 @@ import './ResumoEspaco.css';
 import ResumoEspacoEventos from './ResumoEspacoEventos/ResumoEspacoEventos';
 import ResumoEspacoHorarios from './ResumoEspacoHorarios/ResumoEspacoHorarios';
 
+import ApiEventos from '../../api/ApiEventos';
+import ApiUsers from '../../api/ApiUsers';
+
 class ResumoEspaco extends Component {
     constructor(props) {
         super(props);
@@ -16,6 +19,12 @@ class ResumoEspaco extends Component {
     }
 
 
+    testFunction = () => {
+        console.log("TESTE")
+
+        ApiUsers.register();
+    }
+
 
     render() {
 
@@ -26,6 +35,9 @@ class ResumoEspaco extends Component {
 
         return (
             <div>
+
+                <button type="text" onClick={this.testFunction}>TEST BUTTON</button>
+
                 <h3 style={{ textAlign: 'center' }}>{this.props.title}</h3>
 
                 <div className="btn-section">
@@ -35,6 +47,8 @@ class ResumoEspaco extends Component {
 
                 {activeButton === 'Eventos' ? <ResumoEspacoEventos /> : ''}
                 {activeButton === 'Horarios' ? <ResumoEspacoHorarios /> : ''}
+
+
 
             </div>
         );

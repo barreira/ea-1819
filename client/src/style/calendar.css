@@ -1,3 +1,8 @@
 .fc-left h2 {
-    font-size: 14pt;
+    font-size: 12pt !important;
+    margin-bottom: -20px !important;
+}
+
+.fc-toolbar {
+    margin-bottom: 10px !important;
 }

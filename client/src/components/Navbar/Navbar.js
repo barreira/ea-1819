@@ -4,6 +4,7 @@ import moment from 'moment';
 import UserHandler from '../../utils/userHandler';
 
 import './Navbar.css'
+import { jsxClosingElement } from '@babel/types';
 
 class Navbar extends Component {
     constructor(props) {
@@ -25,7 +26,6 @@ class Navbar extends Component {
     }
 
     render() {
-
         const user = UserHandler.get();
         const loginRegisterSection = (
             <React.Fragment>

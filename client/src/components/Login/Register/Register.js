@@ -72,6 +72,8 @@ class Register extends Component {
 
                             const login = await ApiUsers.login(values.username, values.password);
 
+                            console.log("DADOS LOGIN", login)
+
                             if (login.success) {
                                 if (login.success) {
                                     UserHandler.save(login.token.token);

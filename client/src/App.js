@@ -13,6 +13,7 @@ import Login from "./components/Login/Login";
 import CriarEvento from './components/CriarEvento/CriarEvento';
 import GestaoPedidos from './components/GestaoPedidos/GestaoPedidos';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import Pesquisa from './components/Users/Gestor/Pesquisa/Pesquisa';
 
 function App() {
 

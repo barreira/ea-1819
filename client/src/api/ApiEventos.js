@@ -8,8 +8,8 @@ ApiEventos.fetchEventos = async () => {
 
     try {
         const req = await axios.post(`${HOST}/public/users/eventos`, {
-            "inicio": moment().subtract('30', 'days').format('YYYY-MM-DD'),
-            "fim": moment().add('7', 'days').format('YYYY-MM-DD'),
+            "inicio": moment().subtract('300', 'days').format('YYYY-MM-DD'),
+            "fim": moment().add('300', 'days').format('YYYY-MM-DD'),
         })
 
         console.log(req)
