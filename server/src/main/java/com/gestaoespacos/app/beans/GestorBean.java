@@ -265,7 +265,7 @@ public class GestorBean {
      * @throws IdNotFoundException
      */
     public Evento updateEvento(long id_evt, Evento novoEvento) throws IdNotFoundException, EspacoDoesNotExistException{
-         Optional<Evento> e_opt = er.findById(id_evt);
+        Optional<Evento> e_opt = er.findById(id_evt);
 
         if(!e_opt.isPresent())
             throw new IdNotFoundException("Evento with id="+id_evt+" not found.");
@@ -273,6 +273,12 @@ public class GestorBean {
         Evento e = e_opt.get();
 
         String oldName = e.getNome();
+
+        //Detetar alterações no agendamento
+        boolean novoPeriodo =  e.getPeriodicidade() != novoEvento.getPeriodicidade();
+        boolean novoInicio = novoEvento.getDateTimeInicial() != null;
+        boolean novoFim = novoEvento.getDateTimeFinal() != null;
+        boolean novoLimite = novoEvento.getLimite() != null;
 
         //Atualizar o evento
         Espaco espaco = novoEvento.getEspaco();
@@ -289,15 +295,15 @@ public class GestorBean {
 
 
         //Eliminar conflitos
-        elimConflitos(e, e.getDateTimeInicial(), e.getDateTimeFinal());
+        if(novoPeriodo || novoInicio || novoFim || novoLimite)
+            elimConflitos(e, e.getDateTimeInicial(), e.getDateTimeFinal());
 
         //Notificar afetados
-        Notificacao n = new Notificacao("O evento "+ oldName + "teve os seus dados modificados. Por favor consulte as mudanças.");
+        Notificacao n = new Notificacao("O evento "+ oldName + " teve os seus dados modificados. Por favor consulte as mudanças.");
         if(e.getUtilizadorResponsavel().getId() != gestor.getId()){
             ((UtilizadorCPDR)e.getUtilizadorResponsavel()).addNotificacao(n);
         }
-        System.out.println(e.getSeguidores());
-        //e.getSeguidores().forEach(s -> s.addNotificacao(n));
+        e.getSeguidores().forEach(s -> s.addNotificacao(n));
 
         nr.save(n);
 

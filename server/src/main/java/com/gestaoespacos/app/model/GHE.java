@@ -102,7 +102,7 @@ public class GHE {
      * @return Notificações
      * @throws IdNotFoundException Utilizador com esse identificador não encontrado
      */
-    public static List<Notificacao> getNotificacoes(long id_user) throws IdNotFoundException{
+    public static Set<Notificacao> getNotificacoes(long id_user) throws IdNotFoundException{
         return ub.getNotificacoes(id_user);
     }
 
