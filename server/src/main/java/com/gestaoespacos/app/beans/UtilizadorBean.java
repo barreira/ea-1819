@@ -87,7 +87,7 @@ public class UtilizadorBean {
      * @return
      * @throws IdNotFoundException
      */
-    public List<Notificacao> getNotificacoes(long id_user) throws IdNotFoundException{
+    public Set<Notificacao> getNotificacoes(long id_user) throws IdNotFoundException{
         Optional<Utilizador> u_opt = ur.findById(id_user);
 
         if(!u_opt.isPresent())

@@ -3,9 +3,7 @@ package com.gestaoespacos.app.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class Evento {
@@ -27,7 +25,7 @@ public class Evento {
 
     @ManyToMany(mappedBy = "eventosASeguir", fetch = FetchType.EAGER)
     //@JoinColumn(name = "evento_id")
-    private List<Utilizador> seguidores;
+    private Set<Utilizador> seguidores;
 
     @OneToOne
     //private Responsavel utilizadorResponsavel;
@@ -50,7 +48,7 @@ public class Evento {
         this.dateTimeFinal = fim;
         this.periodicidade = p;
         this.limite = limite;
-        this.seguidores = new ArrayList<>();
+        this.seguidores = new HashSet<>();
         this.espaco = null;
     }
 
@@ -69,11 +67,11 @@ public class Evento {
         this.utilizadorResponsavel = utilizadorResponsavel;
     }
 
-    public List<Utilizador> getSeguidores() {
+    public Set<Utilizador> getSeguidores() {
         return seguidores;
     }
 
-    public void setSeguidores(List<Utilizador> seguidores) {
+    public void setSeguidores(Set<Utilizador> seguidores) {
         this.seguidores = seguidores;
     }
 

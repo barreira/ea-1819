@@ -8,10 +8,12 @@ import com.gestaoespacos.app.model.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/gestor")
 public class GestorController {
+
 
     /*-----------------------------------------------------------------------------------------------------------------
      | Gerir Eventos
@@ -98,7 +100,7 @@ public class GestorController {
         return null;
     }
 
-    @PostMapping("/ecs/delete/{id_ec}")
+    @GetMapping("/ecs/delete/{id_ec}")
     public EspacoComum deleteEC(@PathVariable long id_ec){
 
         try{

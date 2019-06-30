@@ -1,5 +1,7 @@
 package com.gestaoespacos.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,6 +13,7 @@ public class GestorEspacos extends Ator implements Responsavel{
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "gestorespacos_id")
+    @JsonIgnore
     private Set<EspacoComum> espacosComuns;
 
     @OneToMany(mappedBy = "utilizadorResponsavel", fetch = FetchType.EAGER)
@@ -81,14 +84,14 @@ public class GestorEspacos extends Ator implements Responsavel{
         if(novo_evt.getDateTimeInicial() != null) antigo.setDateTimeInicial(novo_evt.getDateTimeInicial());
         if(novo_evt.getDateTimeFinal() != null) antigo.setDateTimeFinal(novo_evt.getDateTimeFinal());
         if(novo_evt.getDescricao() != null) antigo.setDescricao(novo_evt.getDescricao());
-        if(esp != null){
+        if(esp != null && antigo.getEspaco().getId() != esp.getId()){
             antigo.setEspaco(esp);
             esp.getHorario().addEvento(antigo);
         }
         antigo.setPeriodicidade(novo_evt.getPeriodicidade());
         if(novo_evt.getLimite() != null) antigo.setLimite(novo_evt.getLimite());
-        if(novo_evt.getSeguidores() != null) antigo.setSeguidores(novo_evt.getSeguidores());
-        if(novo_evt.getUtilizadorResponsavel() != null) antigo.setUtilizadorResponsavel(novo_evt.getUtilizadorResponsavel());
+        //if(novo_evt.getSeguidores() != null) antigo.setSeguidores(novo_evt.getSeguidores());
+        //if(novo_evt.getUtilizadorResponsavel() != null) antigo.setUtilizadorResponsavel(novo_evt.getUtilizadorResponsavel());
     }
 
     public void updateEvento(Evento antigo, Evento novo_evt){

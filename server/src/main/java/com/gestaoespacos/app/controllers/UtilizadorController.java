@@ -84,7 +84,7 @@ public class UtilizadorController {
     }
 
     @GetMapping("/notificacoes/{id}")
-    public List<Notificacao> getNotificacoes(@PathVariable long id){
+    public Set<Notificacao> getNotificacoes(@PathVariable long id){
         try{
             return GHE.getNotificacoes(id);
         }catch(IdNotFoundException e){ System.out.println(e);}

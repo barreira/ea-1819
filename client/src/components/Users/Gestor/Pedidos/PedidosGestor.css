@@ -1,0 +1,7 @@
+.alert-success:hover {
+    color: green;
+}
+
+.alert-danger:hover {
+    color: red;
+}

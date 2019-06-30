@@ -40,6 +40,8 @@ final class VisitanteController {
     private GestorEspacosRepository gestorRepository;
     @Autowired
     private AdministradorRepository adminRepository;
+    @Autowired
+    private EspacoComumRepository ecr;
 
     @Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -158,6 +160,16 @@ final class VisitanteController {
          catch(Exception e){ System.out.println(e); }
 
         return null;
+    }
+
+    @GetMapping("/ecs/view/{id_ec}")
+    public Optional<EspacoComum> viewEC(@PathVariable long id_ec){
+        return ecr.findById(id_ec);
+    }
+
+    @GetMapping("/ecs/viewAll")
+    public List<EspacoComum> viewAllEC(){
+        return ecr.findAll();
     }
 
     @PostMapping("/exists/user")

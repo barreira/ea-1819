@@ -20,7 +20,8 @@ public class Utilizador extends Ator{
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     //@JoinColumn(name = "utilizador_id")
-    private List<Notificacao> notificacoes;
+    @JsonIgnore
+    private Set<Notificacao> notificacoes;
 
     @ManyToMany(fetch = FetchType.EAGER)
     //@JoinColumn(name = "utilizador_id")
@@ -40,14 +41,14 @@ public class Utilizador extends Ator{
         super(username, password);
         this.email = email;
         this.registrationDate = Calendar.getInstance().getTime();
-        this.notificacoes = new ArrayList<>();
+        this.notificacoes = new HashSet<>();
         this.eventosASeguir = new HashSet<>();
     }
 
     public Utilizador(String username, String password) {
         super(username, password);
         this.registrationDate = Calendar.getInstance().getTime();
-        this.notificacoes = new ArrayList<>();
+        this.notificacoes = new HashSet<>();
         this.eventosASeguir = new HashSet<>();
     }
 
@@ -56,7 +57,7 @@ public class Utilizador extends Ator{
         this.email = email;
         this.nome = nome;
         this.registrationDate = Calendar.getInstance().getTime();
-        this.notificacoes = new ArrayList<>();
+        this.notificacoes = new HashSet<>();
         this.eventosASeguir = new HashSet<>();
     }
 
@@ -85,11 +86,11 @@ public class Utilizador extends Ator{
         this.registrationDate = registrationDate;
     }
 
-    public List<Notificacao> getNotificacoes() {
+    public Set<Notificacao> getNotificacoes() {
         return notificacoes;
     }
 
-    public void setNotificacoes(List<Notificacao> notificacoes) {
+    public void setNotificacoes(Set<Notificacao> notificacoes) {
         this.notificacoes = notificacoes;
     }
 
