@@ -4318,3 +4318,7 @@ insert into utilizador_notificacoes (utilizador_id, notificacoes_id) values (601
 insert into utilizador_notificacoes (utilizador_id, notificacoes_id) values (716, 86);
 insert into utilizador_notificacoes (utilizador_id, notificacoes_id) values (436, 214);
 insert into utilizador_notificacoes (utilizador_id, notificacoes_id) values (421, 85);
+
+-- Update de hibernate_sequence
+
+update hibernate_sequence set next_val = 1101;

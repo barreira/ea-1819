@@ -87,13 +87,14 @@ final class VisitanteController {
     public String register(@RequestBody Utilizador utilizador) {
         System.out.println("Registering " + utilizador.toString());
 
-        Optional<Utilizador> findByUsername = userRepository.findByUsername(utilizador.getUsername());
+        Optional<Ator> findByUsername = atorRepository.findByUsername(utilizador.getUsername());
 
         if(findByUsername.isPresent()){
            return "Username already exists" ;
         }
 
-        Utilizador newAtor = new Utilizador(utilizador.getUsername(), bCryptPasswordEncoder.encode(utilizador.getPassword()));
+        Utilizador newAtor = new Utilizador(utilizador.getUsername(), bCryptPasswordEncoder.encode(utilizador.getPassword()),
+                                            utilizador.getEmail(), utilizador.getNome());
 
         GHE.registarUtilizador(newAtor);
 
@@ -105,6 +106,28 @@ final class VisitanteController {
         return login(u);
     }
 
+    @PostMapping("/registerucpdr")
+    public String register(@RequestBody UtilizadorCPDR utilizador) {
+        System.out.println("Registering " + utilizador.toString());
+
+        Optional<Ator> findByUsername = atorRepository.findByUsername(utilizador.getUsername());
+
+        if(findByUsername.isPresent()){
+            return "Username already exists" ;
+        }
+
+        UtilizadorCPDR newAtor = new UtilizadorCPDR(utilizador.getUsername(), bCryptPasswordEncoder.encode(utilizador.getPassword()),
+                                                    utilizador.getEmail(), utilizador.getNome());
+
+        usercpdrRepository.save(newAtor);
+
+        ObjectNode u = new ObjectMapper().createObjectNode()
+                                         .put("username", utilizador.getUsername())
+                                         .put("password", utilizador.getPassword())
+                                         .put("type", "utilizadorcpdr");
+
+        return login(u);
+    }
 
     @PostMapping("/evento")
     public Evento consultarEvento(@RequestBody ObjectNode nome){

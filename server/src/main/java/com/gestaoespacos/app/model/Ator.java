@@ -27,8 +27,9 @@ import java.util.*;
 public abstract class Ator implements UserDetails {
 
     @Id
+    @GeneratedValue(strategy =  GenerationType.SEQUENCE)
     //@GeneratedValue(strategy =  GenerationType.IDENTITY)
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    //@GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
 
     @Column(unique = true)

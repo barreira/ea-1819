@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +25,12 @@ public class UtilizadorCPDR extends Utilizador implements Responsavel{
 
     public UtilizadorCPDR(){
         super();
+    }
+
+    public UtilizadorCPDR(String username, String password, String email, String nome) {
+        super(username, password, email, nome);
+        eventos = new ArrayList<>();
+        pedidos = new HashSet<>();
     }
 
     /*public List<Evento> getEventos() {
