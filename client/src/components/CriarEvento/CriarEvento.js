@@ -26,7 +26,8 @@ class CriarEvento extends Component {
                 horaInicio: moment('00:00', 'hh:mm'),
                 horaFim: moment('00:00', 'hh:mm'),
                 descricao: ''
-            }
+            },
+            repete: false
         }
     }
 
@@ -67,6 +68,19 @@ class CriarEvento extends Component {
 
         // TODO : implementar a realização do pedido
         console.log(this.state.event)
+    };
+
+    handleRepete = (periodicidade) => {
+        if (periodicidade === 'nunca') {
+            this.setState({
+                repete: false
+            });
+        }
+        else {
+            this.setState({
+                repete: true
+            });
+        }
     };
 
     render() {
@@ -152,41 +166,52 @@ class CriarEvento extends Component {
                         </div>
                         <div className="col-md-10">
                             <div className="item" style={{paddingLeft: '5px'}}>
-                                <input type="radio" className="" name="repete" onChange={this.handleChange} value="Diariamente" />
+                                <input type="radio" className="" name="repete" onChange={this.handleChange}
+                                       onClick={() => this.handleRepete('diariamente')} value="Diariamente" />
                                 <label htmlFor="">Diariamente</label>
                             </div>
 
                             <div className="item" style={{paddingLeft: '5px'}}>
-                                <input type="radio" className="" name="repete" onChange={this.handleChange} value="Semanalmente" />
+                                <input type="radio" className="" name="repete" onChange={this.handleChange}
+                                       onClick={() => this.handleRepete('semanalmente')} value="Semanalmente" />
                                 <label htmlFor="">Semanalmente</label>
                             </div>
 
                             <div className="item" style={{paddingLeft: '5px'}}>
-                                <input type="radio" className="" name="repete" onChange={this.handleChange} value="Mensalmente" />
+                                <input type="radio" className="" name="repete" onChange={this.handleChange}
+                                       onClick={() => this.handleRepete('mensalmente')} value="Mensalmente" />
                                 <label htmlFor="">Mensalmente</label>
                             </div>
 
                             <div className="item" style={{paddingLeft: '5px'}}>
-                                <input type="radio" className="" name="repete" onChange={this.handleChange} value="Anualmente" />
+                                <input type="radio" className="" name="repete" onChange={this.handleChange}
+                                       onClick={() => this.handleRepete('anualmente')} value="Anualmente" />
                                 <label htmlFor="">Anualmente</label>
+                            </div>
+
+                            <div className="item" style={{paddingLeft: '5px'}}>
+                                <input type="radio" className="" name="repete"
+                                       onClick={() => this.handleRepete('nunca')} value="Anualmente" />
+                                <label htmlFor="">Nunca</label>
                             </div>
                         </div>
                     </div>
 
-                    <div className="row" style={{marginBottom: '15px'}}>
-                        <div className="col-md-2">
-                            <p className="p-label" style={{paddingTop: '12px'}}>Data Limite</p>
-                        </div>
+                    {this.state.repete &&
+                        <div className="row" style={{marginBottom: '15px'}}>
+                            <div className="col-md-2">
+                                <p className="p-label" style={{paddingTop: '12px'}}>Data Limite</p>
+                            </div>
 
-                        <div className="col-md-10">
-                            <DatePicker
-                                selected={event.dataLimite}
-                                onChange={(e) => this.handleChange(e, 'dataLimite')}
-                                locale={pt}
-                                dateFormat="dd/MM/yyyy"
-                            />
-                        </div>
-                    </div>
+                            <div className="col-md-10">
+                                <DatePicker
+                                    selected={event.dataLimite}
+                                    onChange={(e) => this.handleChange(e, 'dataLimite')}
+                                    locale={pt}
+                                    dateFormat="dd/MM/yyyy"
+                                />
+                            </div>
+                        </div>}
 
                     <div className="row">
                         <div className="col-md-2">
