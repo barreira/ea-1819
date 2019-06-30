@@ -18,6 +18,10 @@ UserHandler.get = () => {
     return false;
 }
 
+UserHandler.getToken = () => {
+    return localStorage.getItem(token);
+}
+
 UserHandler.typeOfUser = () => {
     const userData = UserHandler.get();
     return userData.role;

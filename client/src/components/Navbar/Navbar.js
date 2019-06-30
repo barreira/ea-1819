@@ -31,7 +31,7 @@ class Navbar extends Component {
         const loginRegisterSection = (
             <React.Fragment>
                 <li className="nav-item">
-                    <Link to={"/pesquisar"}>
+                    <Link to={"/pesquisautilizador"}>
                         <span className="nav-link" href="#">Pesquisar</span>
                     </Link>
                 </li>
@@ -110,9 +110,6 @@ class Navbar extends Component {
                 </li>
             </React.Fragment>
         )
-
-        console.log("ROLE", user.role)
-
 
         return (
             <nav className="navbar navbar-expand-md bg-faded">

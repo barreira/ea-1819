@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FiltroPesquisa from './FiltroPesquisa/FIltroPesquisa';
 import ListarElementosPesquisa from './ListarElementosPesquisa/ListarElementosPesquisa';
+import ApiEventos from '../../../../api/ApiEventos';
 
 class PesquisaUtilizador extends Component {
     constructor(props) {
@@ -17,13 +18,40 @@ class PesquisaUtilizador extends Component {
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+
+        const eventos = await ApiEventos.fetchEventos();
+
+        let finalEvents = [];
+        let finalEspacos = [];
+
+        for (let day in eventos) {
+            const currDayEvents = eventos[day];
+            if (Array.isArray(currDayEvents)) {
+                currDayEvents.forEach(evento => {
+
+                    const espaco = evento.espaco.designacao;
+                    finalEvents.push({
+                        "nome": evento.nome,
+                        "data": day,
+                        "local": espaco,
+                        "horaInicio": evento.localDate,
+                        "horaInicio": evento.dateTimeInicial,
+                        "horaFim": evento.dateTimeFinal,
+                        "responsavel": evento.utilizadorResponsavel.nome,
+                    })
+
+                    finalEspacos.push(espaco)
+                })
+            }
+        }
+
+        finalEspacos = finalEspacos.slice(0, 40);
+        finalEvents = finalEvents.slice(0, 40);
+
         this.setState({
-            eventos: [
-                { nome: 'Programacao I', local: 'DI-0.01', horaInicio: '10:00', horaFim: '12:00', responsavel: 'Maria Luisa' },
-                { nome: 'Programacao II', local: 'DI-0.01', horaInicio: '10:00', horaFim: '12:00', responsavel: 'Maria Luisa' }
-            ],
-            espacos: ['DI-0.01', 'DI-0.02', 'DI-0.03'],
+            eventos: finalEvents,
+            espacos: [... new Set(finalEspacos)],
             loading: false
         });
     }
@@ -34,15 +62,12 @@ class PesquisaUtilizador extends Component {
         activeFilters.forEach(filter => {
             switch (filter) {
                 case 'Eventos':
-                    console.log(filter);
                     listar.eventos = this.state.eventos;
                     break;
                 case 'Espaços':
-                    console.log(filter);
                     listar.espacos = this.state.espacos;
                     break;
                 case 'ASeguir':
-                    console.log(filter);
                     listar.aSeguir = this.state.aSeguir;
                     break;
             }
@@ -62,7 +87,7 @@ class PesquisaUtilizador extends Component {
 
         // Filter events
         const filteredEvents = eventos.filter(e => this.doFilter(e.nome, filterString)
-            || this.doFilter(e.local, filterString));
+            || this.doFilter(e.local, filterString) || this.doFilter(e.responsavel, filterString));
 
         const filteredEspacos = espacos.filter(e => this.doFilter(e, filterString));
 

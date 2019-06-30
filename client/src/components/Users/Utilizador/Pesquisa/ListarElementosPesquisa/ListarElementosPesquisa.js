@@ -51,7 +51,7 @@ class ListarElementosPesquisa extends Component {
                                         <i className="material-icons individual-icon">
                                             calendar_today
                                         </i>
-                                        <p>{moment(event.start).format('HH:mm')} - {moment(event.end).format('HH:mm')}</p>
+                                        <p>{moment(event.data).format('DD/MM')} {moment(event.start).format('HH:mm')} - {moment(event.end).format('HH:mm')}</p>
                                     </td>
                                     <td>
                                         <i className="material-icons individual-icon">
@@ -95,7 +95,7 @@ class ListarElementosPesquisa extends Component {
                                         <i className="material-icons individual-icon">
                                             calendar_today
                                         </i>
-                                        <p>{moment(event.start).format('HH:mm')} - {moment(event.end).format('HH:mm')}</p>
+                                        <p>{moment(event.data).format('DD-MM')} {moment(event.start).format('HH:mm')} - {moment(event.end).format('HH:mm')}</p>
                                     </td>
                                     <td>
                                         <i className="material-icons individual-icon">

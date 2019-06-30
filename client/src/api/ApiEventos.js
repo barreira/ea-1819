@@ -1,8 +1,11 @@
 import axios from 'axios';
 import moment from 'moment';
-const HOST = 'http://localhost:8080'
+import UserHandler from '../utils/userHandler';
 
-let ApiEventos = {}
+const HOST = 'http://localhost:8080';
+let ApiEventos = {};
+
+axios.defaults.headers.post['Authorization'] = `Bearer ${UserHandler.getToken()}`;
 
 ApiEventos.fetchEventos = async () => {
 
@@ -11,8 +14,8 @@ ApiEventos.fetchEventos = async () => {
         // TODO : REMOVE HARDCODE, a solucao sem o espaco não está funcional
 
         const data = {
-            "inicio": moment().subtract('300', 'days').format('YYYY-MM-DD'),
-            "fim": moment().add('300', 'days').format('YYYY-MM-DD'),
+            "inicio": moment().format('YYYY-MM-DD'),
+            "fim": moment().add('15', 'days').format('YYYY-MM-DD'),
             "espaco": 88,
         }
 
@@ -58,6 +61,33 @@ ApiEventos.fetchEventosEspaco = async (espaco) => {
         }
     }
 
+}
+
+
+
+ApiEventos.followEvent = async (eventId) => {
+
+    try {
+        const userData = UserHandler.get();
+        const req = await axios.post(`${HOST}/user/follow`, {
+            "id_user": userData.id,
+            "id_evt": eventId
+        })
+
+        console.log(req.data)
+
+        return {
+            success: true,
+            data: req.data
+        };
+
+    } catch (e) {
+        console.error(e);
+
+        return {
+            success: false,
+        }
+    }
 }
 
 export default ApiEventos;
