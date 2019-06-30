@@ -60,13 +60,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 				//"select username, password, 1 from utilizador where username=?")
 				.authoritiesByUsernameQuery(
 						//"select u.username, r.name from users_roles ur, users u, role r where u.username = ? and ur.users_id = u.id and ur.role_id = r.id")
-						"select t.username, t.tipo from (select username, 'Utilizador' as tipo from utilizador " +
+						"select t.username, CONCAT(t.tipo,',',t.id) from (select username, 'Utilizador' as tipo, id from utilizador " +
 								"union all " +
-								"select username, 'UtilizadorCPDR' as tipo from utilizadorcpdr " +
+								"select username, 'UtilizadorCPDR' as tipo, id from utilizadorcpdr " +
 								"union all " +
-								"select username, 'Administrador' as tipo from administrador " +
+								"select username, 'Administrador' as tipo, id from administrador " +
 								"union all " +
-								"select username, 'GestorEspacos' as tipo from gestor_espacos) t where t.username=?")
+								"select username, 'GestorEspacos' as tipo, id from gestor_espacos) t where t.username=?")
 						//"select username, 'Utilizador' from utilizador where username=?")
 				.passwordEncoder(bCryptPasswordEncoder);
 	}

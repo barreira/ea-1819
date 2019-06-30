@@ -60,12 +60,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         System.out.println("Valid authentication");
 
-        String role = auth.getAuthorities().toString().replace("[", "").replace("]", "");
-        System.out.println(role);
+        String[] role = auth.getAuthorities().toString().replace("[", "")
+                                                        .replace("]", "")
+                                                        .split(",");
+
 
         String token = Jwts.builder().setSubject(((User) auth.getPrincipal()).getUsername())
                 .claim("username", auth.getName())
-                .claim("role", role)
+                .claim("role", role[0])
+                .claim("id", role[1])
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes()).compact();
 
