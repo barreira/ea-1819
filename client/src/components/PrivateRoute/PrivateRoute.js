@@ -70,7 +70,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
             break;
 
-        case 'Gestor':
+        case 'GestorEspacos':
             pathLimitations = ['/', '/espacos', '/eventos', '/eventos/criar', '/eventos/modificar', '/espacos-comuns',
                 '/espacos-comuns/criar', '/espacos-comuns/modificar', '/pedidos', '/notificacoes', '/pesquisar'];
 

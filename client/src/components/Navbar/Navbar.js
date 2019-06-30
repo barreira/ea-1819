@@ -27,13 +27,11 @@ class Navbar extends Component {
 
     render() {
         const user = UserHandler.get();
+
         const loginRegisterSection = (
             <React.Fragment>
                 <li className="nav-item">
-                    <Link to={{
-                        pathname: "/pesquisar",
-                        state: { setLoggedInAs: this.props.setLoggedInAs }
-                    }}>
+                    <Link to={"/pesquisar"}>
                         <span className="nav-link" href="#">Pesquisar</span>
                     </Link>
                 </li>
@@ -48,14 +46,8 @@ class Navbar extends Component {
                 </li>
             </React.Fragment>
         );
-
-        const loggedInMenus = (
+        const loggedIn = (
             <React.Fragment>
-
-                <i className="material-icons individual-icon"
-                    style={{ float: 'right', position: 'absolute', top: '22px', left: '-25px' }}>
-                    person
-                   </i>
 
                 <li className="nav-item active">
                     <span>{user.username} </span>
@@ -67,6 +59,60 @@ class Navbar extends Component {
 
             </React.Fragment>
         );
+
+        const loggedInUtilizador = (
+            <React.Fragment>
+                <li className="nav-item active">
+                    <Link to={"/pesquisautilizador"}>
+                        <span className="nav-link" href="#">Pesquisar</span>
+                    </Link>
+                </li>
+            </React.Fragment>
+        );
+
+        const loggedInUtilizadorCPDR = (
+            <React.Fragment>
+                <li className="nav-item active">
+                    <Link to={"/"}>
+                        <span className="nav-link" href="#">A Seguir</span>
+                    </Link>
+                </li>
+                <li className="nav-item active">
+                    {/* TODO: implementar interface pedidos e definir aqui rota */}
+                    <Link to={"/"}>
+                        <span className="nav-link" href="#">Pedidos</span>
+                    </Link>
+                </li>
+                <li className="nav-item active">
+                    <Link to={"/pesquisautilizador"}>
+                        <span className="nav-link" href="#">Pesquisar</span>
+                    </Link>
+                </li>
+            </React.Fragment>
+        )
+
+        const loggedInGestor = (
+            <React.Fragment>
+                <li className="nav-item active">
+                    <Link to={"/pedidosgestor"}>
+                        <span className="nav-link" href="#">Pedidos</span>
+                    </Link>
+                </li>
+                <li className="nav-item active">
+                    <Link to={"/pesquisagestor"}>
+                        <span className="nav-link" href="#">Pesquisar</span>
+                    </Link>
+                </li>
+                <li className="nav-item active">
+                    <Link to={"/espacoscomunsgestor"}>
+                        <span className="nav-link" href="#">Espaços Comuns</span>
+                    </Link>
+                </li>
+            </React.Fragment>
+        )
+
+        console.log("ROLE", user.role)
+
 
         return (
             <nav className="navbar navbar-expand-md bg-faded">
@@ -92,7 +138,12 @@ class Navbar extends Component {
 
                             {!user && loginRegisterSection}
 
-                            {user && loggedInMenus}
+                            {user.role === 'Utilizador' && loggedInUtilizador}
+                            {user.role === 'UtilizadorCPDR' && loggedInUtilizadorCPDR}
+                            {user.role === 'GestorEspacos' && loggedInGestor}
+
+                            {user && loggedIn}
+
                         </ul>
                     </div>
                 </div>

@@ -1107,6 +1107,7 @@ insert into utilizadorcpdr (id, username, password, email, nome, registration_da
 insert into utilizadorcpdr (id, username, password, email, nome, registration_date) values (1098, 'jgorini2p', 'QP0luGGJ', 'jgorini2p@bigcartel.com', 'Janel Gorini', '2019-03-02 00:44:54');
 insert into utilizadorcpdr (id, username, password, email, nome, registration_date) values (1099, 'cfurphy2q', 'yPyi35Ts6RLp', 'cfurphy2q@mozilla.com', 'Cristobal Furphy', '2018-08-27 11:09:15');
 insert into utilizadorcpdr (id, username, password, email, nome, registration_date) values (1100, 'jphilp2r', 'TdRrihFx', 'jphilp2r@nationalgeographic.com', 'Jerrylee Philp', '2018-08-01 17:09:30');
+insert into utilizadorcpdr (id, username, password, email, nome, registration_date) values (1100, 'cpdr', 'cpdr', 'cpdr@nationalgeographic.com', 'Jerrylee Philp', '2018-08-01 17:09:30');
 
 -- Espaco
 
