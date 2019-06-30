@@ -105,6 +105,17 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
             }
 
             break;
+
+        default:
+
+            if (rest.path === '/') {
+                return (
+                    <Route {...rest} render={(props) => (
+                        <HomeVisitante {...props} />
+                    )} />
+                )
+            }
+            break;
     }
 
     if (!pathLimitations.includes(rest.path)) {

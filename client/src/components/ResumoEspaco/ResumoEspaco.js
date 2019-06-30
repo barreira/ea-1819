@@ -65,6 +65,9 @@ class ResumoEspaco extends Component {
 
     testFunction = () => {
         console.log("TESTE")
+
+        // ApiUsers.calendarPermissions();
+        ApiEventos.followEvent(1)
     }
 
 
@@ -82,7 +85,7 @@ class ResumoEspaco extends Component {
 
             <div>
 
-                {/* <button type="text" onClick={this.testFunction}>TEST BUTTON</button> */}
+                <button type="text" onClick={this.testFunction}>TEST BUTTON</button>
 
                 <h3 style={{ textAlign: 'center' }}>{this.props.title}</h3>
 
