@@ -4,7 +4,6 @@ import moment from 'moment';
 import pt from 'date-fns/locale/pt';
 import TimePicker from 'rc-time-picker';
 
-
 import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 import "../../../node_modules/rc-time-picker/assets/index.css";
 import './CriarEvento.css';
@@ -23,12 +22,12 @@ class CriarEvento extends Component {
                 espaco: '',
                 data: moment().toDate(),
                 repete: '',
+                dataLimite: moment().add('7', 'day').toDate(),
                 horaInicio: moment('00:00', 'hh:mm'),
                 horaFim: moment('00:00', 'hh:mm'),
                 descricao: ''
             }
         }
-
     }
 
     componentDidMount() {
@@ -39,10 +38,8 @@ class CriarEvento extends Component {
         })
     }
 
-
     handleChange = (e, optionalName) => {
-
-        console.log(e, optionalName)
+        console.log(e, optionalName);
 
         let name;
         let value;
@@ -55,7 +52,7 @@ class CriarEvento extends Component {
             value = e;
         }
 
-        console.log(name, value)
+        console.log(name, value);
 
         this.setState({
             event: {
@@ -63,28 +60,25 @@ class CriarEvento extends Component {
                 [name]: value
             }
         })
-    }
-
-
+    };
 
     submeterPedido = () => {
-        console.log("Submetendo pedido")
+        console.log("Submetendo pedido");
 
         // TODO : implementar a realização do pedido
         console.log(this.state.event)
-    }
+    };
 
     render() {
-
         const { espacos, event } = this.state;
 
         return (
             <div className="criar-evento">
                 <h3 style={{ textAlign: 'center', padding: '10px 5px' }}>Criar Evento</h3>
                 <form onSubmit={this.submeterPedido}>
-                    <div className="row">
-                        <div className="col-md-2">
-                            <p className="p-label">Nome</p>
+                    <div className="row" style={{marginBottom: '15px'}}>
+                        <div className="col-md-2 container">
+                            <p className="p-label" style={{paddingTop: '12px'}}>Nome</p>
                         </div>
 
                         <div className="col-md-10">
@@ -92,9 +86,9 @@ class CriarEvento extends Component {
                         </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row" style={{marginBottom: '15px'}}>
                         <div className="col-md-2">
-                            <p className="p-label">Espaço</p>
+                            <p className="p-label" style={{paddingTop: '12px'}}>Espaço</p>
                         </div>
 
                         <div className="col-md-10">
@@ -107,12 +101,12 @@ class CriarEvento extends Component {
                         </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row" style={{marginBottom: '15px'}}>
                         <div className="col-md-2">
-                            <p className="p-label">Data</p>
+                            <p className="p-label" style={{paddingTop: '12px'}}>Data</p>
                         </div>
 
-                        <div className="col-md-6">
+                        <div className="col-md-10">
                             <DatePicker
                                 selected={event.data}
                                 onChange={(e) => this.handleChange(e, 'data')}
@@ -120,75 +114,95 @@ class CriarEvento extends Component {
                                 dateFormat="dd/MM/yyyy"
                             />
                         </div>
-
-                        <div className="col-md-4">
-
-                            <p className="p-label">Repete</p>
-                            <div>
-                                <div className="item">
-                                    <input type="radio" className="" name="repete" onChange={this.handleChange} value="Diariamente" />
-                                    <label htmlFor="">Diariamente</label>
-                                </div>
-
-                                <div className="item">
-                                    <input type="radio" className="" name="repete" onChange={this.handleChange} value="Semanalmente" />
-                                    <label htmlFor="">Semanalmente</label>
-                                </div>
-
-                                <div className="item">
-                                    <input type="radio" className="" name="repete" onChange={this.handleChange} value="Mensalmente" />
-                                    <label htmlFor="">Mensalmente</label>
-                                </div>
-
-                                <div className="item">
-                                    <input type="radio" className="" name="repete" onChange={this.handleChange} value="Anualmente" />
-                                    <label htmlFor="">Anualmente</label>
-                                </div>
-                            </div>
-                        </div>
-
-
                     </div>
-                    <div className="row">
+
+                    <div className="row" style={{marginBottom: '15px'}}>
                         <div className="col-md-2">
-                            <p className="p-label">Hora de Início</p>
+                            <p className="p-label" style={{paddingTop: '12px'}}>Hora de Início</p>
+                        </div>
+                        <div className="col-md-10">
                             <TimePicker
-                                style={{ width: 100 }}
+                                style={{ width: 100, paddingLeft: '5px' }}
                                 showSecond={false}
                                 defaultValue={event.horaInicio}
                                 className="timepicker"
                                 onChange={(e) => this.handleChange(e, 'horaInicio')}
                             />
                         </div>
+                    </div>
 
+                    <div className="row" style={{marginBottom: '15px'}}>
                         <div className="col-md-2">
-                            <p className="p-label">Hora de Fim</p>
+                            <p className="p-label" style={{paddingTop: '12px'}}>Hora de Fim</p>
+                        </div>
+                        <div className="col-md-10">
                             <TimePicker
-                                style={{ width: 100 }}
+                                style={{ width: 100, paddingLeft: '5px'}}
                                 showSecond={false}
                                 defaultValue={event.horaFim}
                                 className="timepicker"
                                 onChange={(e) => this.handleChange(e, 'horaFim')}
                             />
                         </div>
-
                     </div>
 
-                    <div className="row" style={{ marginTop: '25px' }}>
+                    <div className="row" style={{marginBottom: '20px'}}>
                         <div className="col-md-2">
-                            <p className="p-label">Descrição</p>
+                            <p className="p-label" style={{paddingTop: '12px'}}>Repete</p>
+                        </div>
+                        <div className="col-md-10">
+                            <div className="item" style={{paddingLeft: '5px'}}>
+                                <input type="radio" className="" name="repete" onChange={this.handleChange} value="Diariamente" />
+                                <label htmlFor="">Diariamente</label>
+                            </div>
+
+                            <div className="item" style={{paddingLeft: '5px'}}>
+                                <input type="radio" className="" name="repete" onChange={this.handleChange} value="Semanalmente" />
+                                <label htmlFor="">Semanalmente</label>
+                            </div>
+
+                            <div className="item" style={{paddingLeft: '5px'}}>
+                                <input type="radio" className="" name="repete" onChange={this.handleChange} value="Mensalmente" />
+                                <label htmlFor="">Mensalmente</label>
+                            </div>
+
+                            <div className="item" style={{paddingLeft: '5px'}}>
+                                <input type="radio" className="" name="repete" onChange={this.handleChange} value="Anualmente" />
+                                <label htmlFor="">Anualmente</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row" style={{marginBottom: '15px'}}>
+                        <div className="col-md-2">
+                            <p className="p-label" style={{paddingTop: '12px'}}>Data Limite</p>
+                        </div>
+
+                        <div className="col-md-10">
+                            <DatePicker
+                                selected={event.dataLimite}
+                                onChange={(e) => this.handleChange(e, 'dataLimite')}
+                                locale={pt}
+                                dateFormat="dd/MM/yyyy"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-md-2">
+                            <p className="p-label" style={{paddingTop: '10px'}}>Descrição</p>
                         </div>
                         <div className="col-md-10">
                             <textarea name="descricao" maxlength="500" className="w-100"
                                 value={event.descricao} onChange={this.handleChange}
-                                style={{ padding: '10px' }}
+                                style={{ padding: '10px', height: '100px' }}
                                 placeholder="Descrição do evento" id="" rows="8"
                                 required></textarea>
                         </div>
                     </div>
 
                     <div>
-                        <button className="btn" onClick={this.submeterPedido}>Submeter pedido</button>
+                        <button className="btn" onClick={this.submeterPedido}>Enviar</button>
                     </div>
                 </form>
             </div>
