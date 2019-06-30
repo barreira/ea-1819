@@ -3,231 +3,156 @@ import moment from 'moment';
 
 import './ResumoEspacoEventos.css';
 
-class ResumoEspacoEventos extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { events: [], ongoing: [], later: [], tomorrow: [], loading: true }
-    }
+const organizeEventsByTime = (events) => {
 
-    componentDidMount() {
-        // Fetch da lista de eventos
-        const events = [
-            {
-                title: 'Computação Gráfica',
-                start: moment().subtract(3, 'days').valueOf(),
-                end: moment().subtract(3, 'days').add('3', 'h').valueOf(),
-                local: 'DI-01',
-                responsavel: 'João Carlos'
-            },
-            {
-                title: 'Arquiteturas Aplicacionais',
-                start: moment().add(3, 'hours').valueOf(),
-                end: moment().add(5, 'hours').valueOf(),
-                local: 'DI-01',
-                responsavel: 'Maria Carolina'
-            },
-            {
-                title: 'Engenharia Web',
-                start: moment().add(1, 'days').valueOf(),
-                end: moment().add(1, 'days').add('1', 'h').valueOf(),
-                local: 'DI-01',
-                responsavel: 'João Carlos'
-            },
-            {
-                title: 'Programação Avançada II',
-                start: moment().add(1, 'days').subtract('5', 'h').valueOf(),
-                end: moment().add(1, 'days').subtract('3', 'h').valueOf(),
-                local: 'DI-01',
-                responsavel: 'João Carlos'
-            },
-            {
-                title: 'Programação Avançada III',
-                start: moment().valueOf(),
-                end: moment().add(5, 'h').valueOf(),
-                local: 'DI-01',
-                responsavel: 'João Carlos'
-            },
-            {
-                title: 'Programação Avançada',
-                start: moment().valueOf(),
-                end: moment().add(5, 'h').valueOf(),
-                local: 'DI-01',
-                responsavel: 'João Carlos'
-            },
-            {
-                title: 'Programação Avançada II',
-                start: moment().valueOf(),
-                end: moment().add(3, 'h').valueOf(),
-                local: 'DI-02',
-                responsavel: 'Luis Miguel'
-            },
-            {
-                title: 'Programação Avançada III',
-                start: moment().add(2, 'h').valueOf(),
-                end: moment().add(3, 'h').valueOf(),
-                local: 'DI-02',
-                responsavel: 'Luis Miguel'
-            }
-        ];
+    let ongoing = [];
+    let later = [];
 
-        this.organizeEventsByTime(events)
-    }
+    const current = moment();
 
-    organizeEventsByTime = (events) => {
-        let ongoing = [];
-        let later = [];
-        let tomorrow = [];
+    events.forEach(event => {
+        const start = moment(event.start);
+        const end = moment(event.end);
 
-        const current = moment().format('DD-MM-YYYY hh:mm:ss');
+        if (current.isAfter(end))
+            return
 
-        events.forEach(event => {
-
-            const start = moment(event.start).format('DD-MM-YYYY hh:mm:ss');
-            const end = moment(event.end).format('DD-MM-YYYY hh:mm:ss');
-
-            if (current > end) {
-                return
+        if (current.isBefore(start)) {
+            if (current.isSame(start, 'day')) {
+                later.push(event);
             }
 
-            const mStart = moment(start, 'DD-MM-YYYY')
-            const mCurr = moment(current, 'DD-MM-YYYY')
+        } else if (current.isSameOrAfter(start) && current.isBefore(end)) {
+            ongoing.push(event);
+        }
+    })
 
-
-            if (current < start) {
-
-                if (moment(current, 'DD-MM-YYYY').isSame(moment(start, 'DD-MM-YYYY'), 'day')) {
-                    later.push(event);
-                } else if (mStart.diff(mCurr, 'days') === 1) {
-                    tomorrow.push(event)
-                }
-
-            } else if (current >= start && current < end) {
-                ongoing.push(event);
-            }
-
-        })
-
-        this.setState({
-            ongoing, later, tomorrow, events, loading: false
-        })
+    return {
+        ongoing, later
     }
+}
 
+const isNextDay = (m1, m2) => {
 
+    if ((m1.diff(m2, 'days', true) > -1)) {
+        return true
+    }
+    return false;
+}
 
-    render() {
+const ResumoEspacoEventos = (props) => {
 
-        const { ongoing, later, tomorrow, loading } = this.state;
+    const { eventosHoje, eventosAmanha } = props;
 
+    const organizedEvents = organizeEventsByTime(eventosHoje || [])
+    const { ongoing, later, } = organizedEvents;
 
-        if (loading)
-            return <div></div>
+    const tomorrow = props.eventosAmanha;
 
+    return (
+        <div>
+            <div className="row">
+                <div className="col-xs-12 col-md-12">
 
-        return (
-            <div>
-                <div className="row">
-                    <div className="col-xs-12 col-md-12">
+                    <h3>A decorrer</h3>
 
-                        <h3>A decorrer</h3>
+                    <table className="table ec-table">
+                        <tbody>
+                            {ongoing.map(event => (
+                                <tr>
+                                    <td>
+                                        <p>{event.name}</p>
 
-                        <table className="table ec-table">
-                            <tbody>
-                                {ongoing.map(event => (
-                                    <tr>
-                                        <td>
-                                            <p>{event.title}</p>
-
-                                        </td>
-                                        <td>
-                                            <i className="material-icons individual-icon" >
-                                                location_on
+                                    </td>
+                                    <td>
+                                        <i className="material-icons individual-icon" >
+                                            location_on
                                           </i>
-                                            <p>{event.local}</p>
-                                        </td>
-                                        <td>
-                                            <i className="material-icons individual-icon" >
-                                                access_time
+                                        <p>{event.espaco.designacao}</p>
+                                    </td>
+                                    <td>
+                                        <i className="material-icons individual-icon" >
+                                            access_time
                                           </i>
-                                            <p>{moment(event.start).format('HH:mm')} - {moment(event.end).format('HH:mm')}</p>
-                                        </td>
-                                        <td>
-                                            <i className="material-icons individual-icon" >
-                                                person
+                                        <p>{moment(event.start).format('HH:mm')} - {moment(event.end).format('HH:mm')}</p>
+                                    </td>
+                                    <td>
+                                        <i className="material-icons individual-icon" >
+                                            person
                                           </i>
-                                            <p>{event.responsavel}</p>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                        <p>{event.responsavel.nome}</p>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
 
-                    </div>
+                </div>
+            </div>
+
+            <div className="row">
+                <div className="col-xs-12 col-md-6">
+                    <h3>Mais tarde</h3>
+                    <table className="table ec-table">
+                        <tbody>
+                            {later.map(event => (
+                                <tr>
+                                    <td>
+                                        <p>{event.name}</p>
+
+                                    </td>
+                                    <td>
+                                        <i className="material-icons individual-icon" >
+                                            location_on
+                                          </i>
+                                        <p>{event.espaco.designacao}</p>
+                                    </td>
+                                    <td>
+
+                                        <i className="material-icons individual-icon" >
+                                            calendar_today
+                                          </i>
+
+                                        <p>{moment(event.start).format('HH:mm')}</p>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
 
-                <div className="row">
-                    <div className="col-xs-12 col-md-6">
-                        <h3>Mais tarde</h3>
-                        <table className="table ec-table">
-                            <tbody>
-                                {later.map(event => (
-                                    <tr>
-                                        <td>
-                                            <p>{event.title}</p>
+                <div className="col-xs-12 col-md-6">
+                    <h3>Amanhã</h3>
+                    <table className="table ec-table">
+                        <tbody>
+                            {tomorrow.map(event => (
+                                <tr>
+                                    <td>
+                                        <p>{event.name}</p>
 
-                                        </td>
-                                        <td>
-                                            <i className="material-icons individual-icon" >
-                                                location_on
+                                    </td>
+                                    <td>
+                                        <i className="material-icons individual-icon" >
+                                            location_on
                                           </i>
-                                            <p>{event.local}</p>
-                                        </td>
-                                        <td>
+                                        <p>{event.espaco.designacao}</p>
+                                    </td>
+                                    <td>
 
-                                            <i className="material-icons individual-icon" >
-                                                calendar_today
-                                          </i>
-
-                                            <p>{moment(event.start).format('HH:mm')}</p>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div className="col-xs-12 col-md-6">
-                        <h3>Amanhã</h3>
-                        <table className="table ec-table">
-                            <tbody>
-                                {tomorrow.map(event => (
-                                    <tr>
-                                        <td>
-                                            <p>{event.title}</p>
-
-                                        </td>
-                                        <td>
-                                            <i className="material-icons individual-icon" >
-                                                location_on
-                                          </i>
-                                            <p>{event.local}</p>
-                                        </td>
-                                        <td>
-
-                                            <i className="material-icons individual-icon" >
-                                                calendar_today
+                                        <i className="material-icons individual-icon" >
+                                            calendar_today
                                           </i>
 
-                                            <p>{moment(event.start).format('HH:mm')}</p>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                                        <p>{moment(event.start).format('HH:mm')}</p>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
-            </div >
-        );
-    }
+            </div>
+        </div >
+    );
 }
 
 export default ResumoEspacoEventos;

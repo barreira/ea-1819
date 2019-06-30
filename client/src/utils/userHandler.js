@@ -19,20 +19,16 @@ UserHandler.get = () => {
 }
 
 UserHandler.typeOfUser = () => {
-    const data = localStorage.getItem(userData);
-
-    // TODO remover hardcode, verificar tipo de user
-    return 'Visitante'
+    const userData = UserHandler.get();
+    return userData.role;
 }
 
 UserHandler.isUserLogged = () => {
-
     const data = localStorage.getItem(userData);
 
     if (data) {
         return true;
     }
-
     return false;
 }
 
