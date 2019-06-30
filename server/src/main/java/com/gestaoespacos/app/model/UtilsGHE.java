@@ -106,13 +106,13 @@ public class UtilsGHE {
      * @param a
      */
     public static void updateEvento(Evento e, Alteracao a){
-        e.setNome(a.getNome());
-        e.setDescricao(a.getDescricao());
-        e.setDateTimeInicial(a.getDateTimeInicial());
-        e.setDateTimeFinal(a.getDateTimeFinal());
-        e.setEspaco(a.getEspaco());
+        if(a.getNome() != null) e.setNome(a.getNome());
+        if(a.getDescricao() != null) e.setDescricao(a.getDescricao());
+        if(a.getDateTimeInicial() != null) e.setDateTimeInicial(a.getDateTimeInicial());
+        if(a.getDateTimeFinal() != null) e.setDateTimeFinal(a.getDateTimeFinal());
+        //e.setEspaco(a.getEspaco());
         e.setPeriodicidade(a.getPeriodicidade());
-        e.setLimite(a.getLimite());
+        if(a.getLimite() != null) e.setLimite(a.getLimite());
     }
 
     /**

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,29 +56,21 @@ public class ResponsavelBean {
         if(UtilsGHE.menos1Hora(LocalDateTime.now(), a.getDateTimeInicial()) &&
                 //e este não causa conflito com mais nenhum
                 getConflitos(a.getEspaco(), a.getDateTimeInicial(), a.getDateTimeFinal()).size() == 0){
-            System.out.println("ok");
             //Então o evento fica efetivo
             Evento e = makeEvento(u, a);
             //Atualizar horario do espaco
-            System.out.println("ok2");
             Horario h = e.getEspaco().getHorario();
-            System.out.println("ok3");
             h.addEvento(e);
-            System.out.println("ok4");
             a.setAceite(true);
             a.setAtendido(true);
-            System.out.println("ok5");
 
             Notificacao n = new Notificacao("Evento criado com sucesso");
             u.addNotificacao(n);
-            System.out.println("ok6");
             er.save(e);
             hr.save(h);
-            System.out.println("ok7");
         }
-        System.out.println("ok7.5");
         u.alocarEspaco(a);
-        System.out.println("ok8");
+
         pr.save(a);
         ucpdr.save(u);
 
@@ -134,7 +127,7 @@ public class ResponsavelBean {
 
         UtilizadorCPDR u = u_opt.get();
 
-        Evento e = a.getEvento();
+        Evento e = er.getOne(a.getEvento().getId());//a.getEvento();
 
         if(e.getUtilizadorResponsavel().getId() != u.getId())
             throw new IdNotFoundException("UtilizadorCPDR with id="+id_usercpdr+" is not the owner of event with id="+e.getId()+".");
@@ -143,33 +136,37 @@ public class ResponsavelBean {
         LocalDateTime inicio = a.getDateTimeInicial();
         LocalDateTime fim = a.getDateTimeFinal();
 
+        if(inicio == null)
+            inicio = e.getDateTimeInicial();
+
+        if(fim == null)
+            fim = e.getDateTimeFinal();
+
         //Se a data do evento foi alterada e falta menos de uma hora para o possível novo agendamento
         if(UtilsGHE.menos1Hora(LocalDateTime.now(), inicio) &&
                 //e este não causa conflito com mais nenhum
                 getConflitos(e, a.getEspaco(), inicio, fim).size() == 0) {
             //Então as alterações são aplicadas
             //Se o espaço foi alterado
-            Espaco oldEsp = e.getEspaco();
-            Espaco newEsp = a.getEspaco();
+            Espaco oldEsp = espr.getOne(e.getEspaco().getId());//e.getEspaco();
+            Espaco newEsp = espr.getOne(a.getEspaco().getId());//a.getEspaco();
             Horario hAntigo = oldEsp.getHorario();
             Horario hNovo = newEsp.getHorario();
-            boolean novoEspaco = !oldEsp.equals(newEsp);
-
+            boolean novoEspaco = oldEsp.getId() != newEsp.getId();
             if(novoEspaco){
                 //Adaptamos os horários
                 hAntigo.removeEvento(e);
                 hNovo.addEvento(e);
+                e.setEspaco(newEsp);
             }
             //Novas informações
             UtilsGHE.updateEvento(e, a);
-
             a.setAceite(true);
             a.setAtendido(true);
 
             //Notificar o responsável
             Notificacao n = new Notificacao("O detalhes do evento "+e.getNome()+" foram alterados. Por favor, consulte as novas informações.");
             u.addNotificacao(n);
-
             //Notificar seguidores
             e.getSeguidores().forEach(s -> s.addNotificacao(n));
 
@@ -282,7 +279,7 @@ public class ResponsavelBean {
      */
     private List<Evento> getConflitos(Espaco esp, LocalDateTime inicio, LocalDateTime fim){
         return er.findAll().stream()
-                           .filter(e -> e.getEspaco().equals(esp) &&
+                           .filter(e -> e.getEspaco().getId() == esp.getId() &&
                                    UtilsGHE.conflitoPeriodo(inicio, fim, e.getDateTimeInicial(), e.getDateTimeFinal(), e.getPeriodicidade(), e.getLimite()))
                            .collect(Collectors.toList());
     }
