@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import './ResumoEspaco.css';
 
@@ -11,7 +12,49 @@ import ApiUsers from '../../api/ApiUsers';
 class ResumoEspaco extends Component {
     constructor(props) {
         super(props);
-        this.state = { activeButton: 'Eventos' }
+        this.state = { activeButton: 'Eventos', eventos: [], eventosHoje: [], eventosAmanha: [], loading: true }
+    }
+
+    async componentDidMount() {
+        const eventos = await ApiEventos.fetchEventos();
+
+        const dataAtual = moment().format('YYYY-MM-DD')
+        const dataAmanha = moment().add('1', 'days').format('YYYY-MM-DD');
+
+        const dataFinal = moment().format('YYYY-MM-DD')
+
+        let eventosHoje = [];
+        let eventosAmanha = [];
+
+        (eventos[dataAtual] || []).forEach(evento => {
+            eventosHoje.push({
+                ...this.formatarEvento(evento)
+            })
+        });
+
+        (eventos[dataAmanha] || []).forEach(evento => {
+            eventosAmanha.push({
+                ...this.formatarEvento(evento)
+            })
+        });
+
+        this.setState({
+            eventosHoje,
+            eventosAmanha,
+            loading: false
+        })
+
+    }
+
+    formatarEvento = (evento) => {
+        return {
+            name: evento.nome,
+            start: evento.dateTimeInicial,
+            end: evento.dateTimeFinal,
+            descricao: evento.descricao,
+            responsavel: evento.utilizadorResponsavel,
+            espaco: evento.espaco
+        }
     }
 
     changeActiveButton = (pressed) => {
@@ -21,22 +64,24 @@ class ResumoEspaco extends Component {
 
     testFunction = () => {
         console.log("TESTE")
-
-        ApiUsers.register();
     }
 
 
     render() {
 
-        const { activeButton } = this.state;
+        const { activeButton, eventosHoje, eventosAmanha, loading } = this.state;
+
+        if (loading)
+            return <div></div>
 
         const baseCss = 'btn btn-filter'
         const active = 'btn-filter-active';
 
         return (
+
             <div>
 
-                <button type="text" onClick={this.testFunction}>TEST BUTTON</button>
+                {/* <button type="text" onClick={this.testFunction}>TEST BUTTON</button> */}
 
                 <h3 style={{ textAlign: 'center' }}>{this.props.title}</h3>
 
@@ -45,7 +90,7 @@ class ResumoEspaco extends Component {
                     <button className={activeButton === 'Horarios' ? `${baseCss} ${active}` : baseCss} onClick={() => this.changeActiveButton('Horarios')}>Horários</button>
                 </div>
 
-                {activeButton === 'Eventos' ? <ResumoEspacoEventos /> : ''}
+                {activeButton === 'Eventos' ? <ResumoEspacoEventos eventosHoje={eventosHoje} eventosAmanha={eventosAmanha} /> : ''}
                 {activeButton === 'Horarios' ? <ResumoEspacoHorarios /> : ''}
 
 

@@ -7,11 +7,20 @@ let ApiEventos = {}
 ApiEventos.fetchEventos = async () => {
 
     try {
-        const req = await axios.post(`${HOST}/public/users/eventos`, {
+
+        // TODO : REMOVE HARDCODE, a solucao sem o espaco não está funcional
+
+        const data = {
             "inicio": moment().subtract('300', 'days').format('YYYY-MM-DD'),
             "fim": moment().add('300', 'days').format('YYYY-MM-DD'),
+            "espaco": 88,
+        }
+
+        const req = await axios.post(`${HOST}/public/users/eventos`, {
+            ...data
         })
 
+        console.log("Data", data)
         console.log(req)
         return {
             success: true,

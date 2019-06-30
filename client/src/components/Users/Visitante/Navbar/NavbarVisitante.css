@@ -1,0 +1,47 @@
+:root {
+    --color-red: #942218;
+}
+
+.navbar {
+    background-color: var(--color-red);
+    -webkit-box-shadow: -4px 6px 25px -10px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -4px 6px 25px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: -4px 6px 25px -10px rgba(0, 0, 0, 0.75);
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-brand {
+    color: white;
+    font-size: 24pt !important;
+}
+
+.navbar-nav {
+    line-height: 65px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item a,
+.nav-item span {
+    color: white;
+    font-size: 14pt;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item i {
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+#current-time {
+    vertical-align: middle;
+    display: inline !important;
+}

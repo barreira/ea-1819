@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-import './ListarElementosPesquisa.css';
-
 class ListarElementosPesquisa extends Component {
 
     constructor(props) {

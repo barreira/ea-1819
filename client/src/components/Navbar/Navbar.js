@@ -50,7 +50,7 @@ class Navbar extends Component {
         );
 
         const loggedInMenus = (
-            <React.Fragment style={{ position: 'relative' }}>
+            <React.Fragment>
 
                 <i className="material-icons individual-icon"
                     style={{ float: 'right', position: 'absolute', top: '22px', left: '-25px' }}>
