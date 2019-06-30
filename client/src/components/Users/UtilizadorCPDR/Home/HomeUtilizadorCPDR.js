@@ -1,4 +1,5 @@
 import React from 'react';
+import ResumoEspaco from '../../../ResumoEspaco/ResumoEspaco';
 
 class HomeUtilizadorCPDR extends React.Component {
 
@@ -9,7 +10,7 @@ class HomeUtilizadorCPDR extends React.Component {
     render() {
         return (
             <div>
-                Home UtilizadorCPDR
+                <ResumoEspaco />
             </div>
         );
     }

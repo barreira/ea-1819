@@ -38,12 +38,7 @@ class ResumoEspacoHorarios extends Component {
             },
         ]
 
-        const espacos = [...new Set(events.map(event => event.local))];
-
-        console.log("Recieving props")
-        console.log("props", this.props.eventos)
-        console.log(typeof this.props.eventos)
-
+        let espacos = [];
         let finalEvents = [];
 
         const eventos = this.props.eventos;
@@ -58,17 +53,16 @@ class ResumoEspacoHorarios extends Component {
                 dailyEvents.forEach(event => {
                     console.log(event)
                     finalEvents.push({ ...this.formatEvent(event, day) });
-
-                    // finalEvents.push(...this.formatEvent(event, day))
+                    espacos.push(event.espaco.designacao)
                 })
             }
         }
 
+        const uniqueEspacos = [...new Set(espacos)];
+        console.log(uniqueEspacos)
 
-
-        console.log("FINAL EVENTS", finalEvents)
         this.setState({
-            events: finalEvents, espacos, filteredEvents: finalEvents
+            events: finalEvents, espacos: uniqueEspacos, filteredEvents: finalEvents
         })
 
     }
