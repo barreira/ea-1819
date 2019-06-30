@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
 import moment from 'moment';
 import pt from 'date-fns/locale/pt';
 import TimePicker from 'rc-time-picker';
@@ -218,11 +218,11 @@ class CriarEvento extends Component {
                             <p className="p-label" style={{paddingTop: '10px'}}>Descrição</p>
                         </div>
                         <div className="col-md-10">
-                            <textarea name="descricao" maxlength="500" className="w-100"
-                                value={event.descricao} onChange={this.handleChange}
-                                style={{ padding: '10px', height: '100px' }}
-                                placeholder="Descrição do evento" id="" rows="8"
-                                required></textarea>
+                            <textarea name="descricao" className="w-100"
+                                      value={event.descricao} onChange={this.handleChange}
+                                      style={{ padding: '10px', height: '100px' }}
+                                      placeholder="Descrição do evento" id="" rows="8"
+                                      required/>
                         </div>
                     </div>
 
