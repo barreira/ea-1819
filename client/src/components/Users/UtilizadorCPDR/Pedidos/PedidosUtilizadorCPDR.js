@@ -1,9 +1,9 @@
 import React from 'react';
 import moment from "moment";
 
-import './PedidosGestor.css';
+import './PedidosUtilizadorCPDR.css';
 
-class PedidosGestor extends React.Component {
+class PedidosUtilizadorCPDR extends React.Component {
     state = {
         pedidos: [{
             espaco: '',
@@ -12,7 +12,8 @@ class PedidosGestor extends React.Component {
             fim: '',
             descricao: '',
             periodicidade: '',
-            limite: ''
+            limite: '',
+            estado: '' // aceite, em processamento, rejeitado
         }]
     };
 
@@ -27,6 +28,7 @@ class PedidosGestor extends React.Component {
                     descricao: 'Descrição do Evento 1',
                     periodicidade: 7,
                     limite: moment().add('14', 'days').format('YYYY-MM-DD'),
+                    estado: 'aceite'
                 },
                 {
                     espaco: 'DI-0.02',
@@ -36,6 +38,7 @@ class PedidosGestor extends React.Component {
                     descricao: 'Descrição do Evento 2',
                     periodicidade: 1,
                     limite: moment().add('7', 'days').format('YYYY-MM-DD'),
+                    estado: 'emProcessamento'
                 },
                 {
                     espaco: 'DI-0.03',
@@ -45,18 +48,11 @@ class PedidosGestor extends React.Component {
                     descricao: 'Descrição do Evento 3',
                     periodicidade: 3,
                     limite: moment().add('9', 'days').format('YYYY-MM-DD'),
+                    estado: 'rejeitado'
                 },
             ]
         });
     }
-
-    handleAccept = (pedido) => {
-        // Aceitar pedido para evento
-    };
-
-    handleReject = (pedido) => {
-        // Rejeitar pedido para evento
-    };
 
     render() {
         return (
@@ -73,7 +69,7 @@ class PedidosGestor extends React.Component {
                             <th scope="col">Descrição</th>
                             <th scope="col">Periodicidade</th>
                             <th scope="col">Data limite</th>
-                            <th scope="col"></th>
+                            <th scope="col">Estado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,16 +83,21 @@ class PedidosGestor extends React.Component {
                                 <td>{pedido.periodicidade}</td>
                                 <td>{pedido.limite}</td>
                                 <td>
-                                    <a href="#" className="espacoComumGestorEdit alert-success" onClick={this.handleEdit}>
-                                        <i className="material-icons individual-icon">
-                                            check
+                                    {pedido.estado === 'aceite' &&
+                                        <i className="material-icons individual-icon pucpdrIconAceite">
+                                            check_circle
                                         </i>
-                                    </a>
-                                    <a href="#" className="espacoComumGestorEdit alert-danger" onClick={this.handleEdit}>
-                                        <i className="material-icons individual-icon">
-                                            close
+                                    }
+                                    {pedido.estado === 'emProcessamento' &&
+                                        <i className="material-icons individual-icon pucpdrIconEmProcessamento">
+                                            timelapse
                                         </i>
-                                    </a>
+                                    }
+                                    {pedido.estado === 'rejeitado' &&
+                                        <i className="material-icons individual-icon pucpdrIconRejeitado">
+                                            cancel
+                                        </i>
+                                    }
                                 </td>
                             </tr>
                         ))}
@@ -107,4 +108,4 @@ class PedidosGestor extends React.Component {
     }
 }
 
-export default PedidosGestor;
+export default PedidosUtilizadorCPDR;

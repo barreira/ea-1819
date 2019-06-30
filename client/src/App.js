@@ -17,6 +17,7 @@ import PesquisaGestor from "./components/Users/Gestor/Pesquisa/PesquisaGestor";
 import PesquisaUtilizador from "./components/Users/Utilizador/Pesquisa/PesquisaUtilizador";
 import EspacosComunsGestor from "./components/Users/Gestor/EspacosComuns/EspacosComunsGestor";
 import PedidosGestor from "./components/Users/Gestor/Pedidos/PedidosGestor";
+import PedidosUtilizadorCPDR from "./components/Users/UtilizadorCPDR/Pedidos/PedidosUtilizadorCPDR";
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
             <Route exact path="/pesquisagestor" component={PesquisaGestor} />
             <Route exact path="/pesquisautilizador" component={PesquisaUtilizador} />
             <Route exact path="/espacoscomunsgestor" component={EspacosComunsGestor} />
+            <Route exact path="/pedidosutilizadorcpdr" component={PedidosUtilizadorCPDR} />
             <Route exact path="/pedidosgestor" component={PedidosGestor} />
             <Route exact path="/espaco-comum" component={ResumoEspaco} />
             <Route exact path="/evento/criar" component={CriarEvento} />
