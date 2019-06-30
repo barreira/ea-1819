@@ -32,51 +32,48 @@ import static com.gestaoespacos.app.security.SecurityConstants.TOKEN_PREFIX;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-	private AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
-	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
-		this.authenticationManager = authenticationManager;
-		setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/public/users/login", "POST"));
-	}
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+        setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/public/users/login", "POST"));
+    }
 
-	@Override
-	public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
-			throws AuthenticationException {
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
+            throws AuthenticationException {
 
-		System.out.println("Attempting authentication");
-		try {
-			Ator creds = new ObjectMapper().readValue(req.getInputStream(), Ator.class);
-			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(),
-					creds.getPassword(), new ArrayList<>()));
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+        System.out.println("Attempting authentication");
+        try {
+            Ator creds = new ObjectMapper().readValue(req.getInputStream(), Ator.class);
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(),
+                    creds.getPassword(), new ArrayList<>()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@Override
-	protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
-			Authentication auth) throws IOException, ServletException {
-
-
-		System.out.println("Valid authentication");
-
-		// String role = auth.getAuthorities().toString().replace("[", "").replace("]", "");
-		// System.out.println(role);
+    @Override
+    protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
+                                            Authentication auth) throws IOException, ServletException {
 
 
-		// TODO : passar aqui os dados para o token
-		// including subject is a must
-		//.claim("role", role)
-		String token = Jwts.builder().setSubject(((User) auth.getPrincipal()).getUsername())
-				.claim("username", auth.getName())
-				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-				.signWith(SignatureAlgorithm.HS512, SECRET.getBytes()).compact();
+        System.out.println("Valid authentication");
 
-		System.out.println("Token");
-		System.out.println(token);
+        String role = auth.getAuthorities().toString().replace("[", "").replace("]", "");
+        System.out.println(role);
 
-		res.getWriter().write("{\"token\" : \"" + token +"\"}");
-		res.addHeader("Content-Type", "application/json");
-		res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
-	}
+        String token = Jwts.builder().setSubject(((User) auth.getPrincipal()).getUsername())
+                .claim("username", auth.getName())
+                .claim("role", role)
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS512, SECRET.getBytes()).compact();
+
+        System.out.println("Token");
+        System.out.println(token);
+
+        res.getWriter().write("{\"token\" : \"" + token + "\"}");
+        res.addHeader("Content-Type", "application/json");
+        res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+    }
 }
