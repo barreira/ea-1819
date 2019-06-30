@@ -39,6 +39,7 @@ class ResumoEspaco extends Component {
         });
 
         this.setState({
+            eventos,
             eventosHoje,
             eventosAmanha,
             loading: false
@@ -69,7 +70,7 @@ class ResumoEspaco extends Component {
 
     render() {
 
-        const { activeButton, eventosHoje, eventosAmanha, loading } = this.state;
+        const { activeButton, eventosHoje, eventosAmanha, eventos, loading } = this.state;
 
         if (loading)
             return <div></div>
@@ -91,7 +92,7 @@ class ResumoEspaco extends Component {
                 </div>
 
                 {activeButton === 'Eventos' ? <ResumoEspacoEventos eventosHoje={eventosHoje} eventosAmanha={eventosAmanha} /> : ''}
-                {activeButton === 'Horarios' ? <ResumoEspacoHorarios /> : ''}
+                {activeButton === 'Horarios' ? <ResumoEspacoHorarios eventos={eventos || []} /> : ''}
 
 
 

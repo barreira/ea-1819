@@ -40,6 +40,8 @@ class WeeklyCalendar extends Component {
                     events={this.props.events}
                     locale='pt'
                     contentHeight='auto'
+                    eventColor="#ddd"
+                    slotEventOverlap={true}
                 /> </div>
         );
     }
