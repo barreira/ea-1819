@@ -76,16 +76,23 @@ public class GestorEspacos extends Ator implements Responsavel{
         return p;
     }
 
-    public void updateEvento(Evento antigo, Evento novo_evt){
-        antigo.setNome(novo_evt.getNome());
-        antigo.setDateTimeInicial(novo_evt.getDateTimeInicial());
-        antigo.setDateTimeFinal(novo_evt.getDateTimeFinal());
-        antigo.setDescricao(novo_evt.getDescricao());
-        antigo.setEspaco(novo_evt.getEspaco());
+    public void updateEvento(Evento antigo, Evento novo_evt, Espaco esp){
+        if(novo_evt.getNome() != null) antigo.setNome(novo_evt.getNome());
+        if(novo_evt.getDateTimeInicial() != null) antigo.setDateTimeInicial(novo_evt.getDateTimeInicial());
+        if(novo_evt.getDateTimeFinal() != null) antigo.setDateTimeFinal(novo_evt.getDateTimeFinal());
+        if(novo_evt.getDescricao() != null) antigo.setDescricao(novo_evt.getDescricao());
+        if(esp != null){
+            antigo.setEspaco(esp);
+            esp.getHorario().addEvento(antigo);
+        }
         antigo.setPeriodicidade(novo_evt.getPeriodicidade());
-        antigo.setLimite(novo_evt.getLimite());
-        antigo.setSeguidores(novo_evt.getSeguidores());
-        antigo.setUtilizadorResponsavel(novo_evt.getUtilizadorResponsavel());
+        if(novo_evt.getLimite() != null) antigo.setLimite(novo_evt.getLimite());
+        if(novo_evt.getSeguidores() != null) antigo.setSeguidores(novo_evt.getSeguidores());
+        if(novo_evt.getUtilizadorResponsavel() != null) antigo.setUtilizadorResponsavel(novo_evt.getUtilizadorResponsavel());
+    }
+
+    public void updateEvento(Evento antigo, Evento novo_evt){
+        updateEvento(antigo, novo_evt, null);
     }
 
     public EspacoComum novoEC(String d, List<Espaco> ec){

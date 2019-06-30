@@ -29,7 +29,7 @@ public class GestorController {
     public Evento updateEvento(@RequestBody EventoUpdate update) {
         try{
             return GHE.updateEvento(update.getId(), update.getNovoEvento());
-        }catch(IdNotFoundException e){ System.out.println(e);}
+        }catch(IdNotFoundException|EspacoDoesNotExistException e){ System.out.println(e);}
 
         return null;
     }
