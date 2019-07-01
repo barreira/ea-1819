@@ -18,6 +18,7 @@ import PesquisaUtilizador from "./components/Users/Utilizador/Pesquisa/PesquisaU
 import EspacosComunsGestor from "./components/Users/Gestor/EspacosComuns/EspacosComunsGestor";
 import PedidosGestor from "./components/Users/Gestor/Pedidos/PedidosGestor";
 import PedidosUtilizadorCPDR from "./components/Users/UtilizadorCPDR/Pedidos/PedidosUtilizadorCPDR";
+import EditarEspacosComunsGestor from "./components/Users/Gestor/EspacosComuns/Editar/EditarEspacosComunsGestor";
 
 function App() {
 
@@ -39,11 +40,14 @@ function App() {
             <PrivateRoute exact path="/" component={Home} />
             <PrivateRoute exact path="/espaco" component={Espaco} testFunction={testFunction} />
             {/*<PrivateRoute exact path="/pesquisar" component={Pesquisar} />*/}
+            
             <Route exact path="/pesquisagestor" component={PesquisaGestor} />
             <Route exact path="/pesquisautilizador" component={PesquisaUtilizador} />
             <Route exact path="/espacoscomunsgestor" component={EspacosComunsGestor} />
+            <Route exact path="/espacoscomunsgestor/editar" component={EditarEspacosComunsGestor} />
             <Route exact path="/pedidosutilizadorcpdr" component={PedidosUtilizadorCPDR} />
             <Route exact path="/pedidosgestor" component={PedidosGestor} />
+
             <Route exact path="/espaco-comum" component={ResumoEspaco} />
             <Route exact path="/evento/criar" component={CriarEvento} />
             <Route exact path="/gestaopedidos" component={GestaoPedidos} />

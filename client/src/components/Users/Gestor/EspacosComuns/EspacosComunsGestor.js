@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './EspacosComunsGestor.css'
+import './EspacosComunsGestor.css';
 
 class EspacosComunsGestor extends React.Component {
     state = {
