@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.gestaoespacos.app.controllers.model.EventoUpdate;
 import com.gestaoespacos.app.controllers.model.GesEC;
 import com.gestaoespacos.app.model.*;
+import com.gestaoespacos.app.repositories.PedidoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +16,8 @@ import java.util.Optional;
 @RequestMapping("/gestor")
 public class GestorController {
 
+    @Autowired
+    private PedidoRepository pr;
 
     /*-----------------------------------------------------------------------------------------------------------------
      | Gerir Eventos
@@ -53,6 +57,11 @@ public class GestorController {
      | Gerir Pedidos
      -----------------------------------------------------------------------------------------------------------------
      */
+
+    @GetMapping("/pedidos/view")
+    public List<Pedido> viewPedidosPendentes(){
+        return pr.findAllByAtendido(false);
+    }
 
     @PostMapping("/pedidos/aceitar/{nr_pedido}")
     public Pedido aceitaPedido(@PathVariable long nr_pedido){

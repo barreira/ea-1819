@@ -169,6 +169,11 @@ final class VisitanteController {
         return null;
     }
 
+    @GetMapping("/espacos/viewAll")
+    public List<Espaco> getEspacos(){
+        return er.findAll();
+    }
+
     @GetMapping("/ecs/view/{id_ec}")
     public Optional<EspacoComum> viewEC(@PathVariable long id_ec){
         return ecr.findById(id_ec);
