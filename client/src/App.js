@@ -13,14 +13,16 @@ import Login from "./components/Login/Login";
 import CriarEvento from './components/CriarEvento/CriarEvento';
 import GestaoPedidos from './components/GestaoPedidos/GestaoPedidos';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import PesquisaGestor from "./components/Users/Gestor/Pesquisa/PesquisaGestor";
+import PesquisaUtilizadorCPDR from "./components/Users/UtilizadorCPDR/Pesquisa/PesquisaUtilizadorCPDR";
 import PesquisaUtilizador from "./components/Users/Utilizador/Pesquisa/PesquisaUtilizador";
 import EspacosComunsGestor from "./components/Users/Gestor/EspacosComuns/EspacosComunsGestor";
 import PedidosGestor from "./components/Users/Gestor/Pedidos/PedidosGestor";
 import PedidosUtilizadorCPDR from "./components/Users/UtilizadorCPDR/Pedidos/PedidosUtilizadorCPDR";
 import EditarEspacosComunsGestor from "./components/Users/Gestor/EspacosComuns/Editar/EditarEspacosComunsGestor";
-import EditarEventoGestor from "./components/Users/Gestor/Pesquisa/EditarEvento/EditarEventoGestor";
+// import EditarEventoGestor from "./components/Users/UtilizadorCPDR/Pesquisa/EditarEvento/EditarEventoGestor";
 import ASeguirUtilizador from "./components/Users/Utilizador/ASeguir/ASeguirUtilizador";
+import PesquisaGestor from "./components/Users/Gestor/Pesquisa/PesquisaGestor";
+import ASeguirUtilizadorCPDR from "./components/Users/UtilizadorCPDR/ASeguir/ASeguirUtilizadorCPDR";
 
 function App() {
 
@@ -46,12 +48,13 @@ function App() {
             <Route exact path="/pesquisautilizador" component={PesquisaUtilizador} />
             <Route exact path="/aseguirutilizador" component={ASeguirUtilizador} />
 
+            <Route exact path="/pesquisautilizadorcpdr" component={PesquisaUtilizadorCPDR} />
+            {/*<Route exact path="/pesquisautilizadorcpdr/editar" component={EditarEventoUtilizadorCPDR} />*/}
             <Route exact path="/pedidosutilizadorcpdr" component={PedidosUtilizadorCPDR} />
-            <Route exact path="/aseguirutilizadorcpdr" component={ASeguirUtilizador} />
+            <Route exact path="/aseguirutilizadorcpdr" component={ASeguirUtilizadorCPDR} />
 
             <Route exact path="/pesquisagestor" component={PesquisaGestor} /> {/* editar evento */}
-            <Route exact path="/pesquisagestor/editar" component={EditarEventoGestor} />
-
+            {/*<Route exact path="/pesquisagestor/editar" component={EditarEventoGestor} />*/}
             <Route exact path="/pedidosgestor" component={PedidosGestor} />
             <Route exact path="/espacoscomunsgestor" component={EspacosComunsGestor} />
             <Route exact path="/espacoscomunsgestor/editar" component={EditarEspacosComunsGestor} />
