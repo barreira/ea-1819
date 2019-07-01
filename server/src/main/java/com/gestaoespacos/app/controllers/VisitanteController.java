@@ -109,6 +109,7 @@ final class VisitanteController {
         return "Sucessfully registered!";
     }
 
+
     @PostMapping("/registerucpdr")
     public String register(@RequestBody UtilizadorCPDR utilizador) {
         System.out.println("Registering " + utilizador.toString());

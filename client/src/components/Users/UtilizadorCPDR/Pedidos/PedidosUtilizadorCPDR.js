@@ -19,6 +19,9 @@ class PedidosUtilizadorCPDR extends React.Component {
     };
 
     componentDidMount() {
+
+
+
         this.setState({
             pedidos: [
                 {
