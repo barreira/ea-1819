@@ -10,7 +10,7 @@ import Navbar from './components/Navbar/Navbar';
 import Espaco from './components/Espaco/Espaco';
 import ResumoEspaco from './components/ResumoEspaco/ResumoEspaco';
 import Login from "./components/Login/Login";
-import CriarEvento from './components/CriarEvento/CriarEvento';
+import NovoPedido from './components/NovoPedido/NovoPedido';
 import GestaoPedidos from './components/GestaoPedidos/GestaoPedidos';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import PesquisaGestor from "./components/Users/Gestor/Pesquisa/PesquisaGestor";
@@ -51,7 +51,7 @@ function App() {
             <Route exact path="/espacoscomunsgestor/editar" component={EditarEspacosComunsGestor} />
 
             <Route exact path="/espaco-comum" component={ResumoEspaco} />
-            <Route exact path="/evento/criar" component={CriarEvento} />
+            <Route exact path="/pedido/novo" component={NovoPedido} />
             <Route exact path="/gestaopedidos" component={GestaoPedidos} />
             <Route exact path="/login" render={(props) => <Login {...props} updateNavBar={updateNavBar} />} />
             <Route component={Home} />

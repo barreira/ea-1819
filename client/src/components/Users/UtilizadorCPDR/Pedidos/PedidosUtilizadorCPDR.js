@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from "moment";
+import { Redirect, Link } from 'react-router-dom';
 
 import './PedidosUtilizadorCPDR.css';
 
@@ -57,7 +58,11 @@ class PedidosUtilizadorCPDR extends React.Component {
     render() {
         return (
             <div>
-                <h4>Pedidos UtilizadorCPDR</h4>
+                <h4 style={{ float: 'left' }}>Pedidos UtilizadorCPDR</h4>
+
+                <Link to={"/pedido/novo"}>
+                    <span className="nav-link btn btn-filter" style={{ float: 'right', margin: '15px' }} >Novo Pedido</span>
+                </Link>
 
                 <table className="table ec-table">
                     <thead>
