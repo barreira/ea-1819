@@ -234,7 +234,8 @@ public class GHE {
      * @throws IdNotFoundException Responsavel com esse identificador não encontrado
      */
     public static List<Evento> eventosResp(long id_resp) throws IdNotFoundException{
-        if(gb.getGestorId() == id_resp){
+        Long gestorId = gb.getGestorId();
+        if(gestorId != null && gestorId == id_resp){
             return gb.eventosResp();
         }
         else return rb.eventosResp(id_resp);

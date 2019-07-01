@@ -373,8 +373,8 @@ public class GestorBean {
      * Retorna o identificador do gestor.
      * @return
      */
-    public long getGestorId(){
-        return gestor.getId();
+    public Long getGestorId(){
+        return gestor == null ? null : gestor.getId();
     }
 
     /**
