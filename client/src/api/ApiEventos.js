@@ -10,15 +10,15 @@ const token = {
     "Authorization": `Bearer ${UserHandler.getToken()}`
 }
 
-ApiEventos.fetchEventos = async () => {
+ApiEventos.fetchEventos = async (moment1, moment2) => {
 
     try {
 
         // TODO : REMOVE HARDCODE, a solucao sem o espaco não está funcional
 
         const data = {
-            "inicio": moment().format('YYYY-MM-DD'),
-            "fim": moment().add('15', 'days').format('YYYY-MM-DD'),
+            "inicio": moment1,
+            "fim": moment2,
             "espaco": 88,
         }
 

@@ -1151,7 +1151,7 @@ insert into espaco (id, designacao, horario_id, espacocomum_id) values (37, 'Oco
 insert into espaco (id, designacao, horario_id, espacocomum_id) values (38, 'Kaltan', 38, null);
 insert into espaco (id, designacao, horario_id, espacocomum_id) values (39, 'Ipoh', 39, null);
 insert into espaco (id, designacao, horario_id, espacocomum_id) values (40, 'Pumwani', 40, 28);
-insert into espaco (id, designacao, horario_id, espacocomum_id) values (41, 'Barisāl', 41, null);
+insert into espaco (id, designacao, horario_id, espacocomum_id) values (41, 'Barisal', 41, null);
 insert into espaco (id, designacao, horario_id, espacocomum_id) values (42, 'Essang', 42, null);
 insert into espaco (id, designacao, horario_id, espacocomum_id) values (43, 'Puyan', 43, null);
 insert into espaco (id, designacao, horario_id, espacocomum_id) values (44, 'Balogo', 44, null);
@@ -1256,8 +1256,8 @@ insert into espaco (id, designacao, horario_id, espacocomum_id) values (142, 'Lo
 insert into espaco (id, designacao, horario_id, espacocomum_id) values (143, 'Vanadzor', 143, null);
 insert into espaco (id, designacao, horario_id, espacocomum_id) values (144, 'Douniani', 144, null);
 insert into espaco (id, designacao, horario_id, espacocomum_id) values (145, 'Nakambala', 145, 18);
-insert into espaco (id, designacao, horario_id, espacocomum_id) values (146, 'Barkā’', 146, 19);
-insert into espaco (id, designacao, horario_id, espacocomum_id) values (147, 'Maythalūn', 147, 24);
+insert into espaco (id, designacao, horario_id, espacocomum_id) values (146, 'Barka’', 146, 19);
+insert into espaco (id, designacao, horario_id, espacocomum_id) values (147, 'Maythalan', 147, 24);
 insert into espaco (id, designacao, horario_id, espacocomum_id) values (148, 'Patsi', 148, null);
 insert into espaco (id, designacao, horario_id, espacocomum_id) values (149, 'Logon', 149, null);
 insert into espaco (id, designacao, horario_id, espacocomum_id) values (150, 'Marseille', 150, null);

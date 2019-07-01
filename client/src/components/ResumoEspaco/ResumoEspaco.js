@@ -16,7 +16,7 @@ class ResumoEspaco extends Component {
     }
 
     async componentDidMount() {
-        const eventos = await ApiEventos.fetchEventos();
+        const eventos = await ApiEventos.fetchEventos(moment().format('YYYY-MM-DD'), moment().add('1', 'days').format('YYYY-MM-DD'));
 
         const dataAtual = moment().format('YYYY-MM-DD')
         const dataAmanha = moment().add('1', 'days').format('YYYY-MM-DD');

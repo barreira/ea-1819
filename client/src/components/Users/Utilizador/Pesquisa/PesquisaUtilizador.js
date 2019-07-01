@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FiltroPesquisa from './FiltroPesquisa/FIltroPesquisa';
 import ListarElementosPesquisa from './ListarElementosPesquisa/ListarElementosPesquisa';
 import ApiEventos from '../../../../api/ApiEventos';
+import moment from 'moment';
 
 class PesquisaUtilizador extends Component {
     constructor(props) {
@@ -20,7 +21,7 @@ class PesquisaUtilizador extends Component {
 
     async componentDidMount() {
 
-        const eventos = await ApiEventos.fetchEventos();
+        const eventos = await ApiEventos.fetchEventos(moment().format('YYYY-MM-DD'), moment().add('15', 'days').format('YYYY-MM-DD'));
 
         let finalEvents = [];
         let finalEspacos = [];
