@@ -1,5 +1,6 @@
 package com.gestaoespacos.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Entity;
@@ -21,6 +22,7 @@ public class UtilizadorCPDR extends Utilizador implements Responsavel{
 
     @OneToMany //todo:
     @JoinColumn(name = "utilizadorCPDR_id")
+    @JsonIgnore
     private Set<Pedido> pedidos;
 
     public UtilizadorCPDR(){

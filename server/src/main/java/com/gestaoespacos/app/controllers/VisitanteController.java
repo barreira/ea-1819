@@ -42,6 +42,8 @@ final class VisitanteController {
     private AdministradorRepository adminRepository;
     @Autowired
     private EspacoComumRepository ecr;
+    @Autowired
+    private EspacoRepository er;
 
     @Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -160,6 +162,11 @@ final class VisitanteController {
          catch(Exception e){ System.out.println(e); }
 
         return null;
+    }
+
+    @GetMapping("/espacos/viewAll")
+    public List<Espaco> getEspacos(){
+        return er.findAll();
     }
 
     @GetMapping("/ecs/view/{id_ec}")
