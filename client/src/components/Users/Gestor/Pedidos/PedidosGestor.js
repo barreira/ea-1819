@@ -50,12 +50,24 @@ class PedidosGestor extends React.Component {
         });
     }
 
-    handleAccept = (pedido) => {
-        // Aceitar pedido para evento
+    handleAccept = (pedidoIndex) => {
+        const pedidosRemoved = this.state.pedidos.slice(0, pedidoIndex).concat(this.state.pedidos.slice(pedidoIndex + 1));
+
+        this.setState({
+            pedidos: pedidosRemoved
+        });
+
+        // TODO: Aceitar pedido
     };
 
-    handleReject = (pedido) => {
-        // Rejeitar pedido para evento
+    handleReject = (pedidoIndex) => {
+        const pedidosRemoved = this.state.pedidos.slice(0, pedidoIndex).concat(this.state.pedidos.slice(pedidoIndex + 1));
+
+        this.setState({
+            pedidos: pedidosRemoved
+        });
+
+        // TODO: Rejeitar pedido
     };
 
     render() {
@@ -73,11 +85,11 @@ class PedidosGestor extends React.Component {
                             <th scope="col">Descrição</th>
                             <th scope="col">Periodicidade</th>
                             <th scope="col">Data limite</th>
-                            <th scope="col"></th>
+                            <th scope="col"/>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.pedidos.map(pedido => (
+                        {this.state.pedidos.map((pedido, index) => (
                             <tr>
                                 <td>{pedido.espaco}</td>
                                 <td>{pedido.nome}</td>
@@ -87,12 +99,12 @@ class PedidosGestor extends React.Component {
                                 <td>{pedido.periodicidade}</td>
                                 <td>{pedido.limite}</td>
                                 <td>
-                                    <a href="#" className="espacoComumGestorEdit alert-success" onClick={this.handleEdit}>
+                                    <a className="alert-success" onClick={() => this.handleAccept(index)}>
                                         <i className="material-icons individual-icon">
                                             check
                                         </i>
                                     </a>
-                                    <a href="#" className="espacoComumGestorEdit alert-danger" onClick={this.handleEdit}>
+                                    <a className="alert-danger" onClick={() => this.handleReject(index)}>
                                         <i className="material-icons individual-icon">
                                             close
                                         </i>
