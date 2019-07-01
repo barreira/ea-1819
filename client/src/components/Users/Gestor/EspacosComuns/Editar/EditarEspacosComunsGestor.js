@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './EditarEspacosComunsGestor.css';
+import {Link} from "react-router-dom";
 
 class EditarEspacosComunsGestor extends React.Component {
     state = {
@@ -125,9 +126,11 @@ class EditarEspacosComunsGestor extends React.Component {
                     </div>
 
                     <div>
-                        <button type="button" className="btn btn-danger" onClick={this.submeterPedido}>
-                            Guardar Alterações
-                        </button>
+                        <Link to="/espacoscomunsgestor">
+                            <button type="button" className="btn btn-danger" onClick={this.submeterPedido}>
+                                Guardar Alterações
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './EspacosComunsGestor.css';
+import {Link} from "react-router-dom";
 
 class EspacosComunsGestor extends React.Component {
     state = {
@@ -33,11 +34,12 @@ class EspacosComunsGestor extends React.Component {
                         <div className="espacoComumGestorHeader">
                             <h5 className="espacoComumGestorTitle">{espacoComum.nome}</h5>
 
-                            <a href="#" className="espacoComumGestorEdit alert-danger" onClick={this.handleEdit}>
+                            <Link to="/espacoscomunsgestor/editar" className="espacoComumGestorEdit alert-danger"
+                                  onClick={this.handleEdit}>
                                 <i className="material-icons individual-icon">
                                     edit
                                 </i>
-                            </a>
+                            </Link>
                         </div>
 
                         <table className="table ec-table">
