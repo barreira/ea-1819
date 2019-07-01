@@ -42,6 +42,8 @@ final class VisitanteController {
     private AdministradorRepository adminRepository;
     @Autowired
     private EspacoComumRepository ecr;
+    @Autowired
+    private EspacoRepository er;
 
     @Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -105,6 +107,11 @@ final class VisitanteController {
          //                                .put("password", utilizador.getPassword())
            //                              .put("type", "utilizador");
         return "Sucessfully registered!";
+    }
+
+    @GetMapping("/espacos/viewAll")
+    public List<Espaco> getEspacos(){
+        return er.findAll();
     }
 
     @PostMapping("/registerucpdr")

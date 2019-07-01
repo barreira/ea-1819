@@ -1,0 +1,63 @@
+input {
+    box-sizing: border-box !important;
+}
+
+.criar-evento p {
+    margin: 0;
+    padding: 0 10px 10px 0;
+}
+
+.inputs,
+.react-datepicker-ignore-onclickoutside,
+.react-datepicker__input-container input {
+    height: 45px !important;
+}
+
+.inputs,
+.react-datepicker-ignore-onclickoutside,
+.react-datepicker__input-container input,
+textarea {
+    font-size: 12pt;
+    padding: 7px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: gray;
+}
+
+.rc-time-picker-input,
+.rc-time-picker-panel-input {
+    font-size: 12pt;
+    height: 45px;
+    text-align: center;
+}
+
+.rc-time-picker-clear {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+select {
+    max-width: 235px;
+}
+
+.item input {
+    margin-right: 5px;
+}
+
+.p-label {
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.criar-evento .btn {
+    background-color: var(--color-red);
+    color: white;
+    border-radius: 7px;
+    font-size: 10pt;
+    height: 35px;
+    letter-spacing: 1px;
+    float: right;
+    margin-top: 20px;
+}
