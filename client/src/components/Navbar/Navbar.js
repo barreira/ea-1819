@@ -4,7 +4,6 @@ import moment from 'moment';
 import UserHandler from '../../utils/userHandler';
 
 import './Navbar.css'
-import { jsxClosingElement } from '@babel/types';
 
 class Navbar extends Component {
     constructor(props) {
@@ -32,7 +31,7 @@ class Navbar extends Component {
             <React.Fragment>
                 <li className="nav-item">
                     <Link to={"/pesquisautilizador"}>
-                        <span className="nav-link" href="#">Pesquisar</span>
+                        <span className="nav-link">Pesquisar</span>
                     </Link>
                 </li>
 
@@ -41,11 +40,12 @@ class Navbar extends Component {
                         pathname: "/login",
                         state: { setLoggedInAs: this.props.setLoggedInAs }
                     }}>
-                        <span className="nav-link" href="#">Login</span>
+                        <span className="nav-link">Login</span>
                     </Link>
                 </li>
             </React.Fragment>
         );
+
         const loggedIn = (
             <React.Fragment>
 
@@ -64,7 +64,7 @@ class Navbar extends Component {
             <React.Fragment>
                 <li className="nav-item active">
                     <Link to={"/pesquisautilizador"}>
-                        <span className="nav-link" href="#">Pesquisar</span>
+                        <span className="nav-link">Pesquisar</span>
                     </Link>
                 </li>
             </React.Fragment>
@@ -73,43 +73,44 @@ class Navbar extends Component {
         const loggedInUtilizadorCPDR = (
             <React.Fragment>
                 <li className="nav-item active">
+                    {/* TODO: falta isto */}
                     <Link to={"/"}>
-                        <span className="nav-link" href="#">A Seguir</span>
+                        <span className="nav-link">A Seguir</span>
                     </Link>
                 </li>
                 <li className="nav-item active">
-                    {/* TODO: implementar interface pedidos e definir aqui rota */}
-                    <Link to={"/"}>
-                        <span className="nav-link" href="#">Pedidos</span>
+                    <Link to={"/pedidosutilizadorcpdr"}>
+                        <span className="nav-link">Pedidos</span>
                     </Link>
                 </li>
+                {/* TODO: falta adaptar pesquisa ao UtilizadorCPDR */}
                 <li className="nav-item active">
                     <Link to={"/pesquisautilizador"}>
-                        <span className="nav-link" href="#">Pesquisar</span>
+                        <span className="nav-link">Pesquisar</span>
                     </Link>
                 </li>
             </React.Fragment>
-        )
+        );
 
         const loggedInGestor = (
             <React.Fragment>
                 <li className="nav-item active">
-                    <Link to={"/pedidosgestor"}>
-                        <span className="nav-link" href="#">Pedidos</span>
+                    <Link to={"/pesquisagestor"}>
+                        <span className="nav-link">Pesquisar</span>
                     </Link>
                 </li>
                 <li className="nav-item active">
-                    <Link to={"/pesquisagestor"}>
-                        <span className="nav-link" href="#">Pesquisar</span>
+                    <Link to={"/pedidosgestor"}>
+                        <span className="nav-link">Pedidos</span>
                     </Link>
                 </li>
                 <li className="nav-item active">
                     <Link to={"/espacoscomunsgestor"}>
-                        <span className="nav-link" href="#">Espaços Comuns</span>
+                        <span className="nav-link">Espaços Comuns</span>
                     </Link>
                 </li>
             </React.Fragment>
-        )
+        );
 
         return (
             <nav className="navbar navbar-expand-md bg-faded">
@@ -140,7 +141,6 @@ class Navbar extends Component {
                             {user.role === 'GestorEspacos' && loggedInGestor}
 
                             {user && loggedIn}
-
                         </ul>
                     </div>
                 </div>
