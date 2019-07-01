@@ -5,7 +5,10 @@ import UserHandler from '../utils/userHandler';
 const HOST = 'http://localhost:8080';
 let ApiEventos = {};
 
-axios.defaults.headers.post['Authorization'] = `Bearer ${UserHandler.getToken()}`;
+// axios.defaults.headers.post['Authorization'] = `Bearer ${UserHandler.getToken()}`;
+const token = {
+    "Authorization": `Bearer ${UserHandler.getToken()}`
+}
 
 ApiEventos.fetchEventos = async () => {
 
@@ -72,7 +75,7 @@ ApiEventos.followEvent = async (eventId) => {
         const req = await axios.post(`${HOST}/user/follow`, {
             "id_user": userData.id,
             "id_evt": eventId
-        })
+        }, ...token)
 
         console.log(req.data)
 

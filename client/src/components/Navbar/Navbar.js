@@ -67,6 +67,12 @@ class Navbar extends Component {
                         <span className="nav-link">Pesquisar</span>
                     </Link>
                 </li>
+
+                <li className="nav-item active">
+                    <Link to={"/"}>
+                        <span className="nav-link">A Seguir</span>
+                    </Link>
+                </li>
             </React.Fragment>
         );
 
