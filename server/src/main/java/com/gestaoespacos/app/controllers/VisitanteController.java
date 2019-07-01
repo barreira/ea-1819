@@ -109,10 +109,6 @@ final class VisitanteController {
         return "Sucessfully registered!";
     }
 
-    @GetMapping("/espacos/viewAll")
-    public List<Espaco> getEspacos(){
-        return er.findAll();
-    }
 
     @PostMapping("/registerucpdr")
     public String register(@RequestBody UtilizadorCPDR utilizador) {
