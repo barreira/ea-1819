@@ -6,7 +6,7 @@ class FiltroPesquisa extends Component {
         super(props);
         this.state = {
             filters: ['Eventos', 'Espaços', 'Responsáveis'],
-            activeFilters: ['Eventos', 'Espaços'],
+            activeFilters: ['Eventos'],
             inputFilter: ''
         };
 

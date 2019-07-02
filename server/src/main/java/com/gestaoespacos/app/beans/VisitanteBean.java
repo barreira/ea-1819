@@ -42,6 +42,14 @@ public class VisitanteBean {
         } else throw new EventoDoesNotExistException();
     }
 
+    public Evento consultarEventoId(Long id) throws EventoDoesNotExistException {
+        Optional<Evento> es = er.findById(id);
+
+            return es.get();
+
+
+    }
+
     /**
      * Obter o horário associado ao espaco com determinada designação, a existir.
      *

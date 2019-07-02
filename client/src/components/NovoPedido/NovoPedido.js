@@ -240,8 +240,8 @@ class NovoPedido extends Component {
                             </div>
 
                             <div className="item" style={{ paddingLeft: '5px' }}>
-                                <input type="radio" className="" name="repete"
-                                    onClick={() => this.handleRepete('nunca')} value="Anualmente" />
+                                <input type="radio" className="" name="repete" onChange={this.handleChange}
+                                    onClick={() => this.handleRepete('nunca')} value="Nunca" />
                                 <label htmlFor="">Nunca</label>
                             </div>
                         </div>

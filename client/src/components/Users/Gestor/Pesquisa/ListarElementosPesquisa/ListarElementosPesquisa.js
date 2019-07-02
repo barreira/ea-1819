@@ -1,11 +1,32 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import EditarEvento from '../../../../EditarEvento/EditarEvento';
+import { Redirect, Route } from 'react-router-dom';
 
 class ListarElementosPesquisa extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            editEvent: false,
+            eventName: ""
+        };
+    }
+
+    editEvent = (eventName) => {
+
+        console.log("EDITING EVENT ID", eventName)
+
+        this.setState({
+            editEvent: true,
+            eventName: eventName
+        })
+    }
+
+    exitEdit = () => {
+        this.setState({
+            editEvent: false
+        })
     }
 
     render() {
@@ -18,6 +39,20 @@ class ListarElementosPesquisa extends Component {
         // Listar Espaços
 
         // Listar Responsáveis
+
+        if (this.state.editEvent) {
+
+            const eventoAEditar = eventos.filter(evt => evt.nome === this.state.eventName)[0];
+
+            console.log("EVENTO A EDITAR", eventoAEditar)
+
+            return (
+                <Redirect to={{
+                    pathname: `/evento/editar/${this.state.eventName}`
+                }} />
+            )
+        }
+
 
         return (
             <div>
@@ -39,7 +74,7 @@ class ListarElementosPesquisa extends Component {
                                         <i className="material-icons individual-icon">
                                             calendar_today
                                         </i>
-                                        <p>{moment(event.start).format('HH:mm')} - {moment(event.end).format('HH:mm')}</p>
+                                        <p>{moment(event.data).format('DD/MM')} {moment(event.start).format('HH:mm')} - {moment(event.end).format('HH:mm')}</p>
                                     </td>
                                     <td>
                                         <i className="material-icons individual-icon">
@@ -49,7 +84,7 @@ class ListarElementosPesquisa extends Component {
                                     </td>
                                     <td>
                                         <a href="#" className="alert-danger">
-                                            <i className="material-icons individual-icon">
+                                            <i className="material-icons individual-icon" onClick={() => this.editEvent(event.nome)}>
                                                 edit
                                             </i>
                                         </a>

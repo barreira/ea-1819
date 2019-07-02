@@ -283,11 +283,19 @@ public class GestorBean {
         //Atualizar o evento
         Espaco espaco = novoEvento.getEspaco();
 
+        System.out.println("Evento Atual");
+        System.out.println(e.toString());
+        System.out.println("Novo Evento");
+        System.out.println(novoEvento);
+
         if(espaco != null){
             Optional<Espaco> esp = espr.findById(espaco.getId());
 
             if(!esp.isPresent())
                 throw new EspacoDoesNotExistException("Novo evento with name=" + novoEvento.getNome() + " does not have Espaco associated.");
+
+            System.out.println("Espaco");
+            System.out.println(espaco.toString());
 
             gestor.updateEvento(e, novoEvento, esp.get());
         }

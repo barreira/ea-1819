@@ -31,6 +31,17 @@ public class GestorController {
         }catch(EspacoDoesNotExistException e){ System.out.println(e);}
     }
 
+    @GetMapping("/evento/{eventId}")
+    public Evento detalhesEvento(@PathVariable Long eventId) {
+        try {
+            System.out.println("EventID" + eventId);
+            return GHE.consultarEventoId(eventId);
+        } catch (EventoDoesNotExistException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @PostMapping("/eventos/update")
     public Evento updateEvento(@RequestBody EventoUpdate update) {
         try{

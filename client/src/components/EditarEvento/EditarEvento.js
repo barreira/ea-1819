@@ -8,29 +8,20 @@ import ApiEspacos from '../../api/ApiEspacos';
 
 import "../../../node_modules/react-datepicker/dist/react-datepicker.css";
 import "../../../node_modules/rc-time-picker/assets/index.css";
-import './EditarPedido.css';
+import './EditarEvento.css';
 import ApiPedidos from '../../api/ApiPedidos';
+import ApiEventos from '../../api/ApiEventos';
 
 registerLocale('pt', pt);
 
-class EditarPedido extends Component {
+class EditarEvento extends Component {
     constructor(props) {
         super(props);
         this.state = {
             startDate: new Date(),
             espacos: [],
             loading: true,
-            event: {
-                nome: '',
-                espaco: '',
-                data: moment().toDate(),
-                repete: '',
-                horaInicio: moment('00:00', 'hh:mm'),
-                horaFim: moment('00:00', 'hh:mm'),
-                descricao: '',
-                periocidade: 'Nunca',
-                limite: moment().toDate()
-            },
+            event: {},
             repete: false
         }
     }
@@ -39,15 +30,32 @@ class EditarPedido extends Component {
         // TODO : fetch espacos
 
         // Fazer o fetch para ir buscar o pedido atual
-
+        const eventName = this.props.match.params.eventName;
         const espacos = await ApiEspacos.fetchAll();
+        const evento = await ApiEventos.fetchEvento(eventName);
 
         console.log("ESPACOS NO CDM", espacos)
 
+        console.log("EVENT NAME", eventName)
+
         this.setState({
             espacos,
-            loading: false
+            loading: false,
+            event: {
+                "name": evento.nome,
+                "espaco": evento.espaco.id,
+                "data": moment(evento.data).toDate(),
+                "horaInicio": moment(evento.dateTimeInicial),
+                "horaFim": moment(evento.dateTimeFinal),
+                "periodicidade": evento.periodicidade,
+                "limite": moment(evento.limite).toDate(),
+                "descricao": evento.descricao
+            },
+            eventId: evento.id,
+            repete: (evento.periodicidade > 0)
         })
+
+        console.log("STATEEEEEEEEEEE", this.state)
     }
 
     handleChange = (e, optionalName) => {
@@ -79,26 +87,34 @@ class EditarPedido extends Component {
 
         const event = this.state.event;
 
-        let periocidade = 0;
-        switch (event.periocidade.toLowerCase()) {
-            case 'Diariamente':
-                periocidade = 1;
-                break;
-            case 'Semanalmente':
-                periocidade = 7;
-                break;
-            case 'Mensalmente':
-                periocidade = 28;
-                break;
-            case 'Anualmente':
-                periocidade = 365;
-                break;
+        let periodicidade = 0;
+
+        console.log("EVENTO NA SUBMISAAAAA", event)
+
+        try {
+            switch (event.periodicidade.toLowerCase()) {
+                case 'Diariamente':
+                    periodicidade = 1;
+                    break;
+                case 'Semanalmente':
+                    periodicidade = 7;
+                    break;
+                case 'Mensalmente':
+                    periodicidade = 28;
+                    break;
+                case 'Anualmente':
+                    periodicidade = 365;
+                    break;
+            }
+        }
+        catch (error) {
+            periodicidade = event.periodicidade;
         }
 
         const newPedido = {
-            "nome": event.nome,
+            "nome": event.name,
             "descricao": event.descricao,
-            "periocidade": periocidade,
+            "periodicidade": periodicidade,
             "dateTimeInicial": moment(event.horaInicio).format('YYYY-MM-DDTHH:mm:ss'),
             "dateTimeFinal": moment(event.horaFim).format('YYYY-MM-DDTHH:mm:ss'),
             "limite": moment(event.limite).format('YYYY-MM-DDTHH:mm:ss'),
@@ -108,12 +124,12 @@ class EditarPedido extends Component {
 
         }
         console.log("PEDIDO PARA SUBMISSAO", newPedido)
-        const pedidoResponse = await ApiPedidos.novoPedido(newPedido)
-        console.log("Pedido Response:", pedidoResponse);
+        const pedidoResponse = await ApiEventos.editar(this.state.eventId, newPedido)
+        // console.log("Pedido Response:", pedidoResponse);
 
-        if (pedidoResponse.success) {
-            window.location.href = "/pedidosutilizadorcpdr";
-        }
+        // if (pedidoResponse.success) {
+        //     window.location.href = "/pedidosutilizadorcpdr";
+        // }
 
 
     };
@@ -134,9 +150,11 @@ class EditarPedido extends Component {
     render() {
         const { espacos, event } = this.state;
 
+        console.log("Editar State", this.state)
+
         return (
             <div className="criar-evento">
-                <h3 style={{ textAlign: 'center', padding: '10px 5px' }}>Editar Pedido</h3>
+                <h3 style={{ textAlign: 'center', padding: '10px 5px' }}>Editar Evento</h3>
                 <form onSubmit={this.submeterPedido}>
                     <div className="row" style={{ marginBottom: '15px' }}>
                         <div className="col-md-2 container">
@@ -144,7 +162,7 @@ class EditarPedido extends Component {
                         </div>
 
                         <div className="col-md-10">
-                            <input type="text" className="inputs" placeholder="Nome do evento" name="nome" onChange={this.handleChange} required />
+                            <input type="text" className="inputs" placeholder="Nome do evento" value={event.name} name="name" onChange={this.handleChange} required />
                         </div>
                     </div>
 
@@ -157,7 +175,7 @@ class EditarPedido extends Component {
                             <select className="browser-default custom-select inputs" name="espaco" onChange={this.handleChange} required>
                                 <option selected>Selecionar espaço</option>
                                 {espacos.map(espaco => (
-                                    <option value={espaco.id} name='repete' onSelect={this.handleChange}>{espaco.designacao}</option>
+                                    <option value={espaco.id} name='repete' onSelect={this.handleChange} selected={espaco.id === event.espaco}>{espaco.designacao}</option>
                                 ))}
                             </select>
                         </div>
@@ -188,6 +206,7 @@ class EditarPedido extends Component {
                                 showSecond={false}
                                 defaultValue={event.horaInicio}
                                 className="timepicker"
+                                value={event.horaInicio}
                                 onChange={(e) => this.handleChange(e, 'horaInicio')}
                             />
                         </div>
@@ -203,6 +222,7 @@ class EditarPedido extends Component {
                                 showSecond={false}
                                 defaultValue={event.horaFim}
                                 className="timepicker"
+                                value={event.horaFim}
                                 onChange={(e) => this.handleChange(e, 'horaFim')}
                             />
                         </div>
@@ -214,32 +234,32 @@ class EditarPedido extends Component {
                         </div>
                         <div className="col-md-10">
                             <div className="item" style={{ paddingLeft: '5px' }}>
-                                <input type="radio" className="" name="repete" onChange={this.handleChange}
-                                    onClick={() => this.handleRepete('diariamente')} value="Diariamente" />
+                                <input type="radio" className="" name="periodicidade" onChange={this.handleChange}
+                                    onClick={() => this.handleRepete('diariamente')} value="Diariamente" checked={event.periodicidade === 1 || event.periodicidade === 'Diariamente'} />
                                 <label htmlFor="">Diariamente</label>
                             </div>
 
                             <div className="item" style={{ paddingLeft: '5px' }}>
-                                <input type="radio" className="" name="repete" onChange={this.handleChange}
-                                    onClick={() => this.handleRepete('semanalmente')} value="Semanalmente" />
+                                <input type="radio" className="" name="periodicidade" onChange={this.handleChange}
+                                    onClick={() => this.handleRepete('semanalmente')} value="Semanalmente" checked={event.periodicidade === 7 || event.periodicidade === 'Semanalmente'} />
                                 <label htmlFor="">Semanalmente</label>
                             </div>
 
                             <div className="item" style={{ paddingLeft: '5px' }}>
-                                <input type="radio" className="" name="repete" onChange={this.handleChange}
-                                    onClick={() => this.handleRepete('mensalmente')} value="Mensalmente" />
+                                <input type="radio" className="" name="periodicidade" onChange={this.handleChange}
+                                    onClick={() => this.handleRepete('mensalmente')} value="Mensalmente" checked={event.periodicidade === 28 || event.periodicidade === 'Mensalmente'} />
                                 <label htmlFor="">Mensalmente</label>
                             </div>
 
                             <div className="item" style={{ paddingLeft: '5px' }}>
-                                <input type="radio" className="" name="repete" onChange={this.handleChange}
-                                    onClick={() => this.handleRepete('anualmente')} value="Anualmente" />
+                                <input type="radio" className="" name="periodicidade" onChange={this.handleChange}
+                                    onClick={() => this.handleRepete('anualmente')} value="Anualmente" checked={event.periodicidade === 365 || event.periodicidade === 'Anualmente'} />
                                 <label htmlFor="">Anualmente</label>
                             </div>
 
                             <div className="item" style={{ paddingLeft: '5px' }}>
-                                <input type="radio" className="" name="repete"
-                                    onClick={() => this.handleRepete('nunca')} value="Anualmente" />
+                                <input type="radio" className="" name="periodicidade" onChange={this.handleChange}
+                                    onClick={() => this.handleRepete('nunca')} value="Nunca" checked={event.periodicidade === 0 || event.periodicidade == 'Nunca'} />
                                 <label htmlFor="">Nunca</label>
                             </div>
                         </div>
@@ -283,4 +303,4 @@ class EditarPedido extends Component {
     }
 }
 
-export default EditarPedido;
+export default EditarEvento;

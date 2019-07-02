@@ -23,7 +23,7 @@ import EditarEspacosComunsGestor from "./components/Users/Gestor/EspacosComuns/E
 import ASeguirUtilizador from "./components/Users/Utilizador/ASeguir/ASeguirUtilizador";
 import PesquisaGestor from "./components/Users/Gestor/Pesquisa/PesquisaGestor";
 import ASeguirUtilizadorCPDR from "./components/Users/UtilizadorCPDR/ASeguir/ASeguirUtilizadorCPDR";
-import EditarPedido from './components/EditarPedido/EditarPedido';
+import EditarEvento from './components/EditarEvento/EditarEvento';
 
 function App() {
 
@@ -63,7 +63,7 @@ function App() {
             <Route exact path="/espaco-comum" component={ResumoEspaco} />
 
             <Route exact path="/pedido/novo" component={NovoPedido} />
-            <Route exact path="/pedido/editar/:idPedido" component={EditarPedido} />
+            <Route exact path="/evento/editar/:eventName" component={EditarEvento} />
 
             <Route exact path="/gestaopedidos" component={GestaoPedidos} />
             <Route exact path="/login" render={(props) => <Login {...props} updateNavBar={updateNavBar} />} />

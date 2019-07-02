@@ -41,6 +41,10 @@ public class GHE {
         return vb.consultarEvento(nome);
     }
 
+    public static Evento consultarEventoId(Long id) throws EventoDoesNotExistException{
+        return vb.consultarEventoId(id);
+    }
+
     /**
      * Obter o horário associado ao espaco com determinada designação, a existir.
      * @param designacaoEspaco do espaço

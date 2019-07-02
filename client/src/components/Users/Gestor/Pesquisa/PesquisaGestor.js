@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import FiltroPesquisa from './FiltroPesquisa/FIltroPesquisa';
 import ListarElementosPesquisa from './ListarElementosPesquisa/ListarElementosPesquisa';
+import moment from 'moment';
+import ApiEventos from '../../../../api/ApiEventos';
+
 
 class PesquisaGestor extends Component {
     constructor(props) {
@@ -17,14 +20,54 @@ class PesquisaGestor extends Component {
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        const eventos = await ApiEventos.fetchEventos(moment().format('YYYY-MM-DD'), moment().add('15', 'days').format('YYYY-MM-DD'));
+
+        let finalEvents = [];
+        let finalEspacos = [];
+        let finalResponsaveis = [];
+
+        for (let day in eventos) {
+            const currDayEvents = eventos[day];
+            if (Array.isArray(currDayEvents)) {
+                currDayEvents.forEach(evento => {
+
+                    const espaco = evento.espaco.designacao;
+                    finalEvents.push({
+                        "id": evento.id,
+                        "nome": evento.nome,
+                        "data": day,
+                        "local": espaco,
+                        "horaInicio": evento.localDate,
+                        "horaInicio": evento.dateTimeInicial,
+                        "horaFim": evento.dateTimeFinal,
+                        "responsavel": evento.utilizadorResponsavel.nome,
+                    })
+
+                    finalResponsaveis.push(evento.utilizadorResponsavel.nome);
+                    finalEspacos.push(espaco);
+                })
+            }
+        }
+
+        // finalEspacos = finalEspacos.slice(0, 40);
+        // finalEvents = finalEvents.slice(0, 40);
+
+        console.log("FINAL EVENTS", finalEvents)
+
+        const filteredArr = finalEvents.reduce((acc, current) => {
+            const x = acc.find(item => item.nome === current.nome);
+            if (!x) {
+                return acc.concat([current]);
+            } else {
+                return acc;
+            }
+        }, []);
+
         this.setState({
-            eventos: [
-                { nome: 'Programacao', local: 'DI-01', horaInicio: '10:00', horaFim: '12:00', responsavel: 'Maria Luisa' },
-                { nome: 'Programacao', local: 'DI-01', horaInicio: '10:00', horaFim: '12:00', responsavel: 'Maria Luisa' }
-            ],
-            espacos: ['DI-01', 'DI-02', 'DI-03'],
-            responsaveis: ['Maria Luisa', 'Rute', 'Luis'],
+            eventos: filteredArr,
+            espacos: [... new Set(finalEspacos)],
+            responsaveis: [... new Set(finalResponsaveis)],
             loading: false
         });
     }
