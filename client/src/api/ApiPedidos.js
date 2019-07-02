@@ -106,5 +106,21 @@ ApiPedidos.cancelarPedido = async (idPedido) => {
     }
 }
 
+ApiPedidos.consultarPedidosPendentesPeloGestor = async () => {
+    try {
+        const req = await axios.get(`${HOST}/gestor/pedidos/view`, token);
+
+        console.log(`A consultar pedidos pendentes `, req.data)
+
+        return req.data;
+
+    } catch (e) {
+        console.error(e);
+
+        return {
+            success: false,
+        }
+    }
+}
 
 export default ApiPedidos;
