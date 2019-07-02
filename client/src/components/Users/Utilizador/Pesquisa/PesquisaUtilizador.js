@@ -28,7 +28,7 @@ class PesquisaUtilizador extends Component {
 
         console.log("Fetching data from PesquisaUtilizador")
 
-        const eventos = await ApiEventos.fetchEventos(moment().format('YYYY-MM-DD'), moment().add('15', 'days').format('YYYY-MM-DD'));
+        const eventos = await ApiEventos.fetchEventos(moment().format('YYYY-MM-DD'), moment().add('5', 'days').format('YYYY-MM-DD'));
 
         const eventosASeguir = await ApiEventos.eventosASeguir();
 

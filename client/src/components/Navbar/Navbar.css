@@ -65,3 +65,8 @@
     vertical-align: middle;
     display: inline !important;
 }
+
+.no-hover:hover {
+    color: white !important;
+    cursor: default;
+}

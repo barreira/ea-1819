@@ -5,8 +5,8 @@ class FiltroPesquisa extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filters: ['Eventos', 'Espaços'],
-            activeFilters: ['Eventos', 'Espaços'],
+            filters: ['Meus Eventos', 'Eventos', 'Espaços'], //, 'ASeguir'
+            activeFilters: ['Meus Eventos'], //, 'ASeguir'
             inputFilter: ''
         };
 
@@ -51,16 +51,17 @@ class FiltroPesquisa extends Component {
         const { filters } = this.state;
 
         return (
-            <div className="input-filter-container">
-                <div>
-                    <i className="material-icons individual-icon" >
-                        search
-                    </i>
-                    <input type="text" placeholder="Termo de pesquisa" value={this.state.inputFilter}
-                           onChange={(e) => this.handleChange(e)} name="inputFilter" />
-                    {filters.map(filter => (
-                        <button className={this.classNameByFilter(filter)} onClick={() => this.changeFilter(filter)}> {filter}</button>
-                    ))}
+            <div>
+                <div className="input-filter-container">
+                    <div>
+                        <i className="material-icons individual-icon" >
+                            search
+                        </i>
+                        <input type="text" placeholder="Termo de pesquisa" value={this.state.inputFilter} onChange={(e) => this.handleChange(e)} name="inputFilter" />
+                        {filters.map(filter => (
+                            <button className={this.classNameByFilter(filter)} onClick={() => this.changeFilter(filter)}> {filter}</button>
+                        ))}
+                    </div>
                 </div>
             </div>
         );

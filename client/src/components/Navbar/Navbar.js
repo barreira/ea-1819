@@ -82,11 +82,11 @@ class Navbar extends Component {
                         <span className="nav-link">Pedidos</span>
                     </Link>
                 </li>
-                <li className="nav-item active">
+                {/* <li className="nav-item active">
                     <Link to={"/aseguirutilizadorcpdr"}>
                         <span className="nav-link">A Seguir</span>
                     </Link>
-                </li>
+                </li> */}
                 <li className="nav-item active">
                     <Link to={"/pesquisautilizadorcpdr"}>
                         <span className="nav-link">Pesquisar</span>
@@ -128,11 +128,11 @@ class Navbar extends Component {
                                     access_time
                                     </i>
                                 <div id="current-time">
-                                    <span className="nav-link">
+                                    <span className="nav-link" className="no-hover">
                                         {/* <i className="material-icons individual-icon" >
                                             access_time
                                     </i> */}
-                                        {moment().format('DD MMM, HH:mm')}
+                                        {moment().format('DD MMM HH:mm')}
                                     </span>
                                 </div>
                             </li>

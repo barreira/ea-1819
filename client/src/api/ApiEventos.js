@@ -43,6 +43,23 @@ ApiEventos.fetchEventos = async (moment1, moment2) => {
     }
 }
 
+ApiEventos.fetchEventosUtilizadorCPDR = async () => {
+
+    try {
+
+        const userData = UserHandler.get();
+
+        const req = await axios.get(`${HOST}/usercpdr/eventos/view/${userData.id}`, token)
+        return req.data;
+
+    } catch (e) {
+        console.error(e);
+        return {
+            success: false,
+        }
+    }
+}
+
 ApiEventos.editar = async (idEvent, novoEvento) => {
 
     try {

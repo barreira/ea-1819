@@ -13,17 +13,16 @@ import Login from "./components/Login/Login";
 import NovoPedido from './components/NovoPedido/NovoPedido';
 import GestaoPedidos from './components/GestaoPedidos/GestaoPedidos';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import PesquisaUtilizadorCPDR from "./components/Users/UtilizadorCPDR/Pesquisa/PesquisaUtilizadorCPDR";
 import PesquisaUtilizador from "./components/Users/Utilizador/Pesquisa/PesquisaUtilizador";
 import EspacosComunsGestor from "./components/Users/Gestor/EspacosComuns/EspacosComunsGestor";
 import PedidosGestor from "./components/Users/Gestor/Pedidos/PedidosGestor";
-import PedidosUtilizadorCPDR from "./components/Users/UtilizadorCPDR/Pedidos/PedidosUtilizadorCPDR";
 import EditarEspacosComunsGestor from "./components/Users/Gestor/EspacosComuns/Editar/EditarEspacosComunsGestor";
 // import EditarEventoGestor from "./components/Users/UtilizadorCPDR/Pesquisa/EditarEvento/EditarEventoGestor";
 import ASeguirUtilizador from "./components/Users/Utilizador/ASeguir/ASeguirUtilizador";
 import PesquisaGestor from "./components/Users/Gestor/Pesquisa/PesquisaGestor";
 import ASeguirUtilizadorCPDR from "./components/Users/UtilizadorCPDR/ASeguir/ASeguirUtilizadorCPDR";
 import EditarEvento from './components/EditarEvento/EditarEvento';
+import PesquisaUtilizadorCPDR from './components/Users/UtilizadorCPDR/Pesquisa/PesquisaUtilizadorCPDR';
 
 function App() {
 
@@ -51,7 +50,7 @@ function App() {
 
             <Route exact path="/pesquisautilizadorcpdr" component={PesquisaUtilizadorCPDR} />
             {/*<Route exact path="/pesquisautilizadorcpdr/editar" component={EditarEventoUtilizadorCPDR} />*/}
-            <Route exact path="/pedidosutilizadorcpdr" component={PedidosUtilizadorCPDR} />
+            <Route exact path="/pedidosutilizadorcpdr" component={PesquisaUtilizadorCPDR} />
             <Route exact path="/aseguirutilizadorcpdr" component={ASeguirUtilizadorCPDR} />
 
             <Route exact path="/pesquisagestor" component={PesquisaGestor} /> {/* editar evento */}

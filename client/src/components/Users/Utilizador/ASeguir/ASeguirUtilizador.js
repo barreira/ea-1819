@@ -26,6 +26,7 @@ class ASeguirUtilizador extends React.Component {
         console.log(eventosASeguir)
         eventosASeguir.forEach(e => {
             const newE = {
+                id: e.id,
                 nome: e.nome,
                 inicio: moment(e.dateTimeInicial).format('HH:mm'),
                 fim: moment(e.dateTimeFinal).format('HH:mm'),
@@ -42,14 +43,13 @@ class ASeguirUtilizador extends React.Component {
 
     }
 
-    handleUnfollow = (nomeEvento) => {
-        const filtered = this.state.eventosASeguir.filter(evento => evento.nome !== nomeEvento);
+    handleUnfollow = async (id) => {
+        const filtered = this.state.eventosASeguir.filter(evento => evento.id !== id);
 
         this.setState({
             eventosASeguir: filtered
         });
-
-        // TODO: integrar unfollow do evento
+        await ApiEventos.unfollowEvent(id)
     };
 
 
@@ -82,7 +82,7 @@ class ASeguirUtilizador extends React.Component {
 
         return (
             <div>
-                <h4 style={{ float: 'left' }}>Eventos seguidos por ti</h4>
+                <h3>Eventos seguidos por ti</h3>
 
 
                 {
@@ -110,7 +110,7 @@ class ASeguirUtilizador extends React.Component {
                                     <td>{evento.fim}</td>
                                     <td>{evento.responsavel}</td>
                                     <td>
-                                        <a className="alert-warning" onClick={() => this.handleUnfollow(evento.nome)}>
+                                        <a className="alert-warning" style={{ cursor: 'pointer' }} onClick={() => this.handleUnfollow(evento.id)}>
                                             <i className="material-icons individual-icon pucpdrIconAceite">
                                                 star
                                         </i>
@@ -123,12 +123,15 @@ class ASeguirUtilizador extends React.Component {
                 }
                 {
                     this.state.eventosASeguir.length < 1 &&
-                    <p style={{ textAlign: 'center' }}>Não se encontra a seguir nenhum evento</p>
-                }
+                    <div>
 
-                <button className="btn btn-filter" style={{ float: 'right', maxWidth: '300px', color: 'black' }}
-                    onClick={() => this.showGoogleCalendarSection()}
-                >Sync Google Calendar</button>
+                        <h4 style={{}}>Não te encontras a seguir nenhum evento de momento.</h4>
+                    </div>
+                }
+                {this.state.eventosASeguir.length > 0 &&
+                    <button className="btn btn-filter" style={{ float: 'right', maxWidth: '300px', color: 'black' }}
+                        onClick={() => this.showGoogleCalendarSection()}
+                    >Sync Google Calendar</button>}
 
                 {this.state.showGoogleCalendar && sectionGoogleCalendar}
 
