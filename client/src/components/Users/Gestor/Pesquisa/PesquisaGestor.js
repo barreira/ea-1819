@@ -22,10 +22,16 @@ class PesquisaGestor extends Component {
 
     async componentDidMount() {
         const eventos = await ApiEventos.fetchEventos(moment().format('YYYY-MM-DD'), moment().add('15', 'days').format('YYYY-MM-DD'));
+        this.refreshFilteredEvents(eventos);
+    }
+
+    refreshFilteredEvents = (eventos) => {
 
         let finalEvents = [];
         let finalEspacos = [];
         let finalResponsaveis = [];
+
+        console.log("LIsta de ventos a friltar", eventos)
 
         for (let day in eventos) {
             const currDayEvents = eventos[day];
@@ -53,7 +59,6 @@ class PesquisaGestor extends Component {
         // finalEspacos = finalEspacos.slice(0, 40);
         // finalEvents = finalEvents.slice(0, 40);
 
-        console.log("FINAL EVENTS", finalEvents)
 
         const filteredArr = finalEvents.reduce((acc, current) => {
             const x = acc.find(item => item.nome === current.nome);
@@ -64,13 +69,18 @@ class PesquisaGestor extends Component {
             }
         }, []);
 
+        console.log("Eventos filtrados", finalEvents)
+
         this.setState({
             eventos: filteredArr,
+            filteredListar: eventos,
             espacos: [... new Set(finalEspacos)],
             responsaveis: [... new Set(finalResponsaveis)],
             loading: false
         });
+
     }
+
 
     setActiveFilters = (activeFilters) => {
         let listar = {};
@@ -98,6 +108,20 @@ class PesquisaGestor extends Component {
             filteredListar: listar
         });
     };
+
+    removeEventById = (eventId) => {
+        const eventos = this.state.eventos.filter(e => e.id !== eventId);
+        this.refreshFromChild(eventos)
+    }
+
+    refreshFromChild = (eventos) => {
+        this.setState({
+            eventos,
+            filteredListar: {
+                eventos
+            }
+        })
+    }
 
     handleInputFilter = (filterString) => {
         console.log(filterString);
@@ -133,7 +157,7 @@ class PesquisaGestor extends Component {
     };
 
     doFilter = (str1, str2) => {
-        return str1.toLowerCase().indexOf(str2.toLowerCase()) > -1;
+        return (str1 || '').toLowerCase().indexOf((str2 || '').toLowerCase()) > -1;
     };
 
     render() {
@@ -143,12 +167,15 @@ class PesquisaGestor extends Component {
             return <div></div>;
         }
 
+        console.log("RENDERING AGAIN")
+        console.log("FILTRADOS", filteredListar)
+
         return (
             <div>
                 <h4>Pesquisa Gestor</h4>
 
                 <FiltroPesquisa setActiveFilters={this.setActiveFilters} handleInputFilter={this.handleInputFilter} />
-                <ListarElementosPesquisa listar={filteredListar} />
+                <ListarElementosPesquisa listar={filteredListar} removeEventById={this.removeEventById} />
             </div>
         );
     }

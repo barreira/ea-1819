@@ -20,8 +20,7 @@ ApiEventos.fetchEventos = async (moment1, moment2) => {
 
         const data = {
             "inicio": moment1,
-            "fim": moment2,
-            "espaco": 88,
+            "fim": moment2
         }
 
         const req = await axios.post(`${HOST}/public/users/eventos`, {
@@ -71,6 +70,26 @@ ApiEventos.editar = async (idEvent, novoEvento) => {
     }
 }
 
+ApiEventos.cancelar = async (eventId) => {
+
+    try {
+
+        const req = await axios.post(`${HOST}/gestor/eventos/cancelar`, {
+            evento: eventId,
+            justificacao: 'De manhã está-se bem é na caminha'
+        }, token)
+
+        console.log(req)
+        return req.data;
+
+    } catch (e) {
+        console.error(e);
+
+        return {
+            success: false,
+        }
+    }
+}
 ApiEventos.fetchEventosEspaco = async (espaco) => {
 
     try {

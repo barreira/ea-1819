@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import EditarEvento from '../../../../EditarEvento/EditarEvento';
 import { Redirect, Route } from 'react-router-dom';
+import ApiEventos from '../../../../../api/ApiEventos';
 
 class ListarElementosPesquisa extends Component {
 
@@ -21,6 +22,11 @@ class ListarElementosPesquisa extends Component {
             editEvent: true,
             eventName: eventName
         })
+    }
+
+    cancelEvent = async (eventId) => {
+        await ApiEventos.cancelar(eventId);
+        this.props.removeEventById(eventId);
     }
 
     exitEdit = () => {
@@ -52,6 +58,9 @@ class ListarElementosPesquisa extends Component {
                 }} />
             )
         }
+
+
+
 
 
         return (
@@ -91,7 +100,7 @@ class ListarElementosPesquisa extends Component {
                                     </td>
                                     <td>
                                         <a href="#" className="alert-danger">
-                                            <i className="material-icons individual-icon">
+                                            <i className="material-icons individual-icon" onClick={() => this.cancelEvent(event.id)}>
                                                 cancel
                                             </i>
                                         </a>
