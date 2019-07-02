@@ -6,15 +6,8 @@ import ApiPedidos from '../../../../api/ApiPedidos';
 
 class PedidosGestor extends React.Component {
     state = {
-        pedidos: [{
-            espaco: '',
-            nome: '',
-            inicio: '',
-            fim: '',
-            descricao: '',
-            periodicidade: '',
-            limite: ''
-        }], loading: true
+        pedidosPendentes: [],
+        pedidosAtendidos: []
     };
 
     async componentDidMount() {
@@ -77,21 +70,24 @@ class PedidosGestor extends React.Component {
         // });
     }
 
-    handleAccept = (pedidoIndex) => {
-        const pedidosRemoved = this.state.pedidos.slice(0, pedidoIndex).concat(this.state.pedidos.slice(pedidoIndex + 1));
+    handleAccept = async (pedidoIndex) => {
+
+        await ApiPedidos.aceitarPedido(pedidoIndex);
+
+        const pedidosRemoved = this.state.pedidosPendentes.filter(p => p.id != pedidoIndex)
 
         this.setState({
-            pedidos: pedidosRemoved
+            pedidosPendentes: pedidosRemoved
         });
 
         // TODO: Aceitar pedido
     };
 
-    handleReject = (pedidoIndex) => {
-        const pedidosRemoved = this.state.pedidos.slice(0, pedidoIndex).concat(this.state.pedidos.slice(pedidoIndex + 1));
-
+    handleReject = async (pedidoIndex) => {
+        await ApiPedidos.rejeitarPedido(pedidoIndex);
+        const pedidosRemoved = this.state.pedidosPendentes.filter(p => p.id != pedidoIndex)
         this.setState({
-            pedidos: pedidosRemoved
+            pedidosPendentes: pedidosRemoved
         });
 
         // TODO: Rejeitar pedido
@@ -130,12 +126,12 @@ class PedidosGestor extends React.Component {
                                 <td>{pedido.periodicidade}</td>
                                 <td>{moment(pedido.limite).format('DD-MM-YYYY')}</td>
                                 <td>
-                                    <a className="alert-success" onClick={() => this.handleAccept(index)}>
+                                    <a className="alert-success" style={{ cursor: 'pointer' }} onClick={() => this.handleAccept(pedido.id)}>
                                         <i className="material-icons individual-icon">
                                             check
                                         </i>
                                     </a>
-                                    <a className="alert-danger" onClick={() => this.handleReject(index)}>
+                                    <a className="alert-danger" style={{ cursor: 'pointer' }} onClick={() => this.handleReject(pedido.id)}>
                                         <i className="material-icons individual-icon">
                                             close
                                         </i>
