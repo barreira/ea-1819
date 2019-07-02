@@ -63,14 +63,13 @@ class Navbar extends Component {
         const loggedInUtilizador = (
             <React.Fragment>
                 <li className="nav-item active">
-                    <Link to={"/pesquisautilizador"}>
-                        <span className="nav-link">Pesquisar</span>
+                    <Link to={"/aseguirutilizador"}>
+                        <span className="nav-link">A Seguir</span>
                     </Link>
                 </li>
-
                 <li className="nav-item active">
-                    <Link to={"/"}>
-                        <span className="nav-link">A Seguir</span>
+                    <Link to={"/pesquisautilizador"}>
+                        <span className="nav-link">Pesquisar</span>
                     </Link>
                 </li>
             </React.Fragment>
@@ -79,19 +78,17 @@ class Navbar extends Component {
         const loggedInUtilizadorCPDR = (
             <React.Fragment>
                 <li className="nav-item active">
-                    {/* TODO: falta isto */}
-                    <Link to={"/"}>
-                        <span className="nav-link">A Seguir</span>
-                    </Link>
-                </li>
-                <li className="nav-item active">
                     <Link to={"/pedidosutilizadorcpdr"}>
                         <span className="nav-link">Pedidos</span>
                     </Link>
                 </li>
-                {/* TODO: falta adaptar pesquisa ao UtilizadorCPDR */}
                 <li className="nav-item active">
-                    <Link to={"/pesquisautilizador"}>
+                    <Link to={"/aseguirutilizadorcpdr"}>
+                        <span className="nav-link">A Seguir</span>
+                    </Link>
+                </li>
+                <li className="nav-item active">
+                    <Link to={"/pesquisautilizadorcpdr"}>
                         <span className="nav-link">Pesquisar</span>
                     </Link>
                 </li>

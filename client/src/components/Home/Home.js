@@ -1,11 +1,7 @@
 import React from 'react';
 import {Route, Switch} from "react-router";
 
-import EventosMaisTarde from '../EventosMaisTarde/EventosMaisTarde';
-import EventosAmanha from '../EventosAmanha/EventosAmanha';
-import EventosADecorrer from '../EventosADecorrer/EventosADecorrer';
 import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer/Footer";
 
 class Home extends React.Component {
 
@@ -50,8 +46,6 @@ class Home extends React.Component {
                     {!this.state.loggedInAs && <Route exact path="/" component="HomeVisitante" />}
                     {this.state.loggedInAs === 'Utilizador' && <Route exact path="/" component="HomeUtilizador" />}
                 </Switch>
-
-                <Footer />
             </div>
         );
     }
