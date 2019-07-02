@@ -69,7 +69,7 @@ class Navbar extends Component {
                 </li>
 
                 <li className="nav-item active">
-                    <Link to={"/"}>
+                    <Link to={"/aseguirutilizador"}>
                         <span className="nav-link">A Seguir</span>
                     </Link>
                 </li>
