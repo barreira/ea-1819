@@ -17,10 +17,6 @@ const userData = UserHandler.get();
 ApiPedidos.novoPedido = async (pedido) => {
 
     try {
-
-
-        console.log("USERDATA", userData)
-
         const data = {
             "id": userData.id,
             "alocacao": {
@@ -41,14 +37,65 @@ ApiPedidos.novoPedido = async (pedido) => {
             ...data
         }, token)
 
-        console.log("API pedido depois", req.data)
+        console.log("Pedido criado", req.data)
 
-        console.log("Data", data)
-        console.log(req)
+        return req.data;
+
+    } catch (e) {
+        console.error(e);
+
         return {
-            success: true,
-            ...req.data
-        };
+            success: false,
+        }
+    }
+}
+ApiPedidos.fetchPedidosPendentes = async () => {
+
+    try {
+        const req = await axios.get(`${HOST}/usercpdr/pedidos/pendentes/${userData.id}`, token);
+
+        console.log(`Pedidos pendentes do user ${userData.id}`, req.data)
+
+        return req.data;
+
+    } catch (e) {
+        console.error(e);
+
+        return {
+            success: false,
+        }
+    }
+}
+
+ApiPedidos.fetchPedidosAtendidos = async () => {
+
+    try {
+        const req = await axios.get(`${HOST}/usercpdr/pedidos/atendidos/${userData.id}`, token);
+
+        console.log(`Pedidos atendidos do user ${userData.id}`, req.data)
+
+        return req.data;
+
+    } catch (e) {
+        console.error(e);
+
+        return {
+            success: false,
+        }
+    }
+}
+
+ApiPedidos.cancelarPedido = async (idPedido) => {
+
+    try {
+        const req = await axios.post(`${HOST}/usercpdr/pedidos/cancelar`, {
+            "id": userData.id,
+            "nr": idPedido
+        }, token);
+
+        console.log(`A cancelar pedido ${idPedido} do user ${userData.id}`, req.data)
+
+        return req.data;
 
     } catch (e) {
         console.error(e);

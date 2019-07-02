@@ -11,3 +11,12 @@
     padding: 0 15px;
     color: darkred;
 }
+
+.btn-cancelar {
+    margin-top: 8px !important;
+    background-color: #ccc;
+    border-radius: none;
+    height: 40px;
+    max-width: 95px;
+    line-height: 25px;
+    }

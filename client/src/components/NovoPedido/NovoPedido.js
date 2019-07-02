@@ -106,11 +106,15 @@ class NovoPedido extends Component {
 
         }
         console.log("PEDIDO PARA SUBMISSAO", newPedido)
-        const pedidoResponse = await ApiPedidos.novoPedido(newPedido)
-        console.log("Pedido Response:", pedidoResponse);
+        try {
 
-        if (pedidoResponse.success) {
+
+            const pedidoResponse = await ApiPedidos.novoPedido(newPedido)
             window.location.href = "/pedidosutilizadorcpdr";
+            console.log("Pedido Response:", pedidoResponse);
+
+        } catch (e) {
+
         }
 
 
