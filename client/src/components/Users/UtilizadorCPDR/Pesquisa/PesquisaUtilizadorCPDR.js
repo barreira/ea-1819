@@ -53,9 +53,7 @@ class PesquisaUtilizadorCPDR extends Component {
             meusEventos: finalEvents
         })
 
-
         const eventos = await ApiEventos.fetchEventos(moment().format('YYYY-MM-DD'), moment().add('5', 'days').format('YYYY-MM-DD'));
-
         const eventosASeguir = await ApiEventos.eventosASeguir();
 
 
@@ -126,21 +124,24 @@ class PesquisaUtilizadorCPDR extends Component {
     handleInputFilter = (filterString) => {
         console.log(filterString);
 
-        const { eventos, espacos, aSeguir } = this.state;
+        const { eventos, espacos, meusEventos, aSeguir } = this.state;
+
+        const activeFilters = this.state.activeFilters;
 
         // Filter events
-        const filteredEvents = eventos.filter(e => this.doFilter(e.nome, filterString)
-            || this.doFilter(e.local, filterString) || this.doFilter(e.responsavel, filterString));
+        const filteredEvents = activeFilters.includes('Eventos') ? eventos.filter(e => this.doFilter(e.nome, filterString)
+            || this.doFilter(e.local, filterString) || this.doFilter(e.responsavel, filterString)) : []
 
-        const filteredEspacos = espacos.filter(e => this.doFilter(e, filterString));
+        const filteredMeusEventos = activeFilters.includes('Meus Eventos') ? meusEventos.filter(e => this.doFilter(e.nome, filterString)
+            || this.doFilter(e.local, filterString) || this.doFilter(e.responsavel, filterString)) : []
 
-        const filteredASeguir = aSeguir.filter(e => this.doFilter(e.nome, filterString)
-            || this.doFilter(e.local, filterString));
+        const filteredEspacos = activeFilters.includes('Espaços') ? espacos.filter(e => this.doFilter(e, filterString)) : []
+
 
         const newFilteredListar = {
             eventos: filteredEvents,
             espacos: filteredEspacos,
-            aSeguir: filteredASeguir
+            meusEventos: filteredMeusEventos
         };
 
         this.setState({

@@ -136,14 +136,17 @@ class PesquisaGestor extends Component {
         //     // }
         // })
 
+
+        const activeFilters = this.state.activeFilters;
+
         // Filter events
-        const filteredEvents = eventos.filter(e => this.doFilter(e.nome, filterString)
+        const filteredEvents = activeFilters.includes['Eventos'] ? eventos.filter(e => this.doFilter(e.nome, filterString)
             || this.doFilter(e.local, filterString)
-            || this.doFilter(e.responsavel, filterString));
+            || this.doFilter(e.responsavel, filterString)) : [];
 
-        const filteredEspacos = espacos.filter(e => this.doFilter(e, filterString));
+        const filteredEspacos = activeFilters.includes['Espaços'] ? espacos.filter(e => this.doFilter(e, filterString)) : [];
 
-        const filteredResponsaveis = responsaveis.filter(e => this.doFilter(e, filterString));
+        const filteredResponsaveis = activeFilters.includes['Responsáveis'] ? responsaveis.filter(e => this.doFilter(e, filterString)) : [];
 
         const newFilteredListar = {
             eventos: filteredEvents,
@@ -166,9 +169,6 @@ class PesquisaGestor extends Component {
         if (loading) {
             return <div></div>;
         }
-
-        console.log("RENDERING AGAIN")
-        console.log("FILTRADOS", filteredListar)
 
         return (
             <div>
