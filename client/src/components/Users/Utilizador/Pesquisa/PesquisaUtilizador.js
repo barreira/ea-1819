@@ -15,13 +15,22 @@ class PesquisaUtilizador extends Component {
             filteredListar: {},
             activeFilters: [],
             inputFilter: '',
-            loading: true
+            loading: true,
+            eventosASeguir: []
         };
     }
 
     async componentDidMount() {
+        this.fetchStuff();
+    }
+
+    fetchStuff = async () => {
+
+        console.log("Fetching data from PesquisaUtilizador")
 
         const eventos = await ApiEventos.fetchEventos(moment().format('YYYY-MM-DD'), moment().add('15', 'days').format('YYYY-MM-DD'));
+
+        const eventosASeguir = await ApiEventos.eventosASeguir();
 
         let finalEvents = [];
         let finalEspacos = [];
@@ -33,6 +42,7 @@ class PesquisaUtilizador extends Component {
 
                     const espaco = evento.espaco.designacao;
                     finalEvents.push({
+                        "id": evento.id,
                         "nome": evento.nome,
                         "data": day,
                         "local": espaco,
@@ -40,6 +50,7 @@ class PesquisaUtilizador extends Component {
                         "horaInicio": evento.dateTimeInicial,
                         "horaFim": evento.dateTimeFinal,
                         "responsavel": evento.utilizadorResponsavel.nome,
+                        "aSeguir": (eventosASeguir.filter(e => e.nome === evento.nome).length > 0 ? true : false)
                     })
 
                     finalEspacos.push(espaco)
@@ -49,6 +60,7 @@ class PesquisaUtilizador extends Component {
 
         finalEspacos = finalEspacos.slice(0, 40);
         finalEvents = finalEvents.slice(0, 40);
+
 
         this.setState({
             eventos: finalEvents,
@@ -106,6 +118,10 @@ class PesquisaUtilizador extends Component {
         });
     };
 
+    updateParent = () => {
+
+    }
+
     doFilter = (str1, str2) => {
 
         return (str1 || '').toLowerCase().indexOf((str2 || '').toLowerCase()) > -1;
@@ -123,7 +139,7 @@ class PesquisaUtilizador extends Component {
                 <h4>Pesquisa Utilizador</h4>
 
                 <FiltroPesquisa setActiveFilters={this.setActiveFilters} handleInputFilter={this.handleInputFilter} />
-                <ListarElementosPesquisa listar={filteredListar} />
+                <ListarElementosPesquisa listar={filteredListar} updateParent={this.fetchStuff} />
             </div>
         );
     }

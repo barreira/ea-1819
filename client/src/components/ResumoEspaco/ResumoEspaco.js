@@ -16,7 +16,7 @@ class ResumoEspaco extends Component {
     }
 
     async componentDidMount() {
-        const eventos = await ApiEventos.fetchEventos(moment().format('YYYY-MM-DD'), moment().add('1', 'days').format('YYYY-MM-DD'));
+        const eventos = await ApiEventos.fetchEventos(moment().format('YYYY-MM-DD'), moment().add('301', 'days').format('YYYY-MM-DD'));
 
         const dataAtual = moment().format('YYYY-MM-DD')
         const dataAmanha = moment().add('1', 'days').format('YYYY-MM-DD');
@@ -83,8 +83,6 @@ class ResumoEspaco extends Component {
         return (
 
             <div>
-
-                <button type="text" onClick={this.testFunction}>TEST BUTTON</button>
 
                 <h3 style={{ textAlign: 'center' }}>{this.props.title}</h3>
 

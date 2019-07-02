@@ -5,7 +5,9 @@ const HOST = 'http://localhost:8080'
 let ApiUsers = {};
 
 const token = {
-    "Authorization": `Bearer ${UserHandler.getToken()}`
+    "headers": {
+        "Authorization": `Bearer ${UserHandler.getToken()}`
+    }
 }
 
 ApiUsers.login = async (username, password) => {
@@ -66,8 +68,8 @@ ApiUsers.calendarPermissions = async (accessCode) => {
         const userData = UserHandler.get();
         const req = await axios.post(`${HOST}/user/calendar`, {
             "id": userData.id,
-            "code": "4/eQHaiunq3K0dB2l-TbPkW3nVnc4sbXxUE-AXOzlEzQ3l_ArKL73-4v8"
-        }, ...token)
+            "code": accessCode
+        }, token)
 
         console.log(req.data)
 

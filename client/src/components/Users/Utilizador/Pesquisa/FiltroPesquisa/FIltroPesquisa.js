@@ -5,8 +5,8 @@ class FiltroPesquisa extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filters: ['Eventos', 'Espaços', 'ASeguir'],
-            activeFilters: ['Eventos', 'Espaços', 'ASeguir'],
+            filters: ['Eventos', 'Espaços'], //, 'ASeguir'
+            activeFilters: ['Eventos', 'Espaços'], //, 'ASeguir'
             inputFilter: ''
         };
 

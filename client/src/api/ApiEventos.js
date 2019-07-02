@@ -79,7 +79,6 @@ ApiEventos.cancelar = async (eventId) => {
             justificacao: 'De manhã está-se bem é na caminha'
         }, token)
 
-        console.log(req)
         return req.data;
 
     } catch (e) {
@@ -99,11 +98,7 @@ ApiEventos.fetchEventosEspaco = async (espaco) => {
             espaco
         })
 
-        console.log(req)
-        return {
-            success: true,
-            ...req.data
-        };
+        return req.data;
 
     } catch (e) {
         console.error(e);
@@ -142,14 +137,45 @@ ApiEventos.followEvent = async (eventId) => {
         const req = await axios.post(`${HOST}/user/follow`, {
             "id_user": userData.id,
             "id_evt": eventId
-        }, ...token)
+        }, token)
 
-        console.log(req.data)
+        return req.data;
+
+    } catch (e) {
+        console.error(e);
 
         return {
-            success: true,
-            data: req.data
-        };
+            success: false,
+        }
+    }
+}
+
+ApiEventos.unfollowEvent = async (eventId) => {
+
+    try {
+        const userData = UserHandler.get();
+        const req = await axios.post(`${HOST}/user/unfollow`, {
+            "id_user": userData.id,
+            "id_evt": eventId
+        }, token)
+
+        return req.data;
+
+    } catch (e) {
+        console.error(e);
+
+        return {
+            success: false,
+        }
+    }
+}
+
+ApiEventos.eventosASeguir = async () => {
+    try {
+        const userData = UserHandler.get();
+        const req = await axios.get(`${HOST}/user/following/${userData.id}`, token)
+
+        return req.data;
 
     } catch (e) {
         console.error(e);

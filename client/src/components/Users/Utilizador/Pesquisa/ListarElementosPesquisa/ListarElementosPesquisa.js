@@ -2,31 +2,31 @@ import React, { Component } from 'react';
 import moment from 'moment';
 
 import './ListarElementosPesquisa.css';
+import ApiEventos from '../../../../../api/ApiEventos';
 
 class ListarElementosPesquisa extends Component {
 
     constructor(props) {
         super(props);
         this.state = {};
+
     };
 
-    handleFollow = (evento) => {
+    handleFollow = async (evento) => {
         // Mark event as being followed/unfollowed
 
+        console.log(" A seguir novo evento", evento)
+        const result = await ApiEventos.followEvent(evento.id)
         const { listar } = this.props;
         const { eventos, espacos, aSeguir } = listar;
 
-        if (!aSeguir.includes(evento)) {
-            aSeguir.push(evento);
-            eventos.splice(eventos.indexOf(evento), 1);
-        }
-        else {
-            aSeguir.splice(aSeguir.indexOf(evento), 1);
-            eventos.push(evento);
-        }
+        this.props.updateParent();
+
+
     };
 
     render() {
+
         const { listar } = this.props;
 
         const { eventos, espacos, aSeguir } = listar;
@@ -61,7 +61,7 @@ class ListarElementosPesquisa extends Component {
                                     </td>
                                     <td>
                                         {
-                                            !aSeguir.includes(event.nome) &&
+                                            !event.aSeguir &&
                                             <a href="#" className="alert-danger" onClick={() => this.handleFollow(event)}>
                                                 <i className="material-icons individual-icon">
                                                     star_border
@@ -69,7 +69,7 @@ class ListarElementosPesquisa extends Component {
                                             </a>
                                         }
                                         {
-                                            aSeguir.includes(event.nome) &&
+                                            event.aSeguir &&
                                             <a href="#" className="alert-danger" onClick={() => this.handleFollow(event)}>
                                                 <i className="material-icons individual-icon">
                                                     star
