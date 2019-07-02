@@ -12,11 +12,16 @@ import ApiUsers from '../../api/ApiUsers';
 class ResumoEspaco extends Component {
     constructor(props) {
         super(props);
-        this.state = { activeButton: 'Eventos', eventos: [], eventosHoje: [], eventosAmanha: [], loading: true }
+        this.state = { activeButton: 'Eventos', eventos: [], eventosHoje: [], eventosAmanha: [], loading: true, time: Date.now() }
     }
 
     async componentDidMount() {
-        const eventos = await ApiEventos.fetchEventos(moment().format('YYYY-MM-DD'), moment().add('301', 'days').format('YYYY-MM-DD'));
+        this.fetchData();
+        this.interval = setInterval(() => this.fetchData(), 10000);
+    }
+
+    fetchData = async () => {
+        const eventos = await ApiEventos.fetchEventos(moment().subtract('15', 'days').format('YYYY-MM-DD'), moment().add('15', 'days').format('YYYY-MM-DD'));
 
         const dataAtual = moment().format('YYYY-MM-DD')
         const dataAmanha = moment().add('1', 'days').format('YYYY-MM-DD');
@@ -45,7 +50,13 @@ class ResumoEspaco extends Component {
             loading: false
         })
 
+
     }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
 
     formatarEvento = (evento) => {
         return {
@@ -86,7 +97,7 @@ class ResumoEspaco extends Component {
 
                 <h3 style={{ textAlign: 'center' }}>{this.props.title}</h3>
 
-                <div className="btn-section">
+                <div className="btn-section" style={{ marginTop: '-30px' }}>
                     <button className={activeButton === 'Eventos' ? `${baseCss} ${active}` : baseCss} onClick={() => this.changeActiveButton('Eventos')}>Eventos</button>
                     <button className={activeButton === 'Horarios' ? `${baseCss} ${active}` : baseCss} onClick={() => this.changeActiveButton('Horarios')}>Horários</button>
                 </div>

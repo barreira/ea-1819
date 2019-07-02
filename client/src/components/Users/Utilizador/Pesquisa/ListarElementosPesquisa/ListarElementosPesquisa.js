@@ -62,7 +62,7 @@ class ListarElementosPesquisa extends Component {
                                     <td>
                                         {
                                             !event.aSeguir &&
-                                            <a href="#" className="alert-danger" onClick={() => this.handleFollow(event)}>
+                                            <a href="" className="alert-danger" onClick={() => this.handleFollow(event)}>
                                                 <i className="material-icons individual-icon">
                                                     star_border
                                                 </i>
@@ -70,7 +70,7 @@ class ListarElementosPesquisa extends Component {
                                         }
                                         {
                                             event.aSeguir &&
-                                            <a href="#" className="alert-danger" onClick={() => this.handleFollow(event)}>
+                                            <a href="" className="alert-danger" onClick={() => this.handleFollow(event)}>
                                                 <i className="material-icons individual-icon">
                                                     star
                                                 </i>

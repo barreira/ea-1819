@@ -23,6 +23,7 @@ import PesquisaGestor from "./components/Users/Gestor/Pesquisa/PesquisaGestor";
 import ASeguirUtilizadorCPDR from "./components/Users/UtilizadorCPDR/ASeguir/ASeguirUtilizadorCPDR";
 import EditarEvento from './components/EditarEvento/EditarEvento';
 import PesquisaUtilizadorCPDR from './components/Users/UtilizadorCPDR/Pesquisa/PesquisaUtilizadorCPDR';
+import PedidosUtilizadorCPDR from './components/Users/UtilizadorCPDR/Pedidos/PedidosUtilizadorCPDR';
 
 function App() {
 
@@ -50,7 +51,7 @@ function App() {
 
             <Route exact path="/pesquisautilizadorcpdr" component={PesquisaUtilizadorCPDR} />
             {/*<Route exact path="/pesquisautilizadorcpdr/editar" component={EditarEventoUtilizadorCPDR} />*/}
-            <Route exact path="/pedidosutilizadorcpdr" component={PesquisaUtilizadorCPDR} />
+            <Route exact path="/pedidosutilizadorcpdr" component={PedidosUtilizadorCPDR} />
             <Route exact path="/aseguirutilizadorcpdr" component={ASeguirUtilizadorCPDR} />
 
             <Route exact path="/pesquisagestor" component={PesquisaGestor} /> {/* editar evento */}

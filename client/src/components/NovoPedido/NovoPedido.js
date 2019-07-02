@@ -93,12 +93,16 @@ class NovoPedido extends Component {
                 break;
         }
 
+        const d = moment(event.data).format('YYYY-MM-DD');
+        const dateTimeInicio = moment(`${d}T${moment(event.horaInicio).format('HH:mm:ss')}`).format('YYYY-MM-DDTHH:mm:ss')
+        const dateTimeFim = moment(`${d}T${moment(event.horaFim).format('HH:mm:ss')}`).format('YYYY-MM-DDTHH:mm:ss')
+
         const newPedido = {
             "nome": event.nome,
             "descricao": event.descricao,
             "periocidade": periocidade,
-            "dateTimeInicial": moment(event.horaInicio).format('YYYY-MM-DDTHH:mm:ss'),
-            "dateTimeFinal": moment(event.horaFim).format('YYYY-MM-DDTHH:mm:ss'),
+            "dateTimeInicial": dateTimeInicio,
+            "dateTimeFinal": dateTimeFim,
             "limite": moment(event.limite).format('YYYY-MM-DDTHH:mm:ss'),
             "espaco": {
                 "id": event.espaco
@@ -110,7 +114,7 @@ class NovoPedido extends Component {
 
 
             const pedidoResponse = await ApiPedidos.novoPedido(newPedido)
-            window.location.href = "/pedidosutilizadorcpdr";
+            // window.location.href = "/pedidosutilizadorcpdr";
             console.log("Pedido Response:", pedidoResponse);
 
         } catch (e) {

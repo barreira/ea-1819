@@ -111,12 +111,16 @@ class EditarEvento extends Component {
             periodicidade = event.periodicidade;
         }
 
+        const d = moment(event.data).format('YYYY-MM-DD');
+        const dateTimeInicio = moment(`${d}T${moment(event.horaInicio).format('HH:mm:ss')}`).format('YYYY-MM-DDTHH:mm:ss')
+        const dateTimeFim = moment(`${d}T${moment(event.horaFim).format('HH:mm:ss')}`).format('YYYY-MM-DDTHH:mm:ss')
+
         const newPedido = {
             "nome": event.name,
             "descricao": event.descricao,
             "periodicidade": periodicidade,
-            "dateTimeInicial": moment(event.horaInicio).format('YYYY-MM-DDTHH:mm:ss'),
-            "dateTimeFinal": moment(event.horaFim).format('YYYY-MM-DDTHH:mm:ss'),
+            "dateTimeInicial": dateTimeInicio,
+            "dateTimeFinal": dateTimeFim,
             "limite": moment(event.limite).format('YYYY-MM-DDTHH:mm:ss'),
             "espaco": {
                 "id": event.espaco

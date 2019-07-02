@@ -29,12 +29,11 @@ class Navbar extends Component {
 
         const loginRegisterSection = (
             <React.Fragment>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                     <Link to={"/pesquisautilizador"}>
                         <span className="nav-link">Pesquisar</span>
                     </Link>
-                </li>
-
+                </li> */}
                 <li className="nav-item active">
                     <Link to={{
                         pathname: "/login",

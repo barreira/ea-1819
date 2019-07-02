@@ -99,19 +99,18 @@ class PesquisaUtilizador extends Component {
         const { eventos, espacos, aSeguir } = this.state;
 
         const activeFilters = this.state.activeFilters;
+
+        console.log("ACTIVE FILTERS", activeFilters)
         // Filter events
-        const filteredEvents = activeFilters.includes['Eventos'] ? eventos.filter(e => this.doFilter(e.nome, filterString)
+        const filteredEvents = activeFilters.includes('Eventos') ? eventos.filter(e => this.doFilter(e.nome, filterString)
             || this.doFilter(e.local, filterString) || this.doFilter(e.responsavel, filterString)) : [];
 
-        const filteredEspacos = activeFilters.includes['Espaços'] ? espacos.filter(e => this.doFilter(e, filterString)) : [];
-
-        const filteredASeguir = activeFilters.includes['A Seguir'] ? aSeguir.filter(e => this.doFilter(e.nome, filterString)
-            || this.doFilter(e.local, filterString)) : [];
+        const filteredEspacos = activeFilters.includes('Espaços') ? espacos.filter(e => this.doFilter(e, filterString)) : [];
 
         const newFilteredListar = {
             eventos: filteredEvents,
             espacos: filteredEspacos,
-            aSeguir: filteredASeguir
+            aSeguir: []
         };
 
         this.setState({
