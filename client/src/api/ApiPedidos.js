@@ -22,7 +22,7 @@ ApiPedidos.novoPedido = async (pedido) => {
             "alocacao": {
                 "nome": pedido.nome,
                 "descricao": pedido.descricao,
-                "periocidade": pedido.periocidade,
+                "periodicidade": pedido.periodicidade,
                 "dateTimeInicial": pedido.dateTimeInicial,
                 "dateTimeFinal": pedido.dateTimeFinal,
                 "limite": pedido.limite,

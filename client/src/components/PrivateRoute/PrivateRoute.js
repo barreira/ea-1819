@@ -77,7 +77,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
             if (rest.path === '/') {
                 return (
                     <Route {...rest} render={(props) => (
-                        <HomeGestor {...props} />
+                        <HomeVisitante {...props} />
                     )} />
                 )
             }

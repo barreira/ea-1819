@@ -47,15 +47,13 @@ class PesquisaUtilizadorCPDR extends Component {
 
         })
 
-        console.log("MEUS EVENTOS", finalEvents)
-
         this.setState({
             meusEventos: finalEvents
         })
 
         const eventos = await ApiEventos.fetchEventos(moment().format('YYYY-MM-DD'), moment().add('5', 'days').format('YYYY-MM-DD'));
-        const eventosASeguir = await ApiEventos.eventosASeguir();
 
+        const eventosASeguir = await ApiEventos.eventosASeguir();
 
         for (let day in eventos) {
             const currDayEvents = eventos[day];
@@ -82,9 +80,6 @@ class PesquisaUtilizadorCPDR extends Component {
 
         finalEspacos = finalEspacos.slice(0, 30);
         finalEvents = finalEvents.slice(0, 30);
-
-        console.log("EVENTOS FINAIIIIII", finalEvents)
-
 
         this.setState({
             meusEventos: meusEvents,

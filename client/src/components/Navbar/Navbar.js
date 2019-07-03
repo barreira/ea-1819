@@ -22,6 +22,7 @@ class Navbar extends Component {
     logoutUser = () => {
         UserHandler.remove();
         this.setState({ ...this.state });
+        window.location.href = "/"
     };
 
     render() {

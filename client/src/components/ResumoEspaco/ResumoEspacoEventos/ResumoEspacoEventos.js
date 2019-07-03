@@ -10,6 +10,8 @@ const organizeEventsByTime = (events) => {
 
     const current = moment();
 
+    console.log("A organizar evento")
+
     events.forEach(event => {
         const start = moment(event.start);
         const end = moment(event.end);
@@ -44,8 +46,13 @@ const ResumoEspacoEventos = (props) => {
 
     const { eventosHoje, eventosAmanha } = props;
 
+    console.log("Eventos hoje", eventosHoje)
+
     const organizedEvents = organizeEventsByTime(eventosHoje || [])
-    const { ongoing, later, } = organizedEvents;
+    const { ongoing, later } = organizedEvents;
+
+    console.log("ONGOING", ongoing)
+    console.log("LATER", later)
 
     const tomorrow = props.eventosAmanha;
 

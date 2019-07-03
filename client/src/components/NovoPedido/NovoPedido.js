@@ -28,7 +28,7 @@ class NovoPedido extends Component {
                 horaInicio: moment('00:00', 'hh:mm'),
                 horaFim: moment('00:00', 'hh:mm'),
                 descricao: '',
-                periocidade: 'Nunca',
+                periodicidade: 'Nunca',
                 limite: moment().toDate()
             },
             repete: false
@@ -49,7 +49,6 @@ class NovoPedido extends Component {
     }
 
     handleChange = (e, optionalName) => {
-        console.log(e, optionalName);
 
         let name;
         let value;
@@ -62,7 +61,6 @@ class NovoPedido extends Component {
             value = e;
         }
 
-        console.log(name, value);
 
         this.setState({
             event: {
@@ -70,26 +68,29 @@ class NovoPedido extends Component {
                 [name]: value
             }
         })
+
+        console.log([name], value)
+        console.log("STATE", this.state)
     };
 
     submeterPedido = async () => {
-        console.log("Submetendo pedido");
+        console.log("Submetendo pedido", this.state.event);
 
         const event = this.state.event;
 
-        let periocidade = 0;
-        switch (event.periocidade.toLowerCase()) {
+        let periodicidade = 0;
+        switch (event.periodicidade.toLowerCase()) {
             case 'Diariamente':
-                periocidade = 1;
+                periodicidade = 1;
                 break;
             case 'Semanalmente':
-                periocidade = 7;
+                periodicidade = 7;
                 break;
             case 'Mensalmente':
-                periocidade = 28;
+                periodicidade = 28;
                 break;
             case 'Anualmente':
-                periocidade = 365;
+                periodicidade = 365;
                 break;
         }
 
@@ -100,7 +101,7 @@ class NovoPedido extends Component {
         const newPedido = {
             "nome": event.nome,
             "descricao": event.descricao,
-            "periocidade": periocidade,
+            "periodicidade": periodicidade,
             "dateTimeInicial": dateTimeInicio,
             "dateTimeFinal": dateTimeFim,
             "limite": moment(event.limite).format('YYYY-MM-DDTHH:mm:ss'),
@@ -114,7 +115,7 @@ class NovoPedido extends Component {
 
 
             const pedidoResponse = await ApiPedidos.novoPedido(newPedido)
-            // window.location.href = "/pedidosutilizadorcpdr";
+            window.location.href = "/pedidosutilizadorcpdr";
             console.log("Pedido Response:", pedidoResponse);
 
         } catch (e) {
@@ -220,31 +221,32 @@ class NovoPedido extends Component {
                         </div>
                         <div className="col-md-10">
                             <div className="item" style={{ paddingLeft: '5px' }}>
-                                <input type="radio" className="" name="repete" onChange={this.handleChange}
-                                    onClick={() => this.handleRepete('diariamente')} value="Diariamente" />
+                                <input type="radio" className="" name="periodicidade" onChange={this.handleChange}
+                                    onClick={() => this.handleRepete('diariamente')
+                                    } value="Diariamente" />
                                 <label htmlFor="">Diariamente</label>
                             </div>
 
                             <div className="item" style={{ paddingLeft: '5px' }}>
-                                <input type="radio" className="" name="repete" onChange={this.handleChange}
+                                <input type="radio" className="" name="periodicidade" onChange={this.handleChange}
                                     onClick={() => this.handleRepete('semanalmente')} value="Semanalmente" />
                                 <label htmlFor="">Semanalmente</label>
                             </div>
 
                             <div className="item" style={{ paddingLeft: '5px' }}>
-                                <input type="radio" className="" name="repete" onChange={this.handleChange}
+                                <input type="radio" className="" name="periodicidade" onChange={this.handleChange}
                                     onClick={() => this.handleRepete('mensalmente')} value="Mensalmente" />
                                 <label htmlFor="">Mensalmente</label>
                             </div>
 
                             <div className="item" style={{ paddingLeft: '5px' }}>
-                                <input type="radio" className="" name="repete" onChange={this.handleChange}
+                                <input type="radio" className="" name="periodicidade" onChange={this.handleChange}
                                     onClick={() => this.handleRepete('anualmente')} value="Anualmente" />
                                 <label htmlFor="">Anualmente</label>
                             </div>
 
                             <div className="item" style={{ paddingLeft: '5px' }}>
-                                <input type="radio" className="" name="repete" onChange={this.handleChange}
+                                <input type="radio" className="" name="periodicidade" onChange={this.handleChange}
                                     onClick={() => this.handleRepete('nunca')} value="Nunca" />
                                 <label htmlFor="">Nunca</label>
                             </div>

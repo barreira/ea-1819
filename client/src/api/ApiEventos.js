@@ -27,10 +27,7 @@ ApiEventos.fetchEventos = async (moment1, moment2) => {
             ...data
         })
 
-        console.log("Data", data)
-        console.log(req)
         return {
-            success: true,
             ...req.data
         };
 

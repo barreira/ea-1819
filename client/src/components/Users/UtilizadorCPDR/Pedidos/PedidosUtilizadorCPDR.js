@@ -194,9 +194,6 @@ class PedidosUtilizadorCPDR extends React.Component {
             </div>
         )
 
-        console.log("State", this.state)
-
-
         return (
             <div>
                 <h3>Gestão de Pedidos</h3>
